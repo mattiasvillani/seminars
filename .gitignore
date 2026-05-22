@@ -1,0 +1,9 @@
+/hidden
+.quarto
+.Rproj.user/
+/.quarto/
+.Rhistory
+/docs/hidden
+*.lyx~
+.Rhistory*
+*.code-workspace

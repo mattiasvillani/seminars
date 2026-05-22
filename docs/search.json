@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "nordstat2026/index.html#outline",
+    "href": "nordstat2026/index.html#outline",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Outline",
+    "text": "Outline\n\nDynamic shrinkage process priors\nTime-varying multi-seasonal ARMA\nNon-Gaussian models\nPosterior inference"
+  },
+  {
+    "objectID": "nordstat2026/index.html#the-parametric-bottleneck",
+    "href": "nordstat2026/index.html#the-parametric-bottleneck",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "The parametric bottleneck",
+    "text": "The parametric bottleneck\nThis is important and this is a definition.\n\\[p(y \\mid \\theta) = \\sum_{k=1}^{K} \\pi_k \\, f(y \\mid \\mu_k, \\sigma_k^2)\\]\nProblems:\n\n\\(K\\) must be fixed before seeing data\nModel selection over \\(K\\) is awkward\nTrue \\(K\\) may be unknown or infinite\n\n\nIdea: put a prior directly over the space of distributions — let the data determine complexity."
+  },
+  {
+    "objectID": "nordstat2026/index.html#the-dirichlet-process",
+    "href": "nordstat2026/index.html#the-dirichlet-process",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "The Dirichlet Process",
+    "text": "The Dirichlet Process\n\n\n\n\n\n\nDefinition (Ferguson 1973). A random probability measure \\(G\\) on \\((\\Theta, \\mathcal{B})\\) is a Dirichlet Process with base measure \\(G_0\\) and concentration \\(\\alpha &gt; 0\\), written\n\\[G \\sim \\mathrm{DP}(\\alpha, G_0),\\]\nif for every finite measurable partition \\(\\{B_1, \\ldots, B_k\\}\\) of \\(\\Theta\\),\n\\[(G(B_1), \\ldots, G(B_k)) \\sim \\mathrm{Dir}(\\alpha G_0(B_1), \\ldots, \\alpha G_0(B_k)).\\]\n\n\n\nKey properties:\n\n\\(\\mathbb{E}[G(B)] = G_0(B)\\) — the base measure is the prior mean\n\\(\\mathrm{Var}[G(B)] = \\frac{G_0(B)(1-G_0(B))}{\\alpha + 1}\\) — \\(\\alpha\\) controls concentration\nRealizations are discrete with probability one"
+  },
+  {
+    "objectID": "nordstat2026/index.html#chinese-restaurant-process",
+    "href": "nordstat2026/index.html#chinese-restaurant-process",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Chinese Restaurant Process",
+    "text": "Chinese Restaurant Process\nThe DP induces a clustering distribution on observations. If \\(\\theta_1, \\ldots, \\theta_{n-1} \\sim G\\) have been drawn, then:\n\\[\\theta_n \\mid \\theta_1, \\ldots, \\theta_{n-1} \\sim \\frac{\\alpha}{\\alpha + n - 1} G_0 + \\frac{1}{\\alpha + n - 1} \\sum_{i=1}^{n-1} \\delta_{\\theta_i}\\]\nThis is the Pólya urn scheme. Cluster structure: customer \\(n\\) joins\n\n\n\n\n\n\n\nEvent\nProbability\n\n\n\n\nTable \\(k\\) (already occupied by \\(n_k\\) customers)\n\\(n_k / (\\alpha + n - 1)\\)\n\n\nNew table\n\\(\\alpha / (\\alpha + n - 1)\\)\n\n\n\nExpected number of clusters: \\(\\mathbb{E}[K_n] \\approx \\alpha \\log n\\)."
+  },
+  {
+    "objectID": "nordstat2026/index.html#dp-mixture-model",
+    "href": "nordstat2026/index.html#dp-mixture-model",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "DP Mixture Model",
+    "text": "DP Mixture Model\nCombine the DP prior with a likelihood to get a flexible density estimator:\n\\[\\begin{aligned}\nG &\\sim \\mathrm{DP}(\\alpha, G_0) \\\\\n\\phi_i \\mid G &\\overset{\\text{iid}}{\\sim} G \\\\\ny_i \\mid \\phi_i &\\sim f(y \\mid \\phi_i)\n\\end{aligned}\\]\nMarginalizing over \\(G\\) gives a random partition model. With \\(G_0 = \\mathcal{N}(\\mu_0, \\kappa_0^{-1})\\) and \\(f(y \\mid \\phi) = \\mathcal{N}(y \\mid \\phi, \\sigma^2)\\) this is a Gaussian DP mixture.\n\nThe posterior \\(G \\mid y_1, \\ldots, y_n\\) is again a DP:\n\\[G \\mid y_{1:n} \\sim \\mathrm{DP}\\!\\left(\\alpha + n,\\; \\frac{\\alpha}{\\alpha+n} G_0 + \\frac{1}{\\alpha+n}\\sum_{i=1}^n \\delta_{y_i}\\right)\\]"
+  },
+  {
+    "objectID": "nordstat2026/index.html#gibbs-sampler-for-dp-mixtures",
+    "href": "nordstat2026/index.html#gibbs-sampler-for-dp-mixtures",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Gibbs Sampler for DP Mixtures",
+    "text": "Gibbs Sampler for DP Mixtures\nCollapsed sampler (Neal 2000, Algorithm 3). Let \\(z_i \\in \\{1,\\ldots,K\\}\\) be the cluster label for observation \\(i\\).\nFor each \\(i = 1, \\ldots, n\\):\n\nRemove \\(i\\) from its cluster; update counts \\(n_{-i,k}\\)\nSample new label from:\n\n\\[p(z_i = k \\mid z_{-i}, y) \\propto \\begin{cases}\nn_{-i,k} \\cdot p(y_i \\mid y_{-i, k}) & k \\text{ existing} \\\\[4pt]\n\\alpha \\cdot p(y_i \\mid G_0) & k \\text{ new}\n\\end{cases}\\]\nwhere \\(p(y_i \\mid y_{-i,k})\\) is the posterior predictive under \\(G_0\\).\nFor conjugate \\(G_0\\) this is available in closed form — no MH step needed."
+  },
+  {
+    "objectID": "nordstat2026/index.html#implementation-in-julia",
+    "href": "nordstat2026/index.html#implementation-in-julia",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Implementation in Julia",
+    "text": "Implementation in Julia\n\n\n\nListing 1\n\n\n\"\"\"One full Gibbs sweep for a Gaussian DP mixture (conjugate NIG prior).\"\"\"\nfunction gibbs_sweep!(z, y, α, μ₀, κ₀, a₀, b₀)\n    n = length(y)\n    for i in 1:n\n        z[i] = 0                          # remove observation i\n        k_vals, log_probs = Int[], Float64[]\n\n        for k in unique(z[z .&gt; 0])\n            idx   = findall(==(k), z)\n            nk    = length(idx)\n            log_p = log(nk) + log_pred(y[i], y[idx], μ₀, κ₀, a₀, b₀)\n            push!(k_vals, k); push!(log_probs, log_p)\n        end\n\n        # new cluster\n        push!(k_vals, maximum(z) + 1)\n        push!(log_probs, log(α) + log_pred(y[i], Float64[], μ₀, κ₀, a₀, b₀))\n\n        probs  = softmax(log_probs)\n        z[i]   = k_vals[rand(Categorical(probs))]\n    end\n    return z\nend"
+  },
+  {
+    "objectID": "nordstat2026/index.html#dynamic-shrinkage-process-priors---local-level-model",
+    "href": "nordstat2026/index.html#dynamic-shrinkage-process-priors---local-level-model",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Dynamic shrinkage process priors - local level model",
+    "text": "Dynamic shrinkage process priors - local level model"
+  },
+  {
+    "objectID": "nordstat2026/index.html#summary",
+    "href": "nordstat2026/index.html#summary",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Summary",
+    "text": "Summary\n\n\nWhat we covered:\n\nDP is a prior over distributions with two parameters: \\(\\alpha\\) (concentration) and \\(G_0\\) (base measure)\nStick-breaking gives a constructive representation\nCRP describes the induced clustering\nDP mixtures are flexible density estimators\nConjugate Gibbs sampler is clean and efficient\n\n\n\nKey formulas:\n\n\n\nObject\nExpression\n\n\n\n\nPrior mean\n\\(\\mathbb{E}[G] = G_0\\)\n\n\nCRP new table\n\\(\\alpha/(\\alpha+n-1)\\)\n\n\nPosterior\n\\(\\mathrm{DP}(\\alpha+n, \\tilde{G})\\)\n\n\n\\(\\mathbb{E}[K_n]\\)\n\\(\\approx \\alpha \\log n\\)"
+  },
+  {
+    "objectID": "nordstat2026/index.html#references",
+    "href": "nordstat2026/index.html#references",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "References",
+    "text": "References\n\nFerguson, T.S. (1973). A Bayesian analysis of some nonparametric problems. Annals of Statistics, 1(2), 209–230.\nSethuraman, J. (1994). A constructive definition of Dirichlet priors. Statistica Sinica, 4, 639–650.\nNeal, R.M. (2000). Markov chain sampling methods for Dirichlet process mixture models. JCGS, 9(2), 249–265."
+  }
+]

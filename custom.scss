@@ -1,0 +1,264 @@
+/*-- scss:defaults --*/
+
+$linkColor:       #6C8EBF;   // --blue
+$linkColorHover:  #3A6B35;   // --forest
+$selectionBackgroundColor: #b5c6df;  // --light-blue
+
+// ── Fonts ─────────────────────────────────────────────────────────────────────
+$mainFont:             "Latin Modern Roman", "Computer Modern", Georgia, serif;
+$headingFont:          "Latin Modern Roman", "Computer Modern", Georgia, serif;
+$codeFont:             "Latin Modern Mono", "Courier New", monospace;
+
+// ── Sizes ─────────────────────────────────────────────────────────────────────
+$mainFontSize:         36px;      // Base size; reveal scales everything else
+
+// ── Colors ────────────────────────────────────────────────────────────────────
+$backgroundColor:      #f9f8f4;   // Slightly warm white — easier on projectors
+$mainColor:            #1a1a1a;
+$headingColor:         #780000;
+$linkColor:            #bb989a;
+$linkColorHover:       #1a3c7a;
+$selectionBackgroundColor: #eadaaa;
+$selectionColor:       #1a1a1a;
+
+// ── Color utility classes ─────────────────────────────────────────────────────
+.blue      { color: var(--blue); }
+.gold      { color: var(--gold); }
+.crimson   { color: var(--crimson); }
+.teal      { color: var(--teal); }
+.forest    { color: var(--forest); }
+
+.bg-blue       { background: var(--blue);       color: white; padding: 0.1em 0.3em; }
+.bg-gold       { background: var(--gold);       color: white; padding: 0.1em 0.3em; }
+.bg-light-blue { background: var(--light-blue); padding: 0.1em 0.3em; }
+.bg-light-gold { background: var(--light-gold); padding: 0.1em 0.3em; }
+.bg-teal       { background: var(--teal);       color: white; padding: 0.1em 0.3em; }
+
+
+// ── Headings ──────────────────────────────────────────────────────────────────
+$headingTextTransform: none;      // Reveal's default UPPERCASE is very un-LaTeX
+$headingFontWeight:    normal;    // Computer Modern headings are not bold
+$headingLetterSpacing: normal;
+$headingTextShadow:    none;
+$heading1Size:         0.8em;
+$heading2Size:         1.4em;
+$heading3Size:         1.1em;
+$heading4Size:         1.0em;
+
+// ── Spacing ───────────────────────────────────────────────────────────────────
+$blockMargin:          0.2em;
+
+
+/*-- scss:rules --*/
+
+/*-- scss:rules --*/
+
+.reveal .highlight-box {
+  background:    var(--verylight-gold) !important;
+  border:        2px solid var(--gold) !important;
+  border-radius: 1px;
+  padding:       0.2em 0.8em !important; 
+  margin:        0.5em 0;
+}
+
+// ── Palette ───────────────────────────────────────────────────────────────────
+:root {
+  --blue:        #6C8EBF;
+  --gold:        #c0a34d;
+  --crimson:     #780000;
+  --teal:        #007878;
+  --sand:        #bf9d6c;
+  --forest:      #3A6B35;
+  --light-blue:  #b5c6df;
+  --light-gold:  #eadaaa;
+  --verylight-gold: #FAF5E8;
+  --light-rose:  #bb989a;
+  --light-teal:  #98bbb9;
+  --terracotta:  #bf8d6c;
+  --sage:        #CBD18F;
+}
+
+.alertblue {
+  color:       var(--blue);
+  font-weight: bold;
+}
+
+.alertgold {
+  color:       var(--gold);
+  font-weight: bold;
+}
+
+// ── Font rendering ────────────────────────────────────────────────────────────
+.reveal {
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering:          optimizeLegibility;
+  font-feature-settings:   "liga" 1, "kern" 1;
+}
+
+// ── Slide layout ──────────────────────────────────────────────────────────────
+.reveal .slides section {
+  text-align: left;
+  padding: 0 0.1em;
+}
+
+// ── Title slide ───────────────────────────────────────────────────────────────
+#title-slide {
+  
+  
+  h1.title {
+    font-size: 1.75em !important;
+    font-weight: bold !important;
+    margin-bottom: 0.3em !important;
+    border-bottom: 2px solid var(--light-blue) !important;
+    padding-bottom: 0.3em !important;
+  }
+  
+  .subtitle {
+    font-size: 1.15em !important;
+    font-style: italic !important;
+    color: #444 !important;
+    margin-bottom: 1.2em !important;
+  }
+  
+  .quarto-title-author-name {
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+    color: #555 !important;
+  }
+  
+  .quarto-title-affiliation {
+    font-size: 1em !important;
+    color: #666 !important;
+    //font-style: italic !important;
+  }
+
+  
+}
+
+// ── Rule under h2 headings (like \frametitle in Beamer) ───────────────────────
+
+.reveal h1 {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.15em;
+  margin-bottom: 0.6em;
+}
+
+.reveal h2 {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.15em;
+  margin-bottom: 0.6em;
+}
+
+// ── Math: prevent overflow on narrow lines ────────────────────────────────────
+.reveal .MathJax_Display,
+.reveal mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+// ── Theorem / Definition / Proof callout boxes ────────────────────────────────
+.callout.callout-style-default {
+  border-left-width: 4px;
+  border-radius: 2px;
+  background: #f0ede4;
+}
+
+.callout-theorem {
+  border-left-color: #2a5caa !important;
+  
+  .callout-title {
+    font-style: italic;
+    font-weight: normal;
+  }
+}
+
+.callout-definition {
+  border-left-color: #2a8a4a !important;
+}
+
+.callout-proof {
+  border-left-color: #888 !important;
+  font-style: italic;
+}
+
+// ── Code blocks ───────────────────────────────────────────────────────────────
+.reveal pre code {
+  font-family:   "Latin Modern Mono", "Courier New", monospace;
+  font-size:     0.72em;
+  line-height:   1.45;
+  border-radius: 3px;
+  padding:       0.8em 1em;
+  background:    #f0ede4;
+}
+
+// ── Tables ────────────────────────────────────────────────────────────────────
+.reveal table {
+  font-size: 0.85em;
+  border-collapse: collapse;
+  margin: 0.5em auto;
+  
+  th {
+    border-bottom: 1.5px solid #333;
+    padding: 0.3em 0.8em;
+    font-weight: normal;
+    font-style: italic;
+  }
+  
+  td {
+    padding: 0.25em 0.8em;
+    border-bottom: 0.5px solid #ccc;
+  }
+  
+  tr:last-child td {
+    border-bottom: 1.5px solid #333;
+  }
+}
+
+// ── Two-column layout helper ──────────────────────────────────────────────────
+.cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  align-items: start;
+}
+
+.cols-6-4 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: start;
+}
+
+// ── Slide number ──────────────────────────────────────────────────────────────
+.reveal .slide-number {
+  font-family: "Latin Modern Mono", monospace;
+  font-size:   0.5em;
+  color:       #888;
+  background:  transparent;
+}
+
+// ── Footnotes ─────────────────────────────────────────────────────────────────
+.reveal .footnote, .reveal .aside {
+  font-size:   0.55em;
+  color:       #666;
+  font-style:  italic;
+  line-height: 1.3;
+  position:    absolute;
+  bottom:      1.5em;
+  left:        1.2em;
+  right:       1.2em;
+}
+
+// ── iframe slides ─────────────────────────────────────────────────────────────
+.iframe-slide iframe {
+  border:        none;
+  border-radius: 3px;
+  box-shadow:    0 2px 12px rgba(0,0,0,0.15);
+}
+
+// ── Progress bar ─────────────────────────────────────────────────────────────
+.reveal .progress {
+  height: 3px;
+  color:  #2a5caa;
+}

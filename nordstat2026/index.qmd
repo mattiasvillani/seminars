@@ -1,0 +1,293 @@
+---
+title: " Bayesian inference in non-Gaussian time series with global-local
+shrinkage process priors"
+author: "Mattias Villani"
+institute: "Department of Statistics, Stockholm University"
+
+format:
+  revealjs:
+    # ── Theme ──────────────────────────────────────────────────────────────────
+    theme: [default, ../custom.scss]
+    css: ../custom.css
+    include-after-body: 
+      - ../cursor.js
+      - ../logo.js
+
+    # ── Math: SVG output is resolution-independent ─────────────────────────────
+    html-math-method:
+      method: mathjax
+      url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+
+    # ── Resolution: more pixels → sharper rendering ────────────────────────────
+    width:  1600
+    height: 900
+    margin: 0.05
+
+    # ── Navigation ─────────────────────────────────────────────────────────────
+    slide-number:     "c/t"
+    progress:         true
+    history:          false
+    hash:             true
+    controls:         false       # cleaner without arrow buttons
+    transition:       none        # instant transitions look more professional
+    transition-speed: fast
+
+    # ── Code ───────────────────────────────────────────────────────────────────
+    highlight-style:  github
+    code-line-numbers: false
+    
+    #footer: "NordStat2026"
+
+    # ── PDF export (via decktape or browser print) ──────────────────────────────
+    # Run:  quarto render talk.qmd --to revealjs
+    # PDF:  open in browser → Print → Save as PDF (set margins to None)
+    
+resources:
+  - figs/
+
+# ── Execution ──────────────────────────────────────────────────────────────────
+execute:
+  echo:    true
+  warning: false
+  eval:    false
+
+# ── Julia engine ───────────────────────────────────────────────────────────────
+jupyter: julia-1.12
+
+# ── Bibliography ───────────────────────────────────────────────────────────────
+# bibliography: references.bib
+---
+
+## Outline
+
+1. Dynamic shrinkage process priors
+2. Time-varying multi-seasonal ARMA
+3. Non-Gaussian models 
+4. Posterior inference
+
+---
+
+
+## The parametric bottleneck
+
+This is [important]{.alertgold} and this is [a definition]{.alertblue}.
+
+$$p(y \mid \theta) = \sum_{k=1}^{K} \pi_k \, f(y \mid \mu_k, \sigma_k^2)$$
+
+**Problems:**
+
+- $K$ must be fixed before seeing data
+- Model selection over $K$ is awkward
+- True $K$ may be unknown or infinite
+
+::: {.highlight-box}
+**Idea:** put a prior directly over the **space of distributions** — let the data determine complexity.
+:::
+
+---
+
+## The Dirichlet Process {.theorem-slide}
+
+::: {.callout-note .callout-theorem appearance="simple"}
+**Definition (Ferguson 1973).** A random probability measure $G$ on $(\Theta, \mathcal{B})$ is a **Dirichlet Process** with base measure $G_0$ and concentration $\alpha > 0$, written
+
+$$G \sim \mathrm{DP}(\alpha, G_0),$$
+
+if for every finite measurable partition $\{B_1, \ldots, B_k\}$ of $\Theta$,
+
+$$(G(B_1), \ldots, G(B_k)) \sim \mathrm{Dir}(\alpha G_0(B_1), \ldots, \alpha G_0(B_k)).$$
+:::
+
+**Key properties:**
+
+- $\mathbb{E}[G(B)] = G_0(B)$ — the base measure is the prior mean
+- $\mathrm{Var}[G(B)] = \frac{G_0(B)(1-G_0(B))}{\alpha + 1}$ — $\alpha$ controls concentration
+- Realizations are [discrete]{.alertblue} with probability one
+
+---
+
+# Stick-breaking representation
+
+::: {.cols-6-4}
+::: {}
+Sethuraman (1994): $G \sim \mathrm{DP}(\alpha, G_0)$ if and only if
+
+$$G = \sum_{k=1}^{\infty} w_k \, \delta_{\theta_k}$$
+
+where $\theta_k \overset{\text{iid}}{\sim} G_0$ and
+
+$$w_k = v_k \prod_{j < k} (1 - v_j), \quad v_k \overset{\text{iid}}{\sim} \mathrm{Beta}(1, \alpha).$$
+
+The weights $(w_k)$ satisfy $\sum_{k=1}^\infty w_k = 1$ a.s.
+
+**Interpretation of $\alpha$:** small $\alpha \Rightarrow$ few dominant atoms; large $\alpha \Rightarrow$ many small atoms, $G \approx G_0$.
+:::
+
+::: {}
+```{julia}
+#| label: fig-stickbreaking
+#| fig-cap: "Stick-breaking weights for two values of α"
+#| echo: false
+#| eval: false
+using Distributions, CairoMakie
+
+function stickbreak(α, K=30)
+    v = rand(Beta(1, α), K)
+    w = similar(v)
+    rem = 1.0
+    for k in 1:K
+        w[k] = v[k] * rem
+        rem  *= (1 - v[k])
+    end
+    w
+end
+
+fig = Figure(size=(500, 320))
+for (i, α) in enumerate([1.0, 10.0])
+    ax = Axis(fig[1, i],
+        title  = "α = $α",
+        xlabel = "Atom index k",
+        ylabel = i==1 ? "Weight wₖ" : "")
+    ws = stickbreak(α)
+    barplot!(ax, 1:length(ws), ws, color=:steelblue)
+end
+fig
+```
+:::
+:::
+
+---
+
+## Chinese Restaurant Process
+
+The DP induces a **clustering distribution** on observations. If $\theta_1, \ldots, \theta_{n-1} \sim G$ have been drawn, then:
+
+$$\theta_n \mid \theta_1, \ldots, \theta_{n-1} \sim \frac{\alpha}{\alpha + n - 1} G_0 + \frac{1}{\alpha + n - 1} \sum_{i=1}^{n-1} \delta_{\theta_i}$$
+
+This is the **Pólya urn scheme**. Cluster structure: customer $n$ joins
+
+| Event | Probability |
+|---|---|
+| Table $k$ (already occupied by $n_k$ customers) | $n_k / (\alpha + n - 1)$ |
+| New table | $\alpha / (\alpha + n - 1)$ |
+
+Expected number of clusters: $\mathbb{E}[K_n] \approx \alpha \log n$.
+
+---
+
+## DP Mixture Model
+
+Combine the DP prior with a likelihood to get a **flexible density estimator**:
+
+$$\begin{aligned}
+G &\sim \mathrm{DP}(\alpha, G_0) \\
+\phi_i \mid G &\overset{\text{iid}}{\sim} G \\
+y_i \mid \phi_i &\sim f(y \mid \phi_i)
+\end{aligned}$$
+
+Marginalizing over $G$ gives a random partition model. With $G_0 = \mathcal{N}(\mu_0, \kappa_0^{-1})$ and $f(y \mid \phi) = \mathcal{N}(y \mid \phi, \sigma^2)$ this is a **Gaussian DP mixture**.
+
+::: {.highlight-box}
+The posterior $G \mid y_1, \ldots, y_n$ is again a DP:
+
+$$G \mid y_{1:n} \sim \mathrm{DP}\!\left(\alpha + n,\; \frac{\alpha}{\alpha+n} G_0 + \frac{1}{\alpha+n}\sum_{i=1}^n \delta_{y_i}\right)$$
+:::
+
+---
+
+## Gibbs Sampler for DP Mixtures
+
+Collapsed sampler (Neal 2000, Algorithm 3). Let $z_i \in \{1,\ldots,K\}$ be the cluster label for observation $i$.
+
+For each $i = 1, \ldots, n$:
+
+1. Remove $i$ from its cluster; update counts $n_{-i,k}$
+2. Sample new label from:
+
+$$p(z_i = k \mid z_{-i}, y) \propto \begin{cases}
+n_{-i,k} \cdot p(y_i \mid y_{-i, k}) & k \text{ existing} \\[4pt]
+\alpha \cdot p(y_i \mid G_0) & k \text{ new}
+\end{cases}$$
+
+where $p(y_i \mid y_{-i,k})$ is the posterior predictive under $G_0$.
+
+For conjugate $G_0$ this is available in **closed form** — no MH step needed.
+
+---
+
+## Implementation in Julia
+
+```{julia}
+#| label: lst-gibbs
+#| eval: false
+
+"""One full Gibbs sweep for a Gaussian DP mixture (conjugate NIG prior)."""
+function gibbs_sweep!(z, y, α, μ₀, κ₀, a₀, b₀)
+    n = length(y)
+    for i in 1:n
+        z[i] = 0                          # remove observation i
+        k_vals, log_probs = Int[], Float64[]
+
+        for k in unique(z[z .> 0])
+            idx   = findall(==(k), z)
+            nk    = length(idx)
+            log_p = log(nk) + log_pred(y[i], y[idx], μ₀, κ₀, a₀, b₀)
+            push!(k_vals, k); push!(log_probs, log_p)
+        end
+
+        # new cluster
+        push!(k_vals, maximum(z) + 1)
+        push!(log_probs, log(α) + log_pred(y[i], Float64[], μ₀, κ₀, a₀, b₀))
+
+        probs  = softmax(log_probs)
+        z[i]   = k_vals[rand(Categorical(probs))]
+    end
+    return z
+end
+```
+
+---
+
+## Dynamic shrinkage process priors - local level model
+
+::: {.iframe-slide}
+<iframe width="100%" height="807" frameborder="0"
+  src="https://observablehq.com/embed/@mattiasvillani/local-level-model-dsp-prior?cells=viewof+input%2Cviewof+plotselector%2Cviewof+simulatebutton%2Ctimeplot&banner=false"></iframe>
+:::
+
+---
+
+## Summary
+
+::: {.cols-2}
+:::{}
+**What we covered:**
+
+- DP is a prior over distributions with two parameters: $\alpha$ (concentration) and $G_0$ (base measure)
+- Stick-breaking gives a constructive representation
+- CRP describes the induced clustering
+- DP mixtures are flexible density estimators
+- Conjugate Gibbs sampler is clean and efficient
+:::
+:::{}
+**Key formulas:**
+
+| Object | Expression |
+|---|---|
+| Prior mean | $\mathbb{E}[G] = G_0$ |
+| CRP new table | $\alpha/(\alpha+n-1)$ |
+| Posterior | $\mathrm{DP}(\alpha+n, \tilde{G})$ |
+| $\mathbb{E}[K_n]$ | $\approx \alpha \log n$ |
+
+:::
+:::
+
+---
+
+## References {.smaller}
+
+- Ferguson, T.S. (1973). A Bayesian analysis of some nonparametric problems. *Annals of Statistics*, 1(2), 209–230.
+- Sethuraman, J. (1994). A constructive definition of Dirichlet priors. *Statistica Sinica*, 4, 639–650.
+- Neal, R.M. (2000). Markov chain sampling methods for Dirichlet process mixture models. *JCGS*, 9(2), 249–265.
+
+
