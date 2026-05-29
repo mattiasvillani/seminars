@@ -48,7 +48,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-abac499f4c75dd3673a818c6f7e0556f.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-08f1ec49d1aadf7e7434480c77cb80c1.css">
   <link rel="stylesheet" href="../custom.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -154,6 +154,7 @@
     }
   };
   </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cormullion/juliamono/webfonts/JuliaMono.css">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -173,6 +174,30 @@ Mattias Villani
     </div>
 </div>
 
+</section>
+<section class="slide level2">
+
+<p><span class="alertblue">Collaborators</span></p>
+<ul>
+<li><p><span class="alertred">Robert Kohn</span>, University of New South Wales, Sydney.</p></li>
+<li><p><span class="alertred">Ganna Fagerberg</span>, Stockholm University</p></li>
+<li><p><span class="alertred">Yijie Niu</span>, Stockholm University</p></li>
+<li><p><span class="alertred">Oskar Gustafsson</span>, Stockholm University</p></li>
+</ul>
+<hr>
+<p><span class="alertblue">Funding</span></p>
+<ul>
+<li>Swedish Research Council, grants 2020-02846 and 2025-01654.</li>
+</ul>
+<hr>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="alertblue">Slides</span></p>
+<p><img src="figs/qr.svg" style="width:20%;"><br> <a href="mattiasvillani.com/seminars/nordstat2026">mattiasvillani.com/seminars/nordstat2026</a></p>
+</div><div class="column" style="text-align:right;">
+<p><span class="alertblue">Julia packages (unoptimized)</span></p>
+<p><img src="figs/qrbayes.svg" style="width:20%;"><br> <a href="https://github.com/compbayes">https://github.com/compbayes</a></p>
+</div></div>
 </section>
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
@@ -272,8 +297,8 @@ y_{t} &amp;= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t}\qquad
 </ul>
 <p><img data-src="figs/jointsmoothingpost.svg" style="width:20.0%"></p>
 </section>
-<section id="global-local-shrinkage-priors---regression" class="slide level2">
-<h2>Global-local shrinkage priors - regression</h2>
+<section id="global-local-shrinkage-priors---regression-carvalho2010horseshoe-polson2010shrink" class="slide level2">
+<h2>Global-local shrinkage priors - regression <span class="citation" data-cites="carvalho2010horseshoe polson2010shrink">[<a href="#/references" role="doc-biblioref" onclick="">1</a>, <a href="#/references" role="doc-biblioref" onclick="">2</a>]</span></h2>
 <ul>
 <li>Linear Gaussian regression with <span class="alertred">horseshoe prior</span> <span class="math display">\[
 \begin{aligned}
@@ -339,7 +364,7 @@ h_t \sim Z(\alpha,\beta,0,1) \Longleftrightarrow \lambda_t = \exp(h_t/2) \sim C^
 <div class="smallskip">
 
 </div></li>
-<li><p>Mean-variance mixture of Gaussians <span class="citation" data-cites="barndorff1982normal">[<a href="#/references" role="doc-biblioref" onclick="">1</a>]</span> <span class="math display">\[
+<li><p>Mean-variance mixture of Gaussians <span class="citation" data-cites="barndorff1982normal">[<a href="#/references" role="doc-biblioref" onclick="">3</a>]</span> <span class="math display">\[
 \begin{aligned}
 Z \vert \xi &amp;\sim N \big(\xi^{-1}(\alpha-\beta)/2,\xi^{-1}\big)  \\
 \xi &amp;\sim \mathrm{PolyaGamma}(\alpha+\beta,1)
@@ -356,7 +381,7 @@ Z \vert \xi &amp;\sim N \big(\xi^{-1}(\alpha-\beta)/2,\xi^{-1}\big)  \\
 </div>
 </section>
 <section id="multi-seasonal-arma-with-dsp-prior-fagerberg2026time" class="slide level2">
-<h2>Multi-seasonal ARMA with DSP prior <span class="citation" data-cites="fagerberg2026time">[<a href="#/references" role="doc-biblioref" onclick="">2</a>]</span></h2>
+<h2>Multi-seasonal ARMA with DSP prior <span class="citation" data-cites="fagerberg2026time">[<a href="#/references" role="doc-biblioref" onclick="">4</a>]</span></h2>
 <ul>
 <li><p>Seasonal AR with DSP evolution <span class="math display">\[
 \phi_{p,t}(L)\Phi_{P,t}(L^{s})(y_{t}-\mu_t) = \varepsilon_{t},\quad\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(0,\sigma_{t}^{2})
@@ -393,7 +418,7 @@ y_t=\v z_t^{\top}\tilde{\v \phi}+\varepsilon_t
 <div class="callout callout-important no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Lemma - uniform prior over the stability region <span class="citation" data-cites="fagerberg2026time jones2003skew">[<a href="#/references" role="doc-biblioref" onclick="">2</a>, <a href="#/references" role="doc-biblioref" onclick="">3</a>]</span></strong></p>
+<p><strong>Lemma - uniform prior over the stability region <span class="citation" data-cites="fagerberg2026time jones2003skew">[<a href="#/references" role="doc-biblioref" onclick="">4</a>, <a href="#/references" role="doc-biblioref" onclick="">5</a>]</span></strong></p>
 </div>
 <div class="callout-content">
 <p>The AR parameters <span class="math inline">\(\v\phi\)</span> are uniformly distributed over the stability region if, independently, <span class="math display">\[\begin{equation}\label{eq:t_odd_even}
@@ -409,7 +434,29 @@ y_t=\v z_t^{\top}\tilde{\v \phi}+\varepsilon_t
 </div>
 </div>
 <div>
-<p><img data-src="figs/f_x.svg"></p>
+<div class="tight-list">
+<div style="font-size:0.9em;">
+<ul>
+<li>Transformation to partial autocorr matters
+<ul>
+<li><span class="alertblue">Monahan</span> <span class="math display">\[r=\frac{\theta}{\sqrt{1+\theta^{2}}}\]</span></li>
+<li><span class="alertgold">Tanh</span> <span class="math display">\[r=\frac{e^{\theta}-e^{-\theta}}{e^{\theta}+e^{-\theta}}\]</span></li>
+<li><span class="alertred">Hard-tanh</span> <span class="math display">\[
+r=\begin{cases}
+-(1-\epsilon) &amp; \text{if }\theta\leq-(1-\epsilon)\\[6pt]
+\theta &amp; \text{if }-(1-\epsilon)&lt;\theta&lt;1-\epsilon\\[6pt]
+1-\epsilon &amp; \text{if }\geq1-\epsilon
+  \end{cases}
+\]</span></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figs/f_x.svg" class="quarto-figure quarto-figure-center" style="width:55.0%"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -439,15 +486,26 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(\v g^{-1}(\v x_{t}^\top\v\be
 \v h_t &amp;= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 \]</span></p>
-<div class="mediumskip">
+<div class="smallskip">
 
 </div>
 <ul>
-<li><span class="alertred">Local level Poisson</span> with DSP prior</li>
+<li><span class="alertred">Poisson regression</span> with DSP prior</li>
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
 y_t \vert \v x_{t} &amp;\sim \mathrm{Pois}\big(\mu_t = \exp(\v x_{t}^\top\v\beta_{t}) \big)
+\end{aligned}
+\]</span></p>
+<div class="smallskip">
+
+</div>
+<ul>
+<li><span class="alertred">Beta regression</span> with DSP prior</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t}), \psi_t = \exp(\v z_{t}^\top\v\gamma_{t}) \big)
 \end{aligned}
 \]</span></p>
 </div>
@@ -459,19 +517,104 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{Pois}\big(\mu_t = \exp(\v x_{t}^\top\v\beta
 </div>
 </div>
 </section>
+<section id="gaussian-approximation-filters" class="slide level2">
+<h2>Gaussian approximation filters</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li><span class="alertred">Forward-filtering-backward sampling</span> (FFBS) for linear Gaussian models <span class="citation" data-cites="carter1994gibbs fruhwirth1994data">[<a href="#/references" role="doc-biblioref" onclick="">6</a>, <a href="#/references" role="doc-biblioref" onclick="">7</a>]</span>
+<ul>
+<li>Run Kalman filter <span class="math inline">\(p(\v\theta_t\vert y_{1:t})\)</span> forward for <span class="math inline">\(t=1,2,\ldots,T\)</span></li>
+<li>Sample <span class="math inline">\(p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})\)</span> backward for <span class="math inline">\(t=T-1,T-2,\ldots,1\)</span></li>
+</ul></li>
+</ul>
+<div class="tinyskip">
+
+</div>
+<ul>
+<li><span class="alertred">Extended Kalman filter</span>
+<ul>
+<li>Linearize measurement/transition models</li>
+<li>Apply standard Kalman filter</li>
+</ul></li>
+<li><span class="alertred">Unscented Kalman filter</span>
+<ul>
+<li>Propagate sigma point approx of prior/posterior</li>
+</ul></li>
+<li><span class="alertred">Prior linearization filter</span>
+<ul>
+<li>Linearize by statistical linear regression</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:30%;">
+<div style="height:7em;">
+
+</div>
+<p><img data-src="figs/UKFtrue.png" style="width:40.0%"> <img data-src="figs/UKFapprox.png" style="width:40.0%"></p>
+</div></div>
+</section>
+<section id="iterated-gaussian-approximation-filters" class="slide level2">
+<h2>Iterated Gaussian approximation filters</h2>
+<ul>
+<li><p>Iterated extended Kalman filter</p></li>
+<li><p>Iterated unscented Kalman filter</p></li>
+<li><p>Posterior linearization filter</p></li>
+<li><p>Laplace filter</p></li>
+</ul>
+</section>
+<section id="grouping-for-speed-and-gaussianity" class="slide level2">
+<h2>Grouping for speed and Gaussianity</h2>
+<ul>
+<li><p>Need Gaussian approximations at every time step <span class="math inline">\(t\)</span></p></li>
+<li><p>The prior <span class="math inline">\(\v\theta_t \sim N(\v\theta_{t\vert t-1}, \Omega_{t \vert t-1} )\)</span> helps a lot.</p></li>
+<li><p>No Bernstein-von Mises effect to make the likelihood contribution at time <span class="math inline">\(t\)</span> more Gaussian.</p></li>
+<li><p><span class="alertred">Group observations</span>: <span class="math inline">\(\v y_g = (y_t,y_{t-1},\ldots,y_{t-G+1})^\top\)</span> share the <em>same</em> state/parameter <span class="math inline">\(\v\theta_g\)</span>:</p>
+<ul>
+<li>Subsampling MCMC/HMC <span class="citation" data-cites="salomone2020spectral">[<a href="#/references" role="doc-biblioref" onclick="">8</a>]</span></li>
+<li>Filtering [Särkää]</li>
+<li>Macroeconomic modeling <span class="citation" data-cites="celanimoderatetime">[<a href="#/references" role="doc-biblioref" onclick="">9</a>]</span></li>
+</ul></li>
+<li><p>Two views:</p>
+<ul>
+<li>interpolation for algorithmic performance</li>
+<li>genuine model change: different time scales for observations and parameters.</li>
+</ul></li>
+</ul>
+</section>
+<section id="natural-scaled-parameter-evolution" class="slide level2">
+<h2>Natural scaled parameter evolution</h2>
+</section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 
 
 <div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-carvalho2010horseshoe" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Carvalho CM, Polson NG, Scott JG. The horseshoe estimator for sparse signals. Biometrika. 2010;97(2):465–480.</div>
+</div>
+<div id="ref-polson2010shrink" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Polson NG, Scott JG. Shrink globally, act locally: Sparse <span>B</span>ayesian regularization and prediction. Bayesian statistics. 2010;9(501-538):105.</div>
+</div>
 <div id="ref-barndorff1982normal" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Barndorff-Nielsen O, Kent J, Sørensen M. Normal variance-mean mixtures and z distributions. International Statistical Review/Revue Internationale de Statistique. 1982:145–159.</div>
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Barndorff-Nielsen O, Kent J, Sørensen M. Normal variance-mean mixtures and z distributions. International Statistical Review/Revue Internationale de Statistique. 1982:145–159.</div>
 </div>
 <div id="ref-fagerberg2026time" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Fagerberg G, Villani M, Kohn R. Time-varying multi-seasonal AR models. Journal of Computational and Graphical Statistics. 2026;(forthcoming):1–20.</div>
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Fagerberg G, Villani M, Kohn R. Time-varying multi-seasonal AR models. Journal of Computational and Graphical Statistics. 2026;(forthcoming):1–20.</div>
 </div>
 <div id="ref-jones2003skew" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Jones MC, Faddy M. A skew extension of the t-distribution, with applications. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2003;65(1):159–174.</div>
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">Jones MC, Faddy M. A skew extension of the t-distribution, with applications. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2003;65(1):159–174.</div>
+</div>
+<div id="ref-carter1994gibbs" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">Carter CK, Kohn R. On <span>Gibbs</span> sampling for state space models. Biometrika. 1994;81(3):541–553.</div>
+</div>
+<div id="ref-fruhwirth1994data" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">Frühwirth-Schnatter S. Data augmentation and dynamic linear models. Journal of time series analysis. 1994;15(2):183–202.</div>
+</div>
+<div id="ref-salomone2020spectral" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">Salomone R, Quiroz M, Kohn R, Villani M, Tran M-N. Spectral subsampling MCMC for stationary time series. In: International conference on machine learning. PMLR; 2020. p. 8449–8458.</div>
+</div>
+<div id="ref-celanimoderatetime" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">Celani A, Pedini L. Moderate time-varying parameter VARs. Örebro University, School of Business; 2025. Report No.: 2025:16. <a href="https://ideas.repec.org/p/hhs/oruesi/2025_016.html">https://ideas.repec.org/p/hhs/oruesi/2025_016.html</a></div>
 </div>
 </div>
 </section>

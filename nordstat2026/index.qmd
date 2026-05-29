@@ -28,7 +28,8 @@ format:
           }
         };
         </script>
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cormullion/juliamono/webfonts/JuliaMono.css">
+        
     # ── Math: SVG output is resolution-independent ─────────────────────────────
     html-math-method:
       method: mathjax
@@ -74,6 +75,44 @@ jupyter: julia-1.12
 # ── Bibliography ───────────────────────────────────────────────────────────────
 bibliography: references.bib
 csl: vancouver.csl
+
+
+---
+
+[Collaborators]{.alertblue}
+
+-  [Robert Kohn]{.alertred}, University of New South Wales, Sydney.
+
+-  [Ganna Fagerberg]{.alertred}, Stockholm University
+
+-  [Yijie Niu]{.alertred}, Stockholm University
+
+-  [Oskar Gustafsson]{.alertred}, Stockholm University
+
+<hr>
+
+[Funding]{.alertblue}
+
+- Swedish Research Council, grants 2020-02846 and 2025-01654. 
+
+<hr>
+
+:::: {.columns}
+::: {.column width="50%"}
+[Slides]{.alertblue}
+
+<img src="figs/qr.svg" style="width:20%;"><br>
+[mattiasvillani.com/seminars/nordstat2026](mattiasvillani.com/seminars/nordstat2026)
+:::
+::: {.column width="50%" style="text-align:right;"}
+[Julia packages (unoptimized)]{.alertblue}
+
+<img src="figs/qrbayes.svg" style="width:20%;"><br>
+[https://github.com/compbayes](https://github.com/compbayes)
+:::
+::::
+
+
 ---
 
 ## Outline
@@ -82,6 +121,9 @@ csl: vancouver.csl
 2.  Time-varying multi-seasonal ARMA
 3.  Non-Gaussian models
 4.  Posterior inference
+
+
+
 
 ------------------------------------------------------------------------
 
@@ -173,7 +215,7 @@ $p(\boldsymbol{z}_{1:T}\vert y_{1:T})$
 
 ------------------------------------------------------------------------
 
-## Global-local shrinkage priors - regression
+## Global-local shrinkage priors - regression [@carvalho2010horseshoe; @polson2010shrink]
 
 - Linear Gaussian regression with [horseshoe prior]{.alertred}
 $$
@@ -328,7 +370,22 @@ The AR parameters $\v\phi$ are uniformly distributed over the stability region i
 </div>
 <div>
 
-![](figs/f_x.svg)
+::: {.tight-list}
+<div style="font-size:0.9em;">
+- Transformation to partial autocorr matters
+    - [Monahan]{.alertblue} $$r=\frac{\theta}{\sqrt{1+\theta^{2}}}$$
+    - [Tanh]{.alertgold} $$r=\frac{e^{\theta}-e^{-\theta}}{e^{\theta}+e^{-\theta}}$$
+    - [Hard-tanh]{.alertred}
+  $$
+      r=\begin{cases}
+      -(1-\epsilon) & \text{if }\theta\leq-(1-\epsilon)\\[6pt]
+      \theta & \text{if }-(1-\epsilon)<\theta<1-\epsilon\\[6pt]
+      1-\epsilon & \text{if }\geq1-\epsilon
+    \end{cases}
+  $$
+</div>
+::: 
+![](figs/f_x.svg){width="55%" fig-align="center"}
 </div>
 
 :::::: 
@@ -367,10 +424,10 @@ y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(\v g^{-1}(\v x_{t}^\top\v\beta_{
 \end{aligned}
 $$
 
-::: mediumskip
+::: smallskip
 :::
 
--   [Local level Poisson]{.alertred} with DSP prior
+-   [Poisson regression]{.alertred} with DSP prior
 
 $$
 \begin{aligned}
@@ -378,6 +435,17 @@ y_t \vert \v x_{t} &\sim \mathrm{Pois}\big(\mu_t = \exp(\v x_{t}^\top\v\beta_{t}
 \end{aligned}
 $$
 
+::: smallskip
+:::
+
+
+-   [Beta regression]{.alertred} with DSP prior
+
+$$
+\begin{aligned}
+y_t \vert \v x_{t}, z_{t} &\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t}), \psi_t = \exp(\v z_{t}^\top\v\gamma_{t}) \big) 
+\end{aligned}
+$$
 </div>
 
 <div>
@@ -390,5 +458,73 @@ $$
 
 </div>
 :::::::
+
+## Gaussian approximation filters
+
+:::: {.columns}
+::: {.column width="70%"}
+- [Forward-filtering-backward sampling]{.alertred} (FFBS) for linear Gaussian models [@carter1994gibbs; @fruhwirth1994data]
+  - Run Kalman filter $p(\v\theta_t\vert y_{1:t})$ forward for $t=1,2,\ldots,T$
+  - Sample $p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})$ backward for $t=T-1,T-2,\ldots,1$
+
+:::tinyskip
+:::
+
+- [Extended Kalman filter]{.alertred}
+  - Linearize measurement/transition models
+  - Apply standard Kalman filter
+
+- [Unscented Kalman filter]{.alertred}
+  - Propagate sigma point approx of prior/posterior
+
+- [Prior linearization filter]{.alertred}
+  - Linearize by statistical linear regression
+  
+  
+:::
+
+::: {.column width="30%"}
+
+<div style="height:7em;"></div>
+
+![](figs/UKFtrue.png){width="40%"} ![](figs/UKFapprox.png){width="40%"}
+
+
+:::
+
+::::
+
+
+
+## Iterated Gaussian approximation filters
+
+- Iterated extended Kalman filter
+
+- Iterated unscented Kalman filter
+
+- Posterior linearization filter
+
+- Laplace filter
+
+## Grouping for speed and Gaussianity
+
+- Need Gaussian approximations at every time step $t$
+
+- The prior $\v\theta_t \sim N(\v\theta_{t\vert t-1}, \Omega_{t \vert t-1} )$ helps a lot.
+
+- No Bernstein-von Mises effect to make the likelihood contribution at time $t$ more Gaussian.
+
+- [Group observations]{.alertred}: $\v y_g = (y_t,y_{t-1},\ldots,y_{t-G+1})^\top$ share the *same* state/parameter $\v\theta_g$:
+  - Subsampling MCMC/HMC [@salomone2020spectral]
+  - Filtering [Särkää]
+  - Macroeconomic modeling [@celanimoderatetime]
+  
+- Two views: 
+  - interpolation for algorithmic performance
+  - genuine model change: different time scales for observations and parameters.
+
+## Natural scaled parameter evolution
+
+
 
 ## References {.smaller}

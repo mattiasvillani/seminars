@@ -34,6 +34,14 @@ $selectionColor:       #1a1a1a;
 .bg-light-gold { background: var(--light-gold); padding: 0.1em 0.3em; }
 .bg-teal       { background: var(--teal);       color: white; padding: 0.1em 0.3em; }
 
+.tight-list li {
+  margin-bottom: 0.1em !important;
+  line-height: 1.2 !important;
+}
+
+.reveal code, .reveal pre {
+  font-family: "JuliaMono", "DejaVu Sans Mono", monospace;
+}
 
 // ── Headings ──────────────────────────────────────────────────────────────────
 $headingTextTransform: none;      // Reveal's default UPPERCASE is very un-LaTeX

@@ -1,0 +1,323 @@
+---
+title: " Bayesian inference in non-Gaussian time series with global-local
+shrinkage process priors"
+author: "Mattias Villani"
+institute: "Department of Statistics, Stockholm University"
+
+format:
+  revealjs:
+    # ── Theme ──────────────────────────────────────────────────────────────────
+    theme: [default, ../custom.scss]
+    css: ../custom.css
+    include-after-body: 
+      - ../cursor.js
+      - ../logo.js
+      - ../hover-refs.html
+
+    # ── Math: SVG output is resolution-independent ─────────────────────────────
+    html-math-method:
+      method: mathjax
+      url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+
+    # ── Resolution: more pixels → sharper rendering ────────────────────────────
+    width:  1600
+    height: 900
+    margin: 0.05
+
+    # ── Navigation ─────────────────────────────────────────────────────────────
+    slide-number:     "c/t"
+    progress:         true
+    history:          false
+    hash:             true
+    controls:         false       # cleaner without arrow buttons
+    transition:       none        # instant transitions look more professional
+    transition-speed: fast
+
+    # ── Code ───────────────────────────────────────────────────────────────────
+    highlight-style:  github
+    code-line-numbers: false
+    
+    #footer: "NordStat2026"
+
+    # ── PDF export (via decktape or browser print) ──────────────────────────────
+    # Run:  quarto render talk.qmd --to revealjs
+    # PDF:  open in browser → Print → Save as PDF (set margins to None)
+    
+resources:
+  - figs/
+
+# ── Execution ──────────────────────────────────────────────────────────────────
+execute:
+  echo:    true
+  warning: false
+  eval:    false
+
+# ── Julia engine ───────────────────────────────────────────────────────────────
+jupyter: julia-1.12
+
+# ── Bibliography ───────────────────────────────────────────────────────────────
+bibliography: references.bib
+csl: vancouver.csl
+---
+
+```{=html}
+<div style="display:none">
+$$
+\newcommand{\v}[1]{\boldsymbol{#1}}
+\newcommand{\m}[1]{\mathbf{#1}}
+$$
+</div>
+```
+
+
+## Outline
+
+1.  Dynamic shrinkage process priors
+2.  Time-varying multi-seasonal ARMA
+3.  Non-Gaussian models
+4.  Posterior inference
+
+------------------------------------------------------------------------
+
+## Time-varying parameter models
+
+-   Regression with [time-varying parameters]{.alertred}
+
+$$
+\begin{aligned}
+y_{t} &= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t},\qquad
+\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(0,\sigma_{\varepsilon}^{2}) \\
+\v\beta_{t} &= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\qquad 
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu})
+\end{aligned}
+$$
+<div class="mediumskip"></div>
+
+-   [Linear Gaussian state-space model]{.alertred} with state: $\v \theta_t=\v\beta_t$
+$$
+\begin{aligned}
+\text{Observation model:}\qquad\qquad\qquad \v y_{t} &=
+\v C_t\v\theta_{t}+\v\varepsilon_{t},\qquad
+&\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
+\text{Transition model:}\qquad\qquad\qquad\hspace{0.6cm} \v\theta_{t} 
+&=\v A_t \v\theta_{t-1}+\boldsymbol{\nu}_{t},\qquad 
+&\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
+\end{aligned}
+$$
+
+## Taxonomy of state-space models
+
+-   [Linear Gaussian state-space model]{.alertred} dgdgfdgdfgf dgfdgfdg fdg fdg fdg fd
+$$
+\begin{aligned}
+\v y_{t} &=
+\v C_t\v\theta_{t}+\v\varepsilon_{t}\qquad
+&\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
+\v\theta_{t} 
+&=\v A_t \v\theta_{t-1}+\boldsymbol{\nu}_{t}\qquad 
+&\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
+\end{aligned}
+$$
+<div class="mediumskip"></div>
+-   [Non-linear (additive) Gaussian models]{.alertred} 
+$$
+\begin{aligned}
+\v y_{t} &=
+\v c_t(\v\theta_{t}) + \v\varepsilon_{t}\qquad
+&\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
+\v\theta_{t} 
+&=\v a_t(\v\theta_{t-1})+\boldsymbol{\nu}_{t}\qquad
+&\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
+\end{aligned}
+$$
+<div class="mediumskip"></div>
+-   [General distributions - non-Gaussian]{.alertred} 
+$$
+\begin{aligned}
+\v y_{t} &\sim p_t(\v y_{t} \vert \v\theta_t) \\
+\v\theta_{t} &\sim q_t(\v\theta_{t} \vert \v\theta_{t-1})
+\end{aligned}
+$$
+------------------------------------------------------------------------
+
+## Bayesian inference in state-space models
+
+<table style="width: 80%; margin: 0; border-collapse: collapse; text-align: left;  border: none;">
+  <tr style="height: 140px;">
+    <td style="width: 50%; vertical-align: bottom; padding-bottom: 3em; text-align: left;">
+      <span class="alertred">Filtering posterior (instantaneous)</span> 
+      
+      $p(\boldsymbol{z}_{t}\vert y_{1:t})$
+    </td>
+    <td style="width: 50%; vertical-align: middle; text-align: center;">
+      <img src="figs/filteringpost.svg" width="300">
+    </td>
+  </tr>
+  <tr style="height: 140px;">
+    <td style="vertical-align: middle; padding-bottom: 3em;">
+      <span class="alertred">Smoothing posterior (retrospective)</span> 
+      
+      $p(\boldsymbol{z}_{t}\vert y_{1:T})$
+    </td>
+    <td style="vertical-align: middle; text-align: center;">
+      <img src="figs/smoothingpost.svg" width="300">
+    </td>
+  </tr>
+  <tr style="height: 140px;">
+    <td style="vertical-align: middle; padding-bottom: 3em;">
+      <span class="alertred">Joint smoothing posterior</span>
+      
+      $p(\boldsymbol{z}_{1:T}\vert y_{1:T})$
+    </td>
+    <td style="vertical-align: middle; text-align: center;">
+      <img src="figs/jointsmoothingpost.svg" width="300">
+    </td>
+  </tr>
+</table>
+
+
+------------------------------------------------------------------------
+
+## The Dirichlet Process {.theorem-slide}
+
+
+@kowal2019dynamic
+
+
+
+------------------------------------------------------------------------
+
+## Chinese Restaurant Process
+
+The DP induces a **clustering distribution** on observations. If $\theta_1, \ldots, \theta_{n-1} \sim G$ have been drawn, then:
+
+$$\theta_n \mid \theta_1, \ldots, \theta_{n-1} \sim \frac{\alpha}{\alpha + n - 1} G_0 + \frac{1}{\alpha + n - 1} \sum_{i=1}^{n-1} \delta_{\theta_i}$$
+
+This is the **Pólya urn scheme**. Cluster structure: customer $n$ joins
+
+| Event | Probability |
+|------------------------------------|------------------------------------|
+| Table $k$ (already occupied by $n_k$ customers) | $n_k / (\alpha + n - 1)$ |
+| New table | $\alpha / (\alpha + n - 1)$ |
+
+Expected number of clusters: $\mathbb{E}[K_n] \approx \alpha \log n$.
+
+------------------------------------------------------------------------
+
+## DP Mixture Model
+
+Combine the DP prior with a likelihood to get a **flexible density estimator**:
+
+$$\begin{aligned}
+G &\sim \mathrm{DP}(\alpha, G_0) \\
+\phi_i \mid G &\overset{\text{iid}}{\sim} G \\
+y_i \mid \phi_i &\sim f(y \mid \phi_i)
+\end{aligned}$$
+
+Marginalizing over $G$ gives a random partition model. With $G_0 = \mathcal{N}(\mu_0, \kappa_0^{-1})$ and $f(y \mid \phi) = \mathcal{N}(y \mid \phi, \sigma^2)$ this is a **Gaussian DP mixture**.
+
+::: highlight-box
+The posterior $G \mid y_1, \ldots, y_n$ is again a DP:
+
+$$G \mid y_{1:n} \sim \mathrm{DP}\!\left(\alpha + n,\; \frac{\alpha}{\alpha+n} G_0 + \frac{1}{\alpha+n}\sum_{i=1}^n \delta_{y_i}\right)$$
+:::
+
+------------------------------------------------------------------------
+
+## Gibbs Sampler for DP Mixtures
+
+Collapsed sampler (Neal 2000, Algorithm 3). Let $z_i \in \{1,\ldots,K\}$ be the cluster label for observation $i$.
+
+For each $i = 1, \ldots, n$:
+
+1.  Remove $i$ from its cluster; update counts $n_{-i,k}$
+2.  Sample new label from:
+
+$$p(z_i = k \mid z_{-i}, y) \propto \begin{cases}
+n_{-i,k} \cdot p(y_i \mid y_{-i, k}) & k \text{ existing} \\[4pt]
+\alpha \cdot p(y_i \mid G_0) & k \text{ new}
+\end{cases}$$
+
+where $p(y_i \mid y_{-i,k})$ is the posterior predictive under $G_0$.
+
+For conjugate $G_0$ this is available in **closed form** — no MH step needed.
+
+------------------------------------------------------------------------
+
+## Implementation in Julia
+
+```{julia}
+#| label: lst-gibbs
+#| eval: false
+
+"""One full Gibbs sweep for a Gaussian DP mixture (conjugate NIG prior)."""
+function gibbs_sweep!(z, y, α, μ₀, κ₀, a₀, b₀)
+    n = length(y)
+    for i in 1:n
+        z[i] = 0                          # remove observation i
+        k_vals, log_probs = Int[], Float64[]
+
+        for k in unique(z[z .> 0])
+            idx   = findall(==(k), z)
+            nk    = length(idx)
+            log_p = log(nk) + log_pred(y[i], y[idx], μ₀, κ₀, a₀, b₀)
+            push!(k_vals, k); push!(log_probs, log_p)
+        end
+
+        # new cluster
+        push!(k_vals, maximum(z) + 1)
+        push!(log_probs, log(α) + log_pred(y[i], Float64[], μ₀, κ₀, a₀, b₀))
+
+        probs  = softmax(log_probs)
+        z[i]   = k_vals[rand(Categorical(probs))]
+    end
+    return z
+end
+```
+
+------------------------------------------------------------------------
+
+## Dynamic shrinkage process priors - local level model
+
+::: iframe-slide
+<iframe width="100%" height="807" frameborder="0" src="https://observablehq.com/embed/@mattiasvillani/local-level-model-dsp-prior?cells=viewof+input%2Cviewof+plotselector%2Cviewof+simulatebutton%2Ctimeplot&amp;banner=false">
+
+</iframe>
+:::
+
+------------------------------------------------------------------------
+
+## Summary
+
+::::: cols-2
+<div>
+
+**What we covered:**
+
+-   DP is a prior over distributions with two parameters: $\alpha$ (concentration) and $G_0$ (base measure)
+-   Stick-breaking gives a constructive representation
+-   CRP describes the induced clustering
+-   DP mixtures are flexible density estimators
+-   Conjugate Gibbs sampler is clean and efficient
+
+</div>
+
+<div>
+
+**Key formulas:**
+
+| Object            | Expression                         |
+|-------------------|------------------------------------|
+| Prior mean        | $\mathbb{E}[G] = G_0$              |
+| CRP new table     | $\alpha/(\alpha+n-1)$              |
+| Posterior         | $\mathrm{DP}(\alpha+n, \tilde{G})$ |
+| $\mathbb{E}[K_n]$ | $\approx \alpha \log n$            |
+
+</div>
+:::::
+
+------------------------------------------------------------------------
+
+## References {.smaller}
+
+
