@@ -83,8 +83,18 @@ $blockMargin:          0.2em;
   font-weight: bold;
 }
 
+.alertred {
+  color:       var(--crimson);
+  font-weight: bold;
+}
+
 .alertgold {
   color:       var(--gold);
+  font-weight: bold;
+}
+
+.alertteal {
+  color:       var(--teal);
   font-weight: bold;
 }
 

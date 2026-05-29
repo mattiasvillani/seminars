@@ -12,6 +12,22 @@ format:
     include-after-body: 
       - ../cursor.js
       - ../logo.js
+      - ../hover-refs.html
+    include-in-header: 
+      text: |
+        <script>
+        MathJax = {
+          tex: {
+            macros: {
+              v: ["\\boldsymbol{#1}", 1],
+              m: ["\\mathbf{#1}", 1],
+              blue: ["\\textcolor[rgb]{0.4235294, 0.5568627, 0.7490196}{#1}", 1],
+              red: ["\\textcolor[rgb]{0.4705882, 0, 0}{#1}", 1]
+              
+            }
+          }
+        };
+        </script>
 
     # ── Math: SVG output is resolution-independent ─────────────────────────────
     html-math-method:
@@ -21,7 +37,8 @@ format:
     # ── Resolution: more pixels → sharper rendering ────────────────────────────
     width:  1600
     height: 900
-    margin: 0.05
+    margin: 0.15
+    center: false
 
     # ── Navigation ─────────────────────────────────────────────────────────────
     slide-number:     "c/t"
@@ -55,239 +72,323 @@ execute:
 jupyter: julia-1.12
 
 # ── Bibliography ───────────────────────────────────────────────────────────────
-# bibliography: references.bib
+bibliography: references.bib
+csl: vancouver.csl
 ---
 
 ## Outline
 
-1. Dynamic shrinkage process priors
-2. Time-varying multi-seasonal ARMA
-3. Non-Gaussian models 
-4. Posterior inference
+1.  Dynamic shrinkage process priors
+2.  Time-varying multi-seasonal ARMA
+3.  Non-Gaussian models
+4.  Posterior inference
 
----
+------------------------------------------------------------------------
 
+## Time-varying parameter models
 
-## The parametric bottleneck
+-   Regression with [time-varying parameters]{.alertred}
 
-This is [important]{.alertgold} and this is [a definition]{.alertblue}.
+$$
+\begin{aligned}
+y_{t} &= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t}\qquad
+\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(0,\sigma_{\varepsilon}^{2}) \\
+\v\beta_{t} &= \v\beta_{t-1}+\boldsymbol{\nu}_{t}\hspace{2.1cm} 
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu})
+\end{aligned}
+$$
 
-$$p(y \mid \theta) = \sum_{k=1}^{K} \pi_k \, f(y \mid \mu_k, \sigma_k^2)$$
-
-**Problems:**
-
-- $K$ must be fixed before seeing data
-- Model selection over $K$ is awkward
-- True $K$ may be unknown or infinite
-
-::: {.highlight-box}
-**Idea:** put a prior directly over the **space of distributions** — let the data determine complexity.
+::: mediumskip
 :::
 
----
+-   [Linear Gaussian state-space model]{.alertred} $$
+    \begin{aligned}
+    \text{Observation model:}\qquad\qquad\qquad \v y_{t} &=
+    \v C_t\v\theta_{t}+\v\varepsilon_{t}\qquad
+    &\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon, t}) \\
+    \text{Transition model:}\qquad\qquad\qquad\hspace{0.6cm} \v\theta_{t} 
+    &=\v A_t \v\theta_{t-1}+\boldsymbol{\nu}_{t}\hspace{2.1cm} 
+    &\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu, t})
+    \end{aligned}
+    $$ with state $\v \theta_t=\v\beta_t$, $\v C_t = \v x_t^\top$ and $\v A_t = \v I_p$.
 
-## The Dirichlet Process {.theorem-slide}
+## Regression with time-varying parameters
 
-::: {.callout-note .callout-theorem appearance="simple"}
-**Definition (Ferguson 1973).** A random probability measure $G$ on $(\Theta, \mathcal{B})$ is a **Dirichlet Process** with base measure $G_0$ and concentration $\alpha > 0$, written
-
-$$G \sim \mathrm{DP}(\alpha, G_0),$$
-
-if for every finite measurable partition $\{B_1, \ldots, B_k\}$ of $\Theta$,
-
-$$(G(B_1), \ldots, G(B_k)) \sim \mathrm{Dir}(\alpha G_0(B_1), \ldots, \alpha G_0(B_k)).$$
+::: iframe-slide
+<iframe width="100%" height="787" frameborder="0"
+  src="https://observablehq.com/embed/2eac471324f40b89?cells=viewof+input%2Cviewof+obsnumber%2Cviewof+simulatebutton%2Cbothplots&banner=false"></iframe>
 :::
 
-**Key properties:**
+## Taxonomy of state-space models
 
-- $\mathbb{E}[G(B)] = G_0(B)$ — the base measure is the prior mean
-- $\mathrm{Var}[G(B)] = \frac{G_0(B)(1-G_0(B))}{\alpha + 1}$ — $\alpha$ controls concentration
-- Realizations are [discrete]{.alertblue} with probability one
+-   [Linear Gaussian state-space model]{.alertred} $$
+    \begin{aligned}
+    \v y_{t} &=
+    \v C_t\v\theta_{t}+\v\varepsilon_{t}\qquad
+    &\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
+    \v\theta_{t} 
+    &=\v A_t \v\theta_{t-1}+\boldsymbol{\nu}_{t}\qquad 
+    &\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
+    \end{aligned}
+    $$
 
----
+    ::: mediumskip
+    :::
 
-# Stick-breaking representation
+-   [Non-linear (additive) Gaussian models]{.alertred} $$
+    \begin{aligned}
+    \v y_{t} &=
+    \v c_t(\v\theta_{t}) + \v\varepsilon_{t}\qquad
+    &\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
+    \v\theta_{t} 
+    &=\v a_t(\v\theta_{t-1})+\boldsymbol{\nu}_{t}\qquad
+    &\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
+    \end{aligned}
+    $$
 
-::: {.cols-6-4}
-::: {}
-Sethuraman (1994): $G \sim \mathrm{DP}(\alpha, G_0)$ if and only if
+    ::: mediumskip
+    :::
 
-$$G = \sum_{k=1}^{\infty} w_k \, \delta_{\theta_k}$$
+-   [General distributions - non-Gaussian]{.alertred} $$
+    \begin{aligned}
+    \v y_{t} &\sim p_t(\v y_{t} \vert \v\theta_t) \\
+    \v\theta_{t} &\sim q_t(\v\theta_{t} \vert \v\theta_{t-1})
+    \end{aligned}
+    $$
 
-where $\theta_k \overset{\text{iid}}{\sim} G_0$ and
+## Bayesian inference in state-space models
 
-$$w_k = v_k \prod_{j < k} (1 - v_j), \quad v_k \overset{\text{iid}}{\sim} \mathrm{Beta}(1, \alpha).$$
+- [Filtering posterior]{.alertred} (instantaneous) $p(\boldsymbol{z}_{t}\vert y_{1:t})$
 
-The weights $(w_k)$ satisfy $\sum_{k=1}^\infty w_k = 1$ a.s.
+![](figs/filteringpost.svg){width="20%"}  
 
-**Interpretation of $\alpha$:** small $\alpha \Rightarrow$ few dominant atoms; large $\alpha \Rightarrow$ many small atoms, $G \approx G_0$.
+- [Smoothing posterior]{.alertred} (retrospective) $p(\boldsymbol{z}_{t}\vert y_{1:T})$
+
+![](figs/smoothingpost.svg){width="20%"} 
+
+- [Joint smoothing posterior]{.alertred} 
+$p(\boldsymbol{z}_{1:T}\vert y_{1:T})$
+
+![](figs/jointsmoothingpost.svg){width="20%"} 
+
+------------------------------------------------------------------------
+
+## Global-local shrinkage priors - regression
+
+- Linear Gaussian regression with [horseshoe prior]{.alertred}
+$$
+\begin{aligned}
+y_i &=  \v x_i^\top\v\beta + \varepsilon_i,\quad \varepsilon_i \overset{\mathrm{iid}}{\sim}N(0,\sigma^2_\varepsilon) \\
+\beta_j &\overset{\mathrm{ind}}{\sim} N(0,\blue{\tau^2}\red{\lambda^2_j}) \\
+\tau &\sim C^+(0,1) \\
+\lambda_j &\overset{\mathrm{iid}}{\sim} C^+(0,1)
+\end{aligned}
+$$
+- Posterior mean (orthogonal $\v x$) equals shrunken ML estimator
+$$
+\tilde{\beta}_j = (1-\kappa_j)\hat\beta_j
+$$
+
+<img src="figs/horseshoe_kappa.svg" style="width:30%;  margin:0 1em;"><img src="figs/LassoHSEstimatesSimDataNoCorr.svg" style="width:30%;  margin:0 1em;">
+
+
+## Dynamic shrinkage process (DSP) priors for time series
+
+:::::: cols-2
+
+<div>
+- [Local level model - DSP prior]{.alertred}
+$$
+\begin{aligned}
+y_t & = \mu_t + \varepsilon_t \hspace{4.3cm} \varepsilon_t \overset{\mathrm{iid}}{\sim} N(0,\sigma^2_\varepsilon) \\
+\mu_t &= \mu_{t-1} + \nu_t, \hspace{3.0cm} \nu_t \overset{\mathrm{ind}}{\sim} N \big(0,\blue{\tau^2}\red{\exp(h_t)}\big) \\
+h_t &= \rho h_{t-1}  + \eta_t,\hspace{2.5cm} \eta_t \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1) \\
+\tau &\sim C^+(0,1)
+\end{aligned}
+$$
+
+::: tinyskip
+:::
+    
+    
+-   [Global variance]{.alertblue} $\blue{\tau^2}$
+-   [Local variance]{.alertred} $\red{\lambda^2_t=\exp(h_t)}
+
+::: smallskip
+:::
+    
+-   DSP = horseshoe when $\rho=0$:
+$$
+h_t \sim Z(\alpha,\beta,0,1) \Longleftrightarrow \lambda_t = \exp(h_t/2) \sim C^+(0,1)
+$$
+
+</div>
+
+<div>
+
+::: iframe-slide
+<iframe width="100%" height="781" frameborder="0" src="https://observablehq.com/embed/@mattiasvillani/local-level-dsp-simple?cells=viewof+input%2Cviewof+plotselector%2Cviewof+simulatebutton%2Ctimeplot&amp;banner=false">
+
+</iframe>
+
+</iframe>
 :::
 
-::: {}
-```{julia}
-#| label: fig-stickbreaking
-#| fig-cap: "Stick-breaking weights for two values of α"
-#| echo: false
-#| eval: false
-using Distributions, CairoMakie
+</div>
+::::::
 
-function stickbreak(α, K=30)
-    v = rand(Beta(1, α), K)
-    w = similar(v)
-    rem = 1.0
-    for k in 1:K
-        w[k] = v[k] * rem
-        rem  *= (1 - v[k])
-    end
-    w
-end
+------------------------------------------------------------------------
 
-fig = Figure(size=(500, 320))
-for (i, α) in enumerate([1.0, 10.0])
-    ax = Axis(fig[1, i],
-        title  = "α = $α",
-        xlabel = "Atom index k",
-        ylabel = i==1 ? "Weight wₖ" : "")
-    ws = stickbreak(α)
-    barplot!(ax, 1:length(ws), ws, color=:steelblue)
-end
-fig
-```
-:::
-:::
+## Logistic-Beta distribution (Fisher's $Z$)
 
----
+:::::: cols-2
+<div>
 
-## Chinese Restaurant Process
+-   $X\sim \mathrm{Beta}(\alpha,\beta)$ then $$Z := \log\Big(\frac{X}{1-X}\Big) \sim Z(\alpha,\beta,0,1)$$
 
-The DP induces a **clustering distribution** on observations. If $\theta_1, \ldots, \theta_{n-1} \sim G$ have been drawn, then:
+-   Location-scale: $$\mu + \sigma Z  \sim  Z(\alpha,\beta,\mu,\sigma)$$
 
-$$\theta_n \mid \theta_1, \ldots, \theta_{n-1} \sim \frac{\alpha}{\alpha + n - 1} G_0 + \frac{1}{\alpha + n - 1} \sum_{i=1}^{n-1} \delta_{\theta_i}$$
+-   [Heavy tails]{.alertred} - log density decays linearly.
 
-This is the **Pólya urn scheme**. Cluster structure: customer $n$ joins
+    ::: smallskip
+    :::
 
-| Event | Probability |
-|---|---|
-| Table $k$ (already occupied by $n_k$ customers) | $n_k / (\alpha + n - 1)$ |
-| New table | $\alpha / (\alpha + n - 1)$ |
+-   Mean-variance mixture of Gaussians [@barndorff1982normal] $$
+    \begin{aligned}
+    Z \vert \xi &\sim N \big(\xi^{-1}(\alpha-\beta)/2,\xi^{-1}\big)  \\ 
+    \xi &\sim \mathrm{PolyaGamma}(\alpha+\beta,1) 
+    \end{aligned}
+    $$
 
-Expected number of clusters: $\mathbb{E}[K_n] \approx \alpha \log n$.
+</div>
 
----
+<div>
 
-## DP Mixture Model
+::: iframe-slide
+<iframe width="100%" height="684" frameborder="0" style="display:block; margin:auto;" src="https://observablehq.com/embed/@mattiasvillani/zdist_simple@1010?cells=viewof+myinputs%2Cviewof+options%2Cplt&amp;banner=false">
 
-Combine the DP prior with a likelihood to get a **flexible density estimator**:
-
-$$\begin{aligned}
-G &\sim \mathrm{DP}(\alpha, G_0) \\
-\phi_i \mid G &\overset{\text{iid}}{\sim} G \\
-y_i \mid \phi_i &\sim f(y \mid \phi_i)
-\end{aligned}$$
-
-Marginalizing over $G$ gives a random partition model. With $G_0 = \mathcal{N}(\mu_0, \kappa_0^{-1})$ and $f(y \mid \phi) = \mathcal{N}(y \mid \phi, \sigma^2)$ this is a **Gaussian DP mixture**.
-
-::: {.highlight-box}
-The posterior $G \mid y_1, \ldots, y_n$ is again a DP:
-
-$$G \mid y_{1:n} \sim \mathrm{DP}\!\left(\alpha + n,\; \frac{\alpha}{\alpha+n} G_0 + \frac{1}{\alpha+n}\sum_{i=1}^n \delta_{y_i}\right)$$
+</iframe>
 :::
 
----
+</div>
+::::::
 
-## Gibbs Sampler for DP Mixtures
+------------------------------------------------------------------------
 
-Collapsed sampler (Neal 2000, Algorithm 3). Let $z_i \in \{1,\ldots,K\}$ be the cluster label for observation $i$.
+## Multi-seasonal ARMA with DSP prior [@fagerberg2026time]
 
-For each $i = 1, \ldots, n$:
+-   Seasonal AR with DSP evolution $$
+    \phi_{p,t}(L)\Phi_{P,t}(L^{s})(y_{t}-\mu_t) = \varepsilon_{t},\quad\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(0,\sigma_{t}^{2})
+    $$
 
-1. Remove $i$ from its cluster; update counts $n_{-i,k}$
-2. Sample new label from:
+-   SAR as [nonlinear Gaussian regression]{.alertred}
+$$
+y_t=\v z_t^{\top}\tilde{\v \phi}+\varepsilon_t
+$$
+$\tilde{\boldsymbol{\phi}}=(\phi_1,\Phi_1,{\color{red}{-\phi_{1}}\color{red}{\Phi_{1}}})^{\top}$ and $\boldsymbol{z}_{t}=(x_{t-1},x_{t-s},x_{t-(1+s)})^{\top}$
 
-$$p(z_i = k \mid z_{-i}, y) \propto \begin{cases}
-n_{-i,k} \cdot p(y_i \mid y_{-i, k}) & k \text{ existing} \\[4pt]
-\alpha \cdot p(y_i \mid G_0) & k \text{ new}
-\end{cases}$$
 
-where $p(y_i \mid y_{-i,k})$ is the posterior predictive under $G_0$.
+-   Extensions
 
-For conjugate $G_0$ this is available in **closed form** — no MH step needed.
+    <ul style="list-style:none; padding:0;">
 
----
+    <li><input type="checkbox" checked> [Multi-seasonal]{.alertred} (daily, weekly, yearly cycle)</li>
 
-## Implementation in Julia
+    <li><input type="checkbox" checked> ARMA and Exact likelihood</li>
 
-```{julia}
-#| label: lst-gibbs
-#| eval: false
+    <li><input type="checkbox" checked> Stochastic volatility with DSP priors</li>
 
-"""One full Gibbs sweep for a Gaussian DP mixture (conjugate NIG prior)."""
-function gibbs_sweep!(z, y, α, μ₀, κ₀, a₀, b₀)
-    n = length(y)
-    for i in 1:n
-        z[i] = 0                          # remove observation i
-        k_vals, log_probs = Int[], Float64[]
+    <li><input type="checkbox"> Multi-seasonal forecasting</li>
 
-        for k in unique(z[z .> 0])
-            idx   = findall(==(k), z)
-            nk    = length(idx)
-            log_p = log(nk) + log_pred(y[i], y[idx], μ₀, κ₀, a₀, b₀)
-            push!(k_vals, k); push!(log_probs, log_p)
-        end
+    <li><input type="checkbox"> Multi-seasonal VAR</li>
 
-        # new cluster
-        push!(k_vals, maximum(z) + 1)
-        push!(log_probs, log(α) + log_pred(y[i], Float64[], μ₀, κ₀, a₀, b₀))
+    </ul>
 
-        probs  = softmax(log_probs)
-        z[i]   = k_vals[rand(Categorical(probs))]
-    end
-    return z
-end
-```
 
----
+## Stability restrictions
 
-## Dynamic shrinkage process priors - local level model
+:::::: cols-2
 
-::: {.iframe-slide}
-<iframe width="100%" height="807" frameborder="0"
-  src="https://observablehq.com/embed/@mattiasvillani/local-level-model-dsp-prior?cells=viewof+input%2Cviewof+plotselector%2Cviewof+simulatebutton%2Ctimeplot&banner=false"></iframe>
+<div>
+
+[Transformation to stability at every $t$]{.alertred} ![](figs/illustration_transformation.svg){width="100%"}
+
+::: {.callout-important appearance="simple" icon="false" style="width: 100%;"}
+## Lemma - uniform prior over the stability region [@fagerberg2026time; @jones2003skew]
+
+The AR parameters $\v\phi$ are uniformly distributed over the stability region if, independently, \begin{equation}\label{eq:t_odd_even}
+\theta_k \sim
+    \begin{cases}
+       t\big(k+1,0,\frac{1}{\sqrt{k+1}}\big) & \text{ for } k \text{ is odd}\\
+       t_\mathrm{skew}\big(\frac{k}{2},\frac{k+2}{2}, 0, \frac{1}{\sqrt{k+1}}\big) & \text{ for } k \text{ is even}
+    \end{cases}
+\end{equation}
 :::
 
----
+</div>
+<div>
 
-## Summary
+![](figs/f_x.svg)
+</div>
 
-::: {.cols-2}
-:::{}
-**What we covered:**
+:::::: 
 
-- DP is a prior over distributions with two parameters: $\alpha$ (concentration) and $G_0$ (base measure)
-- Stick-breaking gives a constructive representation
-- CRP describes the induced clustering
-- DP mixtures are flexible density estimators
-- Conjugate Gibbs sampler is clean and efficient
+------------------------------------------------------------------------
+
+## Seasonal ARMA with DSP prior - US industrial production 1919-2024
+
+::::: cols-2
+<div>
+
+[SAR(1,2) - Homoscedastic Gaussian]{.alertred} ![](figs/usipSAR12_param_FFBSx-mparamPost_gaussianWithSV.svg){width="100%"}
+
+</div>
+
+<div>
+
+[SAR(1,2) - DSP]{.alertred} ![](figs/usipSAR12_param_FFBSx-mparamPostWithSV.svg){width="100%"}
+
+</div>
+:::::
+
+## Time-varying generalized linear models with DSP evolution
+
+::::::: cols-2
+<div>
+
+-   [GLMs]{.alertred} with time-varying parameters
+
+$$
+\begin{aligned}
+y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(\v g^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+\v\beta_{t} &= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm} 
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
+\v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
+\end{aligned}
+$$
+
+::: mediumskip
 :::
-:::{}
-**Key formulas:**
 
-| Object | Expression |
-|---|---|
-| Prior mean | $\mathbb{E}[G] = G_0$ |
-| CRP new table | $\alpha/(\alpha+n-1)$ |
-| Posterior | $\mathrm{DP}(\alpha+n, \tilde{G})$ |
-| $\mathbb{E}[K_n]$ | $\approx \alpha \log n$ |
+-   [Local level Poisson]{.alertred} with DSP prior
 
+$$
+\begin{aligned}
+y_t \vert \v x_{t} &\sim \mathrm{Pois}\big(\mu_t = \exp(\v x_{t}^\top\v\beta_{t}) \big) 
+\end{aligned}
+$$
+
+</div>
+
+<div>
+
+::: iframe-slide
+<iframe width="100%" height="781" frameborder="0" src="https://observablehq.com/embed/8180c0583931801b@1476?cells=viewof+input%2Cviewof+plotselector%2Cviewof+simulatebutton%2Ctimeplot&amp;banner=false">
+
+</iframe>
 :::
-:::
 
----
+</div>
+:::::::
 
 ## References {.smaller}
-
-- Ferguson, T.S. (1973). A Bayesian analysis of some nonparametric problems. *Annals of Statistics*, 1(2), 209–230.
-- Sethuraman, J. (1994). A constructive definition of Dirichlet priors. *Statistica Sinica*, 4, 639–650.
-- Neal, R.M. (2000). Markov chain sampling methods for Dirichlet process mixture models. *JCGS*, 9(2), 249–265.
-
-

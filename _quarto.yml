@@ -38,7 +38,7 @@ format:
     toc: false
     progress: true
     citations-hover: false
-    logo: ../misc/SU_logotyp_Liggande_1000px.png
+    logo: ../misc/SU_logo_small.png
     footnotes-hover: true
 callout-appearance: default
 

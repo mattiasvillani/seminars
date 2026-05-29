@@ -12,6 +12,10 @@
 
 /* ── Latin Modern Roman ────────────────────────────────────────────────────── */
 
+table td, table th {
+  border: none !important;
+}
+
 @font-face {
   font-family: "Latin Modern Roman";
   font-style:  normal;
@@ -54,7 +58,21 @@
        format("woff2");
 }
 
+
+.tinyskip { margin-top: 0.25em; }
+.smallskip { margin-top: 1em; }
+.mediumskip { margin-top: 3em; }
+.bigskip { margin-top: 5em; }
+
 /* ── Reveal.js overrides that are tricky to do in SCSS ─────────────────────── */
+
+.reveal .tippy-box {
+  font-size: 3rem !important;
+}
+
+.reveal .tippy-content {
+  font-size: 3rem !important;
+}
 
 /* Ensure the viewport background matches the slide background */
 body.reveal-viewport {

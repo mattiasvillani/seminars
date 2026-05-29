@@ -28,74 +28,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
     }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
     }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-      }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-    div.sourceCode
-      { color: #24292e;  }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
     }
-    code span { color: #24292e; } /* Normal */
-    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
-    code span.an { color: #6a737d; } /* Annotation */
-    code span.at { color: #d73a49; } /* Attribute */
-    code span.bn { color: #005cc5; } /* BaseN */
-    code span.bu { color: #d73a49; } /* BuiltIn */
-    code span.cf { color: #d73a49; } /* ControlFlow */
-    code span.ch { color: #032f62; } /* Char */
-    code span.cn { color: #005cc5; } /* Constant */
-    code span.co { color: #6a737d; } /* Comment */
-    code span.cv { color: #6a737d; } /* CommentVar */
-    code span.do { color: #6a737d; } /* Documentation */
-    code span.dt { color: #d73a49; } /* DataType */
-    code span.dv { color: #005cc5; } /* DecVal */
-    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
-    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
-    code span.fl { color: #005cc5; } /* Float */
-    code span.fu { color: #6f42c1; } /* Function */
-    code span.im { color: #032f62; } /* Import */
-    code span.in { color: #6a737d; } /* Information */
-    code span.kw { color: #d73a49; } /* Keyword */
-    code span.op { color: #24292e; } /* Operator */
-    code span.ot { color: #6f42c1; } /* Other */
-    code span.pp { color: #d73a49; } /* Preprocessor */
-    code span.re { color: #6a737d; } /* RegionMarker */
-    code span.sc { color: #005cc5; } /* SpecialChar */
-    code span.ss { color: #032f62; } /* SpecialString */
-    code span.st { color: #032f62; } /* String */
-    code span.va { color: #e36209; } /* Variable */
-    code span.vs { color: #032f62; } /* VerbatimString */
-    code span.wa { color: #ff5555; } /* Warning */
-  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-91e19fe37d23b37e7d9f6db87feb1fb8.css">
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-abac499f4c75dd3673a818c6f7e0556f.css">
   <link rel="stylesheet" href="../custom.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -188,6 +141,19 @@
       margin-right: 0; 
     }
   </style>
+  <script>
+  MathJax = {
+    tex: {
+      macros: {
+        v: ["\\boldsymbol{#1}", 1],
+        m: ["\\mathbf{#1}", 1],
+        blue: ["\\textcolor[rgb]{0.4235294, 0.5568627, 0.7490196}{#1}", 1],
+        red: ["\\textcolor[rgb]{0.4705882, 0, 0}{#1}", 1]
+
+      }
+    }
+  };
+  </script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -208,7 +174,7 @@ Mattias Villani
 </div>
 
 </section>
-<section id="outline" class="slide level2 center">
+<section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ol type="1">
 <li>Dynamic shrinkage process priors</li>
@@ -217,219 +183,300 @@ Mattias Villani
 <li>Posterior inference</li>
 </ol>
 </section>
-<section id="the-parametric-bottleneck" class="slide level2 center">
-<h2>The parametric bottleneck</h2>
-<p>This is <span class="alertgold">important</span> and this is <span class="alertblue">a definition</span>.</p>
-<p><span class="math display">\[p(y \mid \theta) = \sum_{k=1}^{K} \pi_k \, f(y \mid \mu_k, \sigma_k^2)\]</span></p>
-<p><strong>Problems:</strong></p>
+<section id="time-varying-parameter-models" class="slide level2">
+<h2>Time-varying parameter models</h2>
 <ul>
-<li><span class="math inline">\(K\)</span> must be fixed before seeing data</li>
-<li>Model selection over <span class="math inline">\(K\)</span> is awkward</li>
-<li>True <span class="math inline">\(K\)</span> may be unknown or infinite</li>
+<li>Regression with <span class="alertred">time-varying parameters</span></li>
 </ul>
-<div class="highlight-box">
-<p><strong>Idea:</strong> put a prior directly over the <strong>space of distributions</strong> — let the data determine complexity.</p>
-</div>
-</section>
-<section id="the-dirichlet-process" class="slide level2 theorem-slide center">
-<h2>The Dirichlet Process</h2>
-<div class="callout callout-note callout-style-simple">
-<div class="callout-body">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-content">
-<p><strong>Definition (Ferguson 1973).</strong> A random probability measure <span class="math inline">\(G\)</span> on <span class="math inline">\((\Theta, \mathcal{B})\)</span> is a <strong>Dirichlet Process</strong> with base measure <span class="math inline">\(G_0\)</span> and concentration <span class="math inline">\(\alpha &gt; 0\)</span>, written</p>
-<p><span class="math display">\[G \sim \mathrm{DP}(\alpha, G_0),\]</span></p>
-<p>if for every finite measurable partition <span class="math inline">\(\{B_1, \ldots, B_k\}\)</span> of <span class="math inline">\(\Theta\)</span>,</p>
-<p><span class="math display">\[(G(B_1), \ldots, G(B_k)) \sim \mathrm{Dir}(\alpha G_0(B_1), \ldots, \alpha G_0(B_k)).\]</span></p>
-</div>
-</div>
-</div>
-<p><strong>Key properties:</strong></p>
-<ul>
-<li><span class="math inline">\(\mathbb{E}[G(B)] = G_0(B)\)</span> — the base measure is the prior mean</li>
-<li><span class="math inline">\(\mathrm{Var}[G(B)] = \frac{G_0(B)(1-G_0(B))}{\alpha + 1}\)</span> — <span class="math inline">\(\alpha\)</span> controls concentration</li>
-<li>Realizations are <span class="alertblue">discrete</span> with probability one</li>
-</ul>
-</section>
-<section class="slide level2 center">
-
-</section>
-<section>
-<section id="stick-breaking-representation" class="title-slide slide level1 center">
-<h1>Stick-breaking representation</h1>
-<div class="cols-6-4">
-<div>
-<p>Sethuraman (1994): <span class="math inline">\(G \sim \mathrm{DP}(\alpha, G_0)\)</span> if and only if</p>
-<p><span class="math display">\[G = \sum_{k=1}^{\infty} w_k \, \delta_{\theta_k}\]</span></p>
-<p>where <span class="math inline">\(\theta_k \overset{\text{iid}}{\sim} G_0\)</span> and</p>
-<p><span class="math display">\[w_k = v_k \prod_{j &lt; k} (1 - v_j), \quad v_k \overset{\text{iid}}{\sim} \mathrm{Beta}(1, \alpha).\]</span></p>
-<p>The weights <span class="math inline">\((w_k)\)</span> satisfy <span class="math inline">\(\sum_{k=1}^\infty w_k = 1\)</span> a.s.</p>
-<p><strong>Interpretation of <span class="math inline">\(\alpha\)</span>:</strong> small <span class="math inline">\(\alpha \Rightarrow\)</span> few dominant atoms; large <span class="math inline">\(\alpha \Rightarrow\)</span> many small atoms, <span class="math inline">\(G \approx G_0\)</span>.</p>
-</div>
-<div>
+<p><span class="math display">\[
+\begin{aligned}
+y_{t} &amp;= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t}\qquad
+\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(0,\sigma_{\varepsilon}^{2}) \\
+\v\beta_{t} &amp;= \v\beta_{t-1}+\boldsymbol{\nu}_{t}\hspace{2.1cm}
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu})
+\end{aligned}
+\]</span></p>
+<div class="mediumskip">
 
 </div>
-</div>
+<ul>
+<li><span class="alertred">Linear Gaussian state-space model</span> <span class="math display">\[
+\begin{aligned}
+\text{Observation model:}\qquad\qquad\qquad \v y_{t} &amp;=
+\v C_t\v\theta_{t}+\v\varepsilon_{t}\qquad
+&amp;\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon, t}) \\
+\text{Transition model:}\qquad\qquad\qquad\hspace{0.6cm} \v\theta_{t}
+&amp;=\v A_t \v\theta_{t-1}+\boldsymbol{\nu}_{t}\hspace{2.1cm}
+&amp;\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu, t})
+\end{aligned}
+\]</span> with state <span class="math inline">\(\v \theta_t=\v\beta_t\)</span>, <span class="math inline">\(\v C_t = \v x_t^\top\)</span> and <span class="math inline">\(\v A_t = \v I_p\)</span>.</li>
+</ul>
 </section>
-<section id="chinese-restaurant-process" class="slide level2 center">
-<h2>Chinese Restaurant Process</h2>
-<p>The DP induces a <strong>clustering distribution</strong> on observations. If <span class="math inline">\(\theta_1, \ldots, \theta_{n-1} \sim G\)</span> have been drawn, then:</p>
-<p><span class="math display">\[\theta_n \mid \theta_1, \ldots, \theta_{n-1} \sim \frac{\alpha}{\alpha + n - 1} G_0 + \frac{1}{\alpha + n - 1} \sum_{i=1}^{n-1} \delta_{\theta_i}\]</span></p>
-<p>This is the <strong>Pólya urn scheme</strong>. Cluster structure: customer <span class="math inline">\(n\)</span> joins</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Event</th>
-<th>Probability</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Table <span class="math inline">\(k\)</span> (already occupied by <span class="math inline">\(n_k\)</span> customers)</td>
-<td><span class="math inline">\(n_k / (\alpha + n - 1)\)</span></td>
-</tr>
-<tr class="even">
-<td>New table</td>
-<td><span class="math inline">\(\alpha / (\alpha + n - 1)\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>Expected number of clusters: <span class="math inline">\(\mathbb{E}[K_n] \approx \alpha \log n\)</span>.</p>
-</section>
-<section id="dp-mixture-model" class="slide level2 center">
-<h2>DP Mixture Model</h2>
-<p>Combine the DP prior with a likelihood to get a <strong>flexible density estimator</strong>:</p>
-<p><span class="math display">\[\begin{aligned}
-G &amp;\sim \mathrm{DP}(\alpha, G_0) \\
-\phi_i \mid G &amp;\overset{\text{iid}}{\sim} G \\
-y_i \mid \phi_i &amp;\sim f(y \mid \phi_i)
-\end{aligned}\]</span></p>
-<p>Marginalizing over <span class="math inline">\(G\)</span> gives a random partition model. With <span class="math inline">\(G_0 = \mathcal{N}(\mu_0, \kappa_0^{-1})\)</span> and <span class="math inline">\(f(y \mid \phi) = \mathcal{N}(y \mid \phi, \sigma^2)\)</span> this is a <strong>Gaussian DP mixture</strong>.</p>
-<div class="highlight-box">
-<p>The posterior <span class="math inline">\(G \mid y_1, \ldots, y_n\)</span> is again a DP:</p>
-<p><span class="math display">\[G \mid y_{1:n} \sim \mathrm{DP}\!\left(\alpha + n,\; \frac{\alpha}{\alpha+n} G_0 + \frac{1}{\alpha+n}\sum_{i=1}^n \delta_{y_i}\right)\]</span></p>
-</div>
-</section>
-<section id="gibbs-sampler-for-dp-mixtures" class="slide level2 center">
-<h2>Gibbs Sampler for DP Mixtures</h2>
-<p>Collapsed sampler (Neal 2000, Algorithm 3). Let <span class="math inline">\(z_i \in \{1,\ldots,K\}\)</span> be the cluster label for observation <span class="math inline">\(i\)</span>.</p>
-<p>For each <span class="math inline">\(i = 1, \ldots, n\)</span>:</p>
-<ol type="1">
-<li>Remove <span class="math inline">\(i\)</span> from its cluster; update counts <span class="math inline">\(n_{-i,k}\)</span></li>
-<li>Sample new label from:</li>
-</ol>
-<p><span class="math display">\[p(z_i = k \mid z_{-i}, y) \propto \begin{cases}
-n_{-i,k} \cdot p(y_i \mid y_{-i, k}) &amp; k \text{ existing} \\[4pt]
-\alpha \cdot p(y_i \mid G_0) &amp; k \text{ new}
-\end{cases}\]</span></p>
-<p>where <span class="math inline">\(p(y_i \mid y_{-i,k})\)</span> is the posterior predictive under <span class="math inline">\(G_0\)</span>.</p>
-<p>For conjugate <span class="math inline">\(G_0\)</span> this is available in <strong>closed form</strong> — no MH step needed.</p>
-</section>
-<section id="implementation-in-julia" class="slide level2 center">
-<h2>Implementation in Julia</h2>
-<div id="lst-gibbs" class="cell listing quarto-float quarto-figure quarto-figure-left" data-execution_count="2">
-<figure class="quarto-float quarto-float-lst">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst quarto-uncaptioned" id="lst-gibbs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;1
-</figcaption>
-<div aria-describedby="lst-gibbs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="st">"""One full Gibbs sweep for a Gaussian DP mixture (conjugate NIG prior)."""</span></span>
-<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">gibbs_sweep!</span>(z, y, α, μ₀, κ₀, a₀, b₀)</span>
-<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(y)</span>
-<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
-<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>        z[i] <span class="op">=</span> <span class="fl">0</span>                          <span class="co"># remove observation i</span></span>
-<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a>        k_vals, log_probs <span class="op">=</span> <span class="dt">Int</span>[], <span class="dt">Float64</span>[]</span>
-<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="fu">unique</span>(z[z <span class="op">.&gt;</span> <span class="fl">0</span>])</span>
-<span id="cb1-9"><a aria-hidden="true" tabindex="-1"></a>            idx   <span class="op">=</span> <span class="fu">findall</span>(<span class="op">==</span>(k), z)</span>
-<span id="cb1-10"><a aria-hidden="true" tabindex="-1"></a>            nk    <span class="op">=</span> <span class="fu">length</span>(idx)</span>
-<span id="cb1-11"><a aria-hidden="true" tabindex="-1"></a>            log_p <span class="op">=</span> <span class="fu">log</span>(nk) <span class="op">+</span> <span class="fu">log_pred</span>(y[i], y[idx], μ₀, κ₀, a₀, b₀)</span>
-<span id="cb1-12"><a aria-hidden="true" tabindex="-1"></a>            <span class="fu">push!</span>(k_vals, k); <span class="fu">push!</span>(log_probs, log_p)</span>
-<span id="cb1-13"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
-<span id="cb1-14"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a aria-hidden="true" tabindex="-1"></a>        <span class="co"># new cluster</span></span>
-<span id="cb1-16"><a aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(k_vals, <span class="fu">maximum</span>(z) <span class="op">+</span> <span class="fl">1</span>)</span>
-<span id="cb1-17"><a aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(log_probs, <span class="fu">log</span>(α) <span class="op">+</span> <span class="fu">log_pred</span>(y[i], <span class="dt">Float64</span>[], μ₀, κ₀, a₀, b₀))</span>
-<span id="cb1-18"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a aria-hidden="true" tabindex="-1"></a>        probs  <span class="op">=</span> <span class="fu">softmax</span>(log_probs)</span>
-<span id="cb1-20"><a aria-hidden="true" tabindex="-1"></a>        z[i]   <span class="op">=</span> k_vals[<span class="fu">rand</span>(<span class="fu">Categorical</span>(probs))]</span>
-<span id="cb1-21"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb1-22"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> z</span>
-<span id="cb1-23"><a aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</figure>
-</div>
-</section>
-<section id="dynamic-shrinkage-process-priors---local-level-model" class="slide level2 center">
-<h2>Dynamic shrinkage process priors - local level model</h2>
+<section id="regression-with-time-varying-parameters" class="slide level2">
+<h2>Regression with time-varying parameters</h2>
 <div class="iframe-slide">
-<iframe width="100%" height="807" frameborder="0" src="https://observablehq.com/embed/@mattiasvillani/local-level-model-dsp-prior?cells=viewof+input%2Cviewof+plotselector%2Cviewof+simulatebutton%2Ctimeplot&amp;banner=false">
+<iframe width="100%" height="787" frameborder="0" src="https://observablehq.com/embed/2eac471324f40b89?cells=viewof+input%2Cviewof+obsnumber%2Cviewof+simulatebutton%2Cbothplots&amp;banner=false">
 </iframe>
 </div>
 </section>
-<section id="summary" class="slide level2 center">
-<h2>Summary</h2>
+<section id="taxonomy-of-state-space-models" class="slide level2">
+<h2>Taxonomy of state-space models</h2>
+<ul>
+<li><p><span class="alertred">Linear Gaussian state-space model</span> <span class="math display">\[
+\begin{aligned}
+\v y_{t} &amp;=
+\v C_t\v\theta_{t}+\v\varepsilon_{t}\qquad
+&amp;\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
+\v\theta_{t}
+&amp;=\v A_t \v\theta_{t-1}+\boldsymbol{\nu}_{t}\qquad
+&amp;\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
+\end{aligned}
+\]</span></p>
+<div class="mediumskip">
+
+</div></li>
+<li><p><span class="alertred">Non-linear (additive) Gaussian models</span> <span class="math display">\[
+\begin{aligned}
+\v y_{t} &amp;=
+\v c_t(\v\theta_{t}) + \v\varepsilon_{t}\qquad
+&amp;\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
+\v\theta_{t}
+&amp;=\v a_t(\v\theta_{t-1})+\boldsymbol{\nu}_{t}\qquad
+&amp;\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
+\end{aligned}
+\]</span></p>
+<div class="mediumskip">
+
+</div></li>
+<li><p><span class="alertred">General distributions - non-Gaussian</span> <span class="math display">\[
+\begin{aligned}
+\v y_{t} &amp;\sim p_t(\v y_{t} \vert \v\theta_t) \\
+\v\theta_{t} &amp;\sim q_t(\v\theta_{t} \vert \v\theta_{t-1})
+\end{aligned}
+\]</span></p></li>
+</ul>
+</section>
+<section id="bayesian-inference-in-state-space-models" class="slide level2">
+<h2>Bayesian inference in state-space models</h2>
+<ul>
+<li><span class="alertred">Filtering posterior</span> (instantaneous) <span class="math inline">\(p(\boldsymbol{z}_{t}\vert y_{1:t})\)</span></li>
+</ul>
+<p><img data-src="figs/filteringpost.svg" style="width:20.0%"></p>
+<ul>
+<li><span class="alertred">Smoothing posterior</span> (retrospective) <span class="math inline">\(p(\boldsymbol{z}_{t}\vert y_{1:T})\)</span></li>
+</ul>
+<p><img data-src="figs/smoothingpost.svg" style="width:20.0%"></p>
+<ul>
+<li><span class="alertred">Joint smoothing posterior</span> <span class="math inline">\(p(\boldsymbol{z}_{1:T}\vert y_{1:T})\)</span></li>
+</ul>
+<p><img data-src="figs/jointsmoothingpost.svg" style="width:20.0%"></p>
+</section>
+<section id="global-local-shrinkage-priors---regression" class="slide level2">
+<h2>Global-local shrinkage priors - regression</h2>
+<ul>
+<li>Linear Gaussian regression with <span class="alertred">horseshoe prior</span> <span class="math display">\[
+\begin{aligned}
+y_i &amp;=  \v x_i^\top\v\beta + \varepsilon_i,\quad \varepsilon_i \overset{\mathrm{iid}}{\sim}N(0,\sigma^2_\varepsilon) \\
+\beta_j &amp;\overset{\mathrm{ind}}{\sim} N(0,\blue{\tau^2}\red{\lambda^2_j}) \\
+\tau &amp;\sim C^+(0,1) \\
+\lambda_j &amp;\overset{\mathrm{iid}}{\sim} C^+(0,1)
+\end{aligned}
+\]</span></li>
+<li>Posterior mean (orthogonal <span class="math inline">\(\v x\)</span>) equals shrunken ML estimator <span class="math display">\[
+\tilde{\beta}_j = (1-\kappa_j)\hat\beta_j
+\]</span></li>
+</ul>
+<p><img src="figs/horseshoe_kappa.svg" style="width:30%;  margin:0 1em;"><img src="figs/LassoHSEstimatesSimDataNoCorr.svg" style="width:30%;  margin:0 1em;"></p>
+</section>
+<section id="dynamic-shrinkage-process-dsp-priors-for-time-series" class="slide level2">
+<h2>Dynamic shrinkage process (DSP) priors for time series</h2>
 <div class="cols-2">
 <div>
-<p><strong>What we covered:</strong></p>
 <ul>
-<li>DP is a prior over distributions with two parameters: <span class="math inline">\(\alpha\)</span> (concentration) and <span class="math inline">\(G_0\)</span> (base measure)</li>
-<li>Stick-breaking gives a constructive representation</li>
-<li>CRP describes the induced clustering</li>
-<li>DP mixtures are flexible density estimators</li>
-<li>Conjugate Gibbs sampler is clean and efficient</li>
+<li><span class="alertred">Local level model - DSP prior</span> <span class="math display">\[
+\begin{aligned}
+y_t &amp; = \mu_t + \varepsilon_t \hspace{4.3cm} \varepsilon_t \overset{\mathrm{iid}}{\sim} N(0,\sigma^2_\varepsilon) \\
+\mu_t &amp;= \mu_{t-1} + \nu_t, \hspace{3.0cm} \nu_t \overset{\mathrm{ind}}{\sim} N \big(0,\blue{\tau^2}\red{\exp(h_t)}\big) \\
+h_t &amp;= \rho h_{t-1}  + \eta_t,\hspace{2.5cm} \eta_t \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1) \\
+\tau &amp;\sim C^+(0,1)
+\end{aligned}
+\]</span></li>
+</ul>
+<div class="tinyskip">
+
+</div>
+<ul>
+<li><span class="alertblue">Global variance</span> <span class="math inline">\(\blue{\tau^2}\)</span></li>
+<li><span class="alertred">Local variance</span> $</li>
+</ul>
+<div class="smallskip">
+
+</div>
+<ul>
+<li>DSP = horseshoe when <span class="math inline">\(\rho=0\)</span>: <span class="math display">\[
+h_t \sim Z(\alpha,\beta,0,1) \Longleftrightarrow \lambda_t = \exp(h_t/2) \sim C^+(0,1)
+\]</span></li>
 </ul>
 </div>
 <div>
-<p><strong>Key formulas:</strong></p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Object</th>
-<th>Expression</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Prior mean</td>
-<td><span class="math inline">\(\mathbb{E}[G] = G_0\)</span></td>
-</tr>
-<tr class="even">
-<td>CRP new table</td>
-<td><span class="math inline">\(\alpha/(\alpha+n-1)\)</span></td>
-</tr>
-<tr class="odd">
-<td>Posterior</td>
-<td><span class="math inline">\(\mathrm{DP}(\alpha+n, \tilde{G})\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\mathbb{E}[K_n]\)</span></td>
-<td><span class="math inline">\(\approx \alpha \log n\)</span></td>
-</tr>
-</tbody>
-</table>
+<div class="iframe-slide">
+<iframe width="100%" height="781" frameborder="0" src="https://observablehq.com/embed/@mattiasvillani/local-level-dsp-simple?cells=viewof+input%2Cviewof+plotselector%2Cviewof+simulatebutton%2Ctimeplot&amp;banner=false">
+</iframe>
+
+</div>
 </div>
 </div>
 </section>
-<section id="references" class="slide level2 smaller center">
-<h2>References</h2>
+<section id="logistic-beta-distribution-fishers-z" class="slide level2">
+<h2>Logistic-Beta distribution (Fisher’s <span class="math inline">\(Z\)</span>)</h2>
+<div class="cols-2">
+<div>
 <ul>
-<li>Ferguson, T.S. (1973). A Bayesian analysis of some nonparametric problems. <em>Annals of Statistics</em>, 1(2), 209–230.</li>
-<li>Sethuraman, J. (1994). A constructive definition of Dirichlet priors. <em>Statistica Sinica</em>, 4, 639–650.</li>
-<li>Neal, R.M. (2000). Markov chain sampling methods for Dirichlet process mixture models. <em>JCGS</em>, 9(2), 249–265.</li>
+<li><p><span class="math inline">\(X\sim \mathrm{Beta}(\alpha,\beta)\)</span> then <span class="math display">\[Z := \log\Big(\frac{X}{1-X}\Big) \sim Z(\alpha,\beta,0,1)\]</span></p></li>
+<li><p>Location-scale: <span class="math display">\[\mu + \sigma Z  \sim  Z(\alpha,\beta,\mu,\sigma)\]</span></p></li>
+<li><p><span class="alertred">Heavy tails</span> - log density decays linearly.</p>
+<div class="smallskip">
+
+</div></li>
+<li><p>Mean-variance mixture of Gaussians <span class="citation" data-cites="barndorff1982normal">[<a href="#/references" role="doc-biblioref" onclick="">1</a>]</span> <span class="math display">\[
+\begin{aligned}
+Z \vert \xi &amp;\sim N \big(\xi^{-1}(\alpha-\beta)/2,\xi^{-1}\big)  \\
+\xi &amp;\sim \mathrm{PolyaGamma}(\alpha+\beta,1)
+\end{aligned}
+\]</span></p></li>
 </ul>
+</div>
+<div>
+<div class="iframe-slide">
+<iframe width="100%" height="684" frameborder="0" style="display:block; margin:auto;" src="https://observablehq.com/embed/@mattiasvillani/zdist_simple@1010?cells=viewof+myinputs%2Cviewof+options%2Cplt&amp;banner=false">
+</iframe>
+</div>
+</div>
+</div>
+</section>
+<section id="multi-seasonal-arma-with-dsp-prior-fagerberg2026time" class="slide level2">
+<h2>Multi-seasonal ARMA with DSP prior <span class="citation" data-cites="fagerberg2026time">[<a href="#/references" role="doc-biblioref" onclick="">2</a>]</span></h2>
+<ul>
+<li><p>Seasonal AR with DSP evolution <span class="math display">\[
+\phi_{p,t}(L)\Phi_{P,t}(L^{s})(y_{t}-\mu_t) = \varepsilon_{t},\quad\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(0,\sigma_{t}^{2})
+\]</span></p></li>
+<li><p>SAR as <span class="alertred">nonlinear Gaussian regression</span> <span class="math display">\[
+y_t=\v z_t^{\top}\tilde{\v \phi}+\varepsilon_t
+\]</span> <span class="math inline">\(\tilde{\boldsymbol{\phi}}=(\phi_1,\Phi_1,{\color{red}{-\phi_{1}}\color{red}{\Phi_{1}}})^{\top}\)</span> and <span class="math inline">\(\boldsymbol{z}_{t}=(x_{t-1},x_{t-s},x_{t-(1+s)})^{\top}\)</span></p></li>
+<li><p>Extensions</p>
+<ul style="list-style:none; padding:0;">
+<li>
+<p><input type="checkbox" checked=""> <span class="alertred">Multi-seasonal</span> (daily, weekly, yearly cycle)</p>
+</li>
+<li>
+<p><input type="checkbox" checked=""> ARMA and Exact likelihood</p>
+</li>
+<li>
+<p><input type="checkbox" checked=""> Stochastic volatility with DSP priors</p>
+</li>
+<li>
+<p><input type="checkbox"> Multi-seasonal forecasting</p>
+</li>
+<li>
+<p><input type="checkbox"> Multi-seasonal VAR</p>
+</li>
+</ul></li>
+</ul>
+</section>
+<section id="stability-restrictions" class="slide level2">
+<h2>Stability restrictions</h2>
+<div class="cols-2">
+<div>
+<p><span class="alertred">Transformation to stability at every <span class="math inline">\(t\)</span></span> <img data-src="figs/illustration_transformation.svg" style="width:100.0%"></p>
+<div style="width: 100%;">
+<div class="callout callout-important no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Lemma - uniform prior over the stability region <span class="citation" data-cites="fagerberg2026time jones2003skew">[<a href="#/references" role="doc-biblioref" onclick="">2</a>, <a href="#/references" role="doc-biblioref" onclick="">3</a>]</span></strong></p>
+</div>
+<div class="callout-content">
+<p>The AR parameters <span class="math inline">\(\v\phi\)</span> are uniformly distributed over the stability region if, independently, <span class="math display">\[\begin{equation}\label{eq:t_odd_even}
+\theta_k \sim
+    \begin{cases}
+       t\big(k+1,0,\frac{1}{\sqrt{k+1}}\big) &amp; \text{ for } k \text{ is odd}\\
+       t_\mathrm{skew}\big(\frac{k}{2},\frac{k+2}{2}, 0, \frac{1}{\sqrt{k+1}}\big) &amp; \text{ for } k \text{ is even}
+    \end{cases}
+\end{equation}\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<p><img data-src="figs/f_x.svg"></p>
+</div>
+</div>
+</section>
+<section id="seasonal-arma-with-dsp-prior---us-industrial-production-1919-2024" class="slide level2">
+<h2>Seasonal ARMA with DSP prior - US industrial production 1919-2024</h2>
+<div class="cols-2">
+<div>
+<p><span class="alertred">SAR(1,2) - Homoscedastic Gaussian</span> <img data-src="figs/usipSAR12_param_FFBSx-mparamPost_gaussianWithSV.svg" style="width:100.0%"></p>
+</div>
+<div>
+<p><span class="alertred">SAR(1,2) - DSP</span> <img data-src="figs/usipSAR12_param_FFBSx-mparamPostWithSV.svg" style="width:100.0%"></p>
+</div>
+</div>
+</section>
+<section id="time-varying-generalized-linear-models-with-dsp-evolution" class="slide level2">
+<h2>Time-varying generalized linear models with DSP evolution</h2>
+<div class="cols-2">
+<div>
+<ul>
+<li><span class="alertred">GLMs</span> with time-varying parameters</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(\v g^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+\v\beta_{t} &amp;= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm}
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
+\v h_t &amp;= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
+\end{aligned}
+\]</span></p>
+<div class="mediumskip">
+
+</div>
+<ul>
+<li><span class="alertred">Local level Poisson</span> with DSP prior</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+y_t \vert \v x_{t} &amp;\sim \mathrm{Pois}\big(\mu_t = \exp(\v x_{t}^\top\v\beta_{t}) \big)
+\end{aligned}
+\]</span></p>
+</div>
+<div>
+<div class="iframe-slide">
+<iframe width="100%" height="781" frameborder="0" src="https://observablehq.com/embed/8180c0583931801b@1476?cells=viewof+input%2Cviewof+plotselector%2Cviewof+simulatebutton%2Ctimeplot&amp;banner=false">
+</iframe>
+</div>
+</div>
+</div>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
 
 
-</section></section>
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-barndorff1982normal" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Barndorff-Nielsen O, Kent J, Sørensen M. Normal variance-mean mixtures and z distributions. International Statistical Review/Revue Internationale de Statistique. 1982:145–159.</div>
+</div>
+<div id="ref-fagerberg2026time" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Fagerberg G, Villani M, Kohn R. Time-varying multi-seasonal AR models. Journal of Computational and Graphical Statistics. 2026;(forthcoming):1–20.</div>
+</div>
+<div id="ref-jones2003skew" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Jones MC, Faddy M. A skew extension of the t-distribution, with applications. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2003;65(1):159–174.</div>
+</div>
+</div>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
-<p><img src="../misc/SU_logotyp_Liggande_1000px.png" class="slide-logo"></p>
+<p><img src="../misc/SU_logo_small.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
@@ -513,7 +560,7 @@ Listing&nbsp;1
         disableLayout: false,
 
         // Vertical centering of slides
-        center: true,
+        center: false,
 
         // Enables touch navigation on devices with touch input
         touch: true,
@@ -614,7 +661,7 @@ Listing&nbsp;1
         height: 900,
 
         // Factor of the display size that should remain empty around the content
-        margin: 5.0e-2,
+        margin: 0.15,
 
         math: {
           mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js',
@@ -736,6 +783,35 @@ Listing&nbsp;1
       footer.style.display = event.indexh === 0 ? 'block' : 'none';
     });
 
+    </script>
+    <script>
+    Reveal.on('ready', function() {
+      const refMap = {};
+      document.querySelectorAll('.csl-entry').forEach(entry => {
+        const numEl = entry.querySelector('.csl-left-margin');
+        const textEl = entry.querySelector('.csl-right-inline');
+        if (numEl && textEl) {
+          const num = numEl.textContent.replace(/\D/g, '');
+          refMap[num] = textEl.innerHTML;
+        }
+      });
+
+      document.querySelectorAll('a[role="doc-biblioref"]').forEach(el => {
+        const num = el.textContent.trim();
+        if (refMap[num]) {
+          tippy(el, {
+            content: refMap[num],
+            allowHTML: true,
+            theme: 'light-border',
+            placement: 'top',
+            maxWidth: 600,
+            onShow(instance) {
+              instance.popper.querySelector('.tippy-box').style.fontSize = '32px';
+            }
+          });
+        }
+      });
+    });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {

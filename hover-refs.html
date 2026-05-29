@@ -1,0 +1,29 @@
+<script>
+Reveal.on('ready', function() {
+  const refMap = {};
+  document.querySelectorAll('.csl-entry').forEach(entry => {
+    const numEl = entry.querySelector('.csl-left-margin');
+    const textEl = entry.querySelector('.csl-right-inline');
+    if (numEl && textEl) {
+      const num = numEl.textContent.replace(/\D/g, '');
+      refMap[num] = textEl.innerHTML;
+    }
+  });
+
+  document.querySelectorAll('a[role="doc-biblioref"]').forEach(el => {
+    const num = el.textContent.trim();
+    if (refMap[num]) {
+      tippy(el, {
+        content: refMap[num],
+        allowHTML: true,
+        theme: 'light-border',
+        placement: 'top',
+        maxWidth: 600,
+        onShow(instance) {
+          instance.popper.querySelector('.tippy-box').style.fontSize = '32px';
+        }
+      });
+    }
+  });
+});
+</script>

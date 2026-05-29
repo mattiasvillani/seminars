@@ -1,0 +1,39 @@
+---
+title: "TempDump"
+editor: visual
+---
+
+$$
+\begin{aligned}
+y_t & = \mu_t + \varepsilon_t \hspace{3.57cm} \varepsilon_t \overset{\mathrm{iid}}{\sim} N(0,\sigma^2_\varepsilon) \\
+\mu_t &= \mu_{t-1} + \nu_t, \hspace{3.0cm} \nu_t \overset{\mathrm{ind}}{\sim} N \big(0,\exp(h_t)\big) \\
+h_t &= \mu + \rho(h_{t-1} - \mu) + \eta_t,\hspace{1cm} \eta_t \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
+\end{aligned}
+$$
+
+## Local level model - homoscedastic Gaussian evolution
+
+:::::: cols-2
+<div>
+
+$$
+\begin{aligned}
+y_t & = \mu_t + \varepsilon_t \hspace{4.2cm} \varepsilon_t \overset{\mathrm{iid}}{\sim} N(0,\sigma^2_\varepsilon) \\
+\mu_t &= \mu_{t-1} + \nu_t, \hspace{3.0cm} \nu_t \overset{\mathrm{iid}}{\sim} N(0,\sigma^2_\nu) \\
+\end{aligned}
+$$
+
+</div>
+
+<div>
+
+::: iframe-slide
+`<iframe width="100%" height="697" frameborder="0" src="https://observablehq.com/embed/b8266f4d5273a4d2?cells=viewof+input%2Cviewof+plotselector%2Cviewof+simulatebutton%2Ctimeplot&amp;banner=false"`{=html}
+
+</iframe>
+:::
+
+</div>
+::::::
+
+------------------------------------------------------------------------
