@@ -121,21 +121,22 @@ $$
 
 ## Taxonomy of state-space models
 
--   [Linear Gaussian state-space model]{.alertred} $$
-    \begin{aligned}
-    \v y_{t} &=
-    \v C_t\v\theta_{t}+\v\varepsilon_{t}\qquad
-    &\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
-    \v\theta_{t} 
-    &=\v A_t \v\theta_{t-1}+\boldsymbol{\nu}_{t}\qquad 
-    &\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
-    \end{aligned}
-    $$
+-   [Linear Gaussian]{.alertred}
 
-    ::: mediumskip
-    :::
+$$
+\begin{aligned}
+\v y_{t} &=
+\v C_t\v\theta_{t}+\v\varepsilon_{t}\qquad
+&\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
+\v\theta_{t} 
+&=\v A_t \v\theta_{t-1}+\boldsymbol{\nu}_{t}\qquad 
+&\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
+\end{aligned}
+$$
 
--   [Non-linear (additive) Gaussian models]{.alertred} $$
+-   [Non-linear Gaussian]{.alertred} (additive) models
+
+$$
     \begin{aligned}
     \v y_{t} &=
     \v c_t(\v\theta_{t}) + \v\varepsilon_{t}\qquad
@@ -144,17 +145,16 @@ $$
     &=\v a_t(\v\theta_{t-1})+\boldsymbol{\nu}_{t}\qquad
     &\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
     \end{aligned}
-    $$
+$$
 
-    ::: mediumskip
-    :::
+-   [Non-Gaussian]{.alertred} - general distributions
 
--   [General distributions - non-Gaussian]{.alertred} $$
+$$
     \begin{aligned}
     \v y_{t} &\sim p_t(\v y_{t} \vert \v\theta_t) \\
     \v\theta_{t} &\sim q_t(\v\theta_{t} \vert \v\theta_{t-1})
     \end{aligned}
-    $$
+$$
 
 ## Bayesian inference in state-space models
 
@@ -192,12 +192,12 @@ $$
 <img src="figs/horseshoe_kappa.svg" style="width:30%;  margin:0 1em;"><img src="figs/LassoHSEstimatesSimDataNoCorr.svg" style="width:30%;  margin:0 1em;">
 
 
-## Dynamic shrinkage process (DSP) priors for time series
+## Dynamic global-local shrinkage priors for time series
 
 :::::: cols-2
 
 <div>
-- [Local level model - DSP prior]{.alertred}
+- [Local level model - dynamic shrinkage process (DSP) prior]{.alertred}
 $$
 \begin{aligned}
 y_t & = \mu_t + \varepsilon_t \hspace{4.3cm} \varepsilon_t \overset{\mathrm{iid}}{\sim} N(0,\sigma^2_\varepsilon) \\
@@ -212,7 +212,7 @@ $$
     
     
 -   [Global variance]{.alertblue} $\blue{\tau^2}$
--   [Local variance]{.alertred} $\red{\lambda^2_t=\exp(h_t)}
+-   [Local variance]{.alertred} $\red{\lambda^2_t=\exp(h_t)}$
 
 ::: smallskip
 :::

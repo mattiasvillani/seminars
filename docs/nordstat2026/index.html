@@ -222,7 +222,9 @@ y_{t} &amp;= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t}\qquad
 <section id="taxonomy-of-state-space-models" class="slide level2">
 <h2>Taxonomy of state-space models</h2>
 <ul>
-<li><p><span class="alertred">Linear Gaussian state-space model</span> <span class="math display">\[
+<li><span class="alertred">Linear Gaussian</span></li>
+</ul>
+<p><span class="math display">\[
 \begin{aligned}
 \v y_{t} &amp;=
 \v C_t\v\theta_{t}+\v\varepsilon_{t}\qquad
@@ -232,29 +234,28 @@ y_{t} &amp;= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t}\qquad
 &amp;\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
 \end{aligned}
 \]</span></p>
-<div class="mediumskip">
-
-</div></li>
-<li><p><span class="alertred">Non-linear (additive) Gaussian models</span> <span class="math display">\[
-\begin{aligned}
-\v y_{t} &amp;=
-\v c_t(\v\theta_{t}) + \v\varepsilon_{t}\qquad
-&amp;\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
-\v\theta_{t}
-&amp;=\v a_t(\v\theta_{t-1})+\boldsymbol{\nu}_{t}\qquad
-&amp;\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
-\end{aligned}
-\]</span></p>
-<div class="mediumskip">
-
-</div></li>
-<li><p><span class="alertred">General distributions - non-Gaussian</span> <span class="math display">\[
-\begin{aligned}
-\v y_{t} &amp;\sim p_t(\v y_{t} \vert \v\theta_t) \\
-\v\theta_{t} &amp;\sim q_t(\v\theta_{t} \vert \v\theta_{t-1})
-\end{aligned}
-\]</span></p></li>
+<ul>
+<li><span class="alertred">Non-linear Gaussian</span> (additive) models</li>
 </ul>
+<p><span class="math display">\[
+    \begin{aligned}
+    \v y_{t} &amp;=
+    \v c_t(\v\theta_{t}) + \v\varepsilon_{t}\qquad
+    &amp;\v\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\varepsilon,t}) \\
+    \v\theta_{t}
+    &amp;=\v a_t(\v\theta_{t-1})+\boldsymbol{\nu}_{t}\qquad
+    &amp;\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu,t})
+    \end{aligned}
+\]</span></p>
+<ul>
+<li><span class="alertred">Non-Gaussian</span> - general distributions</li>
+</ul>
+<p><span class="math display">\[
+    \begin{aligned}
+    \v y_{t} &amp;\sim p_t(\v y_{t} \vert \v\theta_t) \\
+    \v\theta_{t} &amp;\sim q_t(\v\theta_{t} \vert \v\theta_{t-1})
+    \end{aligned}
+\]</span></p>
 </section>
 <section id="bayesian-inference-in-state-space-models" class="slide level2">
 <h2>Bayesian inference in state-space models</h2>
@@ -288,12 +289,12 @@ y_i &amp;=  \v x_i^\top\v\beta + \varepsilon_i,\quad \varepsilon_i \overset{\mat
 </ul>
 <p><img src="figs/horseshoe_kappa.svg" style="width:30%;  margin:0 1em;"><img src="figs/LassoHSEstimatesSimDataNoCorr.svg" style="width:30%;  margin:0 1em;"></p>
 </section>
-<section id="dynamic-shrinkage-process-dsp-priors-for-time-series" class="slide level2">
-<h2>Dynamic shrinkage process (DSP) priors for time series</h2>
+<section id="dynamic-global-local-shrinkage-priors-for-time-series" class="slide level2">
+<h2>Dynamic global-local shrinkage priors for time series</h2>
 <div class="cols-2">
 <div>
 <ul>
-<li><span class="alertred">Local level model - DSP prior</span> <span class="math display">\[
+<li><span class="alertred">Local level model - dynamic shrinkage process (DSP) prior</span> <span class="math display">\[
 \begin{aligned}
 y_t &amp; = \mu_t + \varepsilon_t \hspace{4.3cm} \varepsilon_t \overset{\mathrm{iid}}{\sim} N(0,\sigma^2_\varepsilon) \\
 \mu_t &amp;= \mu_{t-1} + \nu_t, \hspace{3.0cm} \nu_t \overset{\mathrm{ind}}{\sim} N \big(0,\blue{\tau^2}\red{\exp(h_t)}\big) \\
@@ -307,7 +308,7 @@ h_t &amp;= \rho h_{t-1}  + \eta_t,\hspace{2.5cm} \eta_t \overset{\mathrm{iid}}{\
 </div>
 <ul>
 <li><span class="alertblue">Global variance</span> <span class="math inline">\(\blue{\tau^2}\)</span></li>
-<li><span class="alertred">Local variance</span> $</li>
+<li><span class="alertred">Local variance</span> <span class="math inline">\(\red{\lambda^2_t=\exp(h_t)}\)</span></li>
 </ul>
 <div class="smallskip">
 
