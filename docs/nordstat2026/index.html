@@ -195,7 +195,7 @@ Mattias Villani
 <p><span class="alertblue">Slides</span></p>
 <p><img src="figs/qr.svg" style="width:20%;"><br> <a href="mattiasvillani.com/seminars/nordstat2026">mattiasvillani.com/seminars/nordstat2026</a></p>
 </div><div class="column" style="text-align:right;">
-<p><span class="alertblue">Julia packages (unoptimized)</span></p>
+<p><img data-src="figs/julialogo.svg" style="vertical-align: bottom;;width:5.0%"> <span class="alertblue">Julia packages (unoptimized, ongoing)</span></p>
 <p><img src="figs/qrbayes.svg" style="width:20%;"><br> <a href="https://github.com/compbayes">https://github.com/compbayes</a></p>
 </div></div>
 </section>
@@ -285,15 +285,15 @@ y_{t} &amp;= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t}\qquad
 <section id="bayesian-inference-in-state-space-models" class="slide level2">
 <h2>Bayesian inference in state-space models</h2>
 <ul>
-<li><span class="alertred">Filtering posterior</span> (instantaneous) <span class="math inline">\(p(\boldsymbol{z}_{t}\vert y_{1:t})\)</span></li>
+<li><span class="alertred">Filtering posterior</span> (instantaneous) <span class="math inline">\(p(\v\theta_{t}\vert y_{1:t})\)</span></li>
 </ul>
 <p><img data-src="figs/filteringpost.svg" style="width:20.0%"></p>
 <ul>
-<li><span class="alertred">Smoothing posterior</span> (retrospective) <span class="math inline">\(p(\boldsymbol{z}_{t}\vert y_{1:T})\)</span></li>
+<li><span class="alertred">Smoothing posterior</span> (retrospective) <span class="math inline">\(p(\v\theta_{t}\vert y_{1:T})\)</span></li>
 </ul>
 <p><img data-src="figs/smoothingpost.svg" style="width:20.0%"></p>
 <ul>
-<li><span class="alertred">Joint smoothing posterior</span> <span class="math inline">\(p(\boldsymbol{z}_{1:T}\vert y_{1:T})\)</span></li>
+<li><span class="alertred">Joint smoothing posterior</span> <span class="math inline">\(p(\v\theta_{1:T}\vert y_{1:T})\)</span></li>
 </ul>
 <p><img data-src="figs/jointsmoothingpost.svg" style="width:20.0%"></p>
 </section>
@@ -388,9 +388,9 @@ Z \vert \xi &amp;\sim N \big(\xi^{-1}(\alpha-\beta)/2,\xi^{-1}\big)  \\
 \]</span></p></li>
 <li><p>SAR as <span class="alertred">nonlinear Gaussian regression</span> <span class="math display">\[
 y_t=\v z_t^{\top}\tilde{\v \phi}+\varepsilon_t
-\]</span> <span class="math inline">\(\tilde{\boldsymbol{\phi}}=(\phi_1,\Phi_1,{\color{red}{-\phi_{1}}\color{red}{\Phi_{1}}})^{\top}\)</span> and <span class="math inline">\(\boldsymbol{z}_{t}=(x_{t-1},x_{t-s},x_{t-(1+s)})^{\top}\)</span></p></li>
+\]</span> <span class="math inline">\(\tilde{\boldsymbol{\phi}}=(\phi_1,\Phi_1,\red{-\phi_1\Phi_1})^{\top}\)</span> and <span class="math inline">\(\boldsymbol{z}_{t}=(x_{t-1},x_{t-s},x_{t-(1+s)})^{\top}\)</span></p></li>
 <li><p>Extensions</p>
-<ul style="list-style:none; padding:0;">
+<ul style="list-style:none; padding:0; accent-color: #6C8EBF;">
 <li>
 <p><input type="checkbox" checked=""> <span class="alertred">Multi-seasonal</span> (daily, weekly, yearly cycle)</p>
 </li>
@@ -460,8 +460,8 @@ r=\begin{cases}
 </div>
 </div>
 </section>
-<section id="seasonal-arma-with-dsp-prior---us-industrial-production-1919-2024" class="slide level2">
-<h2>Seasonal ARMA with DSP prior - US industrial production 1919-2024</h2>
+<section id="seasonal-ar-with-dsp-prior---us-industrial-production-1919-2024" class="slide level2">
+<h2>Seasonal AR with DSP prior - US industrial production 1919-2024</h2>
 <div class="cols-2">
 <div>
 <p><span class="alertred">SAR(1,2) - Homoscedastic Gaussian</span> <img data-src="figs/usipSAR12_param_FFBSx-mparamPost_gaussianWithSV.svg" style="width:100.0%"></p>
@@ -471,6 +471,10 @@ r=\begin{cases}
 </div>
 </div>
 </section>
+<section id="simulated-example---mcmc-convergence" class="slide level2">
+<h2>Simulated example - MCMC convergence</h2>
+
+<img data-src="figs/Exp1ConvergeEps_paramPost.svg" style="display: block; margin: auto;;width:100.0%" class="r-stretch"></section>
 <section id="time-varying-generalized-linear-models-with-dsp-evolution" class="slide level2">
 <h2>Time-varying generalized linear models with DSP evolution</h2>
 <div class="cols-2">
@@ -480,7 +484,7 @@ r=\begin{cases}
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
-y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(\v g^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &amp;= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm}
 \v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
 \v h_t &amp;= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
@@ -505,7 +509,7 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{Pois}\big(\mu_t = \exp(\v x_{t}^\top\v\beta
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
-y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t}), \psi_t = \exp(\v z_{t}^\top\v\gamma_{t}) \big)
+y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t})}, \, \blue{\psi_t = \exp(\v z_{t}^\top\v\gamma_{t})} \big)
 \end{aligned}
 \]</span></p>
 </div>
@@ -517,20 +521,70 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(
 </div>
 </div>
 </section>
+<section id="bayesian-inference-in-linear-gaussian-model-with-dsp-prior" class="slide level2">
+<h2>Bayesian inference in linear Gaussian model with DSP prior</h2>
+<ul>
+<li><p>Joint posterior (<span class="math inline">\(\v\psi\)</span> holds all static parameters) <span class="math display">\[
+p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})
+\]</span></p></li>
+<li><p>Many options:</p>
+<ul>
+<li>Gibbs sampling/MCMC</li>
+<li>Particle MCMC</li>
+<li>Hamiltonian Monte Carlo (HMC)</li>
+<li>Variational approximations</li>
+<li>Integrated Nested Laplace Approximation (INLA)?</li>
+</ul></li>
+<li><p>Gibbs sampling:</p>
+<ul>
+<li><span class="alertred">Polya-Gamma augmentation</span> to turn <span class="math inline">\(Z\)</span>-distribution into conditionally Gaussian. <span class="citation" data-cites="kowal2019dynamic polson2013bayesian">[<a href="#/references" role="doc-biblioref" onclick="">6</a>, <a href="#/references" role="doc-biblioref" onclick="">7</a>]</span></li>
+<li><span class="alertred">Square-and-log trick</span> to turn variance <span class="math inline">\(\exp(h_t)\)</span> into a mean <span class="math inline">\(h_t\)</span>. <span class="citation" data-cites="kim1998stochastic">[<a href="#/references" role="doc-biblioref" onclick="">8</a>]</span></li>
+<li>Fast sampling of <span class="math inline">\(\v h_{1:T}\)</span> using <span class="alertred">sparse multivariate Gaussian</span> <span class="citation" data-cites="rue2001fast">[<a href="#/references" role="doc-biblioref" onclick="">9</a>]</span>.</li>
+<li><span class="alertred">Forward-filtering-backward sampling</span> (FFBS) to sample <span class="math inline">\(\v\theta_{1:T}\)</span> <span class="citation" data-cites="carter1994gibbs fruhwirth1994data">[<a href="#/references" role="doc-biblioref" onclick="">10</a>, <a href="#/references" role="doc-biblioref" onclick="">11</a>]</span></li>
+</ul></li>
+</ul>
+</section>
 <section id="gaussian-approximation-filters" class="slide level2">
 <h2>Gaussian approximation filters</h2>
 <div class="columns">
 <div class="column" style="width:70%;">
 <ul>
-<li><span class="alertred">Forward-filtering-backward sampling</span> (FFBS) for linear Gaussian models <span class="citation" data-cites="carter1994gibbs fruhwirth1994data">[<a href="#/references" role="doc-biblioref" onclick="">6</a>, <a href="#/references" role="doc-biblioref" onclick="">7</a>]</span>
+<li><p><span class="alertred">Forward-filtering-backward sampling</span> for linear Gaussian models <span class="citation" data-cites="carter1994gibbs fruhwirth1994data">[<a href="#/references" role="doc-biblioref" onclick="">10</a>, <a href="#/references" role="doc-biblioref" onclick="">11</a>]</span></p>
 <ul>
 <li>Run Kalman filter <span class="math inline">\(p(\v\theta_t\vert y_{1:t})\)</span> forward for <span class="math inline">\(t=1,2,\ldots,T\)</span></li>
-<li>Sample <span class="math inline">\(p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})\)</span> backward for <span class="math inline">\(t=T-1,T-2,\ldots,1\)</span></li>
+<li>Sample <span class="math inline">\(p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})\)</span> backward for <span class="math inline">\(t=T,T-1,\ldots,1\)</span></li>
 </ul></li>
+<li><p>In non-linear/non-Gaussian models, Kalman filter and FFBS are not applicable.</p></li>
+<li><p>General idea: replace the filtering step with an approximate filter.</p></li>
+<li><p><span class="alertred">Prior propagation</span>: approximate the joint distribution <span class="math display">\[\left(\begin{array}{c}
+\v\theta_{t}\\
+\v\theta_{t-1}
+\end{array}\right)\mid\boldsymbol{y}_{1:t-1}\overset{\mathrm{approx}}{\sim}N\left[\left(\begin{array}{c}
+\mathbb{E}(\v\theta_{t})\\
+\mathbb{E}(\v\theta_{t-1})
+\end{array}\right),\left(\begin{array}{cc}
+\mathbb{V}(\v\theta_{t}) &amp; \mathbb{C}(\v\theta_{t},\v\theta_{t-1})\\
+\mathbb{C}(\v\theta_{t},\v\theta_{t-1})^{\top} &amp; \mathbb{V}(\v\theta_{t-1})
+\end{array}\right)\right]\]</span></p></li>
+<li><p><span class="alertred">Observation update</span>: approximate the joint distribution <span class="math display">\[\left(\begin{array}{c}
+\boldsymbol{y}_{t}\\
+\v\theta_{t}
+\end{array}\right)\mid\boldsymbol{y}_{1:t-1}\overset{\mathrm{approx}}{\sim}N\left[\left(\begin{array}{c}
+\mathbb{E}(\boldsymbol{y}_{t})\\
+\mathbb{E}(\v\theta_{t})
+\end{array}\right),\left(\begin{array}{cc}
+\mathbb{V}(\boldsymbol{y}_{t}) &amp; \red{\mathbb{C}(\boldsymbol{y}_{t},\v\theta_{t})}\\
+\mathbb{C}(\boldsymbol{y}_{t},\v\theta_{t})^{\top} &amp; \mathbb{V}(\v\theta_{t})
+\end{array}\right)\right]\]</span></p></li>
 </ul>
-<div class="tinyskip">
-
-</div>
+</div><div class="column" style="width:30%;">
+<p><img data-src="figs/sarkaabook.jpg" style="display: block; margin: auto;;width:50.0%"></p>
+</div></div>
+</section>
+<section id="gaussian-approximation-filters-1" class="slide level2">
+<h2>Gaussian approximation filters</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
 <ul>
 <li><span class="alertred">Extended Kalman filter</span>
 <ul>
@@ -562,27 +616,78 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(
 <li><p>Laplace filter</p></li>
 </ul>
 </section>
-<section id="grouping-for-speed-and-gaussianity" class="slide level2">
-<h2>Grouping for speed and Gaussianity</h2>
+<section id="grouping-observations-for-speed-and-gaussianity" class="slide level2">
+<h2>Grouping observations for speed and Gaussianity</h2>
+<div class="columns">
+<div class="column" style="width:80%;">
 <ul>
-<li><p>Need Gaussian approximations at every time step <span class="math inline">\(t\)</span></p></li>
-<li><p>The prior <span class="math inline">\(\v\theta_t \sim N(\v\theta_{t\vert t-1}, \Omega_{t \vert t-1} )\)</span> helps a lot.</p></li>
-<li><p>No Bernstein-von Mises effect to make the likelihood contribution at time <span class="math inline">\(t\)</span> more Gaussian.</p></li>
-<li><p><span class="alertred">Group observations</span>: <span class="math inline">\(\v y_g = (y_t,y_{t-1},\ldots,y_{t-G+1})^\top\)</span> share the <em>same</em> state/parameter <span class="math inline">\(\v\theta_g\)</span>:</p>
+<li><p>Gaussian approximations at every time <span class="math inline">\(t\)</span>.</p></li>
+<li><p>How Gaussian are the <span class="alertred">likelihood contributions</span> <span class="math inline">\(p(y_t\vert\v\theta_t)\)</span> in <span class="math inline">\(\v\theta_t\)</span>?</p></li>
+<li><p>No asymptotic Bernstein-von Mises effect to help.</p></li>
+<li><p>A tight propagated prior <span class="math inline">\(\v\theta_t \sim N(\hat{\v\theta}_{t\vert t-1}, \Omega_{t \vert t-1} )\)</span> helps a lot.</p></li>
+<li><p>But DSP can give large innovations, so <span class="math inline">\(\Omega_{t \vert t-1}\)</span> can be large.</p></li>
+</ul>
+<div class="tinyskip">
+
+</div>
 <ul>
-<li>Subsampling MCMC/HMC <span class="citation" data-cites="salomone2020spectral">[<a href="#/references" role="doc-biblioref" onclick="">8</a>]</span></li>
-<li>Filtering [Särkää]</li>
-<li>Macroeconomic modeling <span class="citation" data-cites="celanimoderatetime">[<a href="#/references" role="doc-biblioref" onclick="">9</a>]</span></li>
+<li><span class="alertred">Group observations</span> in <span class="math inline">\(G\)</span> groups of <span class="math inline">\(J_g\)</span> observations in group <span class="math inline">\(g\)</span>.</li>
+<li><span class="alertred">Same state <span class="math inline">\(\v\theta_g\)</span> for observations within a group</span>.</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
+\v\beta_{g} &amp;= \v\beta_{g-1}+\boldsymbol{\nu}_{g},\hspace{2cm}
+\v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_g))\big) \\
+\v h_g &amp;= \Phi \v h_{g-1} + \v\eta_g,\hspace{1.6cm} \eta_{g} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
+\end{aligned}
+\]</span> where <span class="math inline">\(j=1,\ldots,J_g\)</span> for <span class="math inline">\(g=1,\ldots,G\)</span>.</p>
+</div><div class="column" style="width:20%;">
+<blockquote>
+<p>“When all the hope is gone, there is no reason for pessimism”. <br> <em>Aki Kaurismäki</em></p>
+</blockquote>
+</div></div>
+</section>
+<section id="grouping-observations" class="slide level2">
+<h2>Grouping observations</h2>
+<ul>
+<li><p>Related ideas:</p>
+<ul>
+<li>Improve Gaussianity in Subsampling MCMC/HMC <span class="citation" data-cites="salomone2020spectral">[<a href="#/references" role="doc-biblioref" onclick="">12</a>]</span></li>
+<li>Improve linearity/Gaussianity in filtering <span class="citation" data-cites="raitoharju2024stacked">[<a href="#/references" role="doc-biblioref" onclick="">13</a>]</span></li>
+<li>Modeling moderate time evolutions <span class="citation" data-cites="celanimoderatetime">[<a href="#/references" role="doc-biblioref" onclick="">14</a>]</span></li>
 </ul></li>
 <li><p>Two views:</p>
 <ul>
 <li>interpolation for algorithmic performance</li>
 <li>genuine model change: different time scales for observations and parameters.</li>
 </ul></li>
+<li><p>Parameter evolution is automatically adapted to different group sizes.</p></li>
+<li><p><span class="alertred">Massive speed-up</span>, particularly for sub-daily data.</p></li>
+<li><p>Example: 30 min electricity price. Group <span class="math inline">\(48\times 30 = 1440\)</span> observations by month.</p></li>
 </ul>
 </section>
-<section id="natural-scaled-parameter-evolution" class="slide level2">
-<h2>Natural scaled parameter evolution</h2>
+<section id="natural-parameter-innovations" class="slide level2">
+<h2>Natural parameter innovations</h2>
+<ul>
+<li><p>Parameter evolution should adapt to:</p>
+<ul>
+<li>Scales of covariates</li>
+<li>Link functions</li>
+<li>Model geometry</li>
+</ul></li>
+<li><p><span class="alertred">Natural gradients</span> <span class="citation" data-cites="amari1998natural amari1982differential">[<a href="#/references" role="doc-biblioref" onclick="">15</a>, <a href="#/references" role="doc-biblioref" onclick="">16</a>]</span> in optimization. Fisher metric.</p></li>
+<li><p>Parameter evolution with <span class="alertred">natural innovations</span> <span class="math display">\[
+\begin{aligned}
+y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+\v\beta_{t} &amp;= \v\beta_{t-1}+\v S(\v\beta_{t-1}) \v\nu_{t},\hspace{2cm}
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
+\v h_t &amp;= \Phi \v h_{t-1} + \v\eta_t,\hspace{4.3cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
+\end{aligned}
+\]</span> where <span class="math inline">\(\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})\)</span></p></li>
+<li><p><span class="math inline">\(\bar{I}(\v\beta) = \frac{1}{T}I(\v\beta)\)</span> is the <span class="alertred">Fisher information</span> from an “average” observation.</p></li>
+<li><p>Non-linear transition model. Prior propagation step: <span class="math inline">\(S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})\)</span>.</p></li>
+</ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -599,22 +704,43 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(
 <div class="csl-left-margin">[3] </div><div class="csl-right-inline">Barndorff-Nielsen O, Kent J, Sørensen M. Normal variance-mean mixtures and z distributions. International Statistical Review/Revue Internationale de Statistique. 1982:145–159.</div>
 </div>
 <div id="ref-fagerberg2026time" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Fagerberg G, Villani M, Kohn R. Time-varying multi-seasonal AR models. Journal of Computational and Graphical Statistics. 2026;(forthcoming):1–20.</div>
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Fagerberg G, Villani M, Kohn R. Time-varying multi-seasonal AR models. Journal of Computational and Graphical Statistics. 2026.</div>
 </div>
 <div id="ref-jones2003skew" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[5] </div><div class="csl-right-inline">Jones MC, Faddy M. A skew extension of the t-distribution, with applications. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2003;65(1):159–174.</div>
 </div>
+<div id="ref-kowal2019dynamic" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">Kowal DR, Matteson DS, Ruppert D. Dynamic shrinkage processes. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2019;81(4):781–804.</div>
+</div>
+<div id="ref-polson2013bayesian" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">Polson NG, Scott JG, Windle J. Bayesian inference for logistic models using p<span>ó</span>lya–gamma latent variables. Journal of the American statistical Association. 2013;108(504):1339–1349.</div>
+</div>
+<div id="ref-kim1998stochastic" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">Kim S, Shephard N, Chib S. Stochastic volatility: Likelihood inference and comparison with ARCH models. The review of economic studies. 1998;65(3):361–393.</div>
+</div>
+<div id="ref-rue2001fast" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">Rue H. Fast sampling of <span>Gaussian Markov</span> random fields. Journal of the Royal Statistical Society: Series B (Statistical Methodology). 2001;63(2):325–338.</div>
+</div>
 <div id="ref-carter1994gibbs" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[6] </div><div class="csl-right-inline">Carter CK, Kohn R. On <span>Gibbs</span> sampling for state space models. Biometrika. 1994;81(3):541–553.</div>
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">Carter CK, Kohn R. On <span>Gibbs</span> sampling for state space models. Biometrika. 1994;81(3):541–553.</div>
 </div>
 <div id="ref-fruhwirth1994data" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[7] </div><div class="csl-right-inline">Frühwirth-Schnatter S. Data augmentation and dynamic linear models. Journal of time series analysis. 1994;15(2):183–202.</div>
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">Frühwirth-Schnatter S. Data augmentation and dynamic linear models. Journal of time series analysis. 1994;15(2):183–202.</div>
 </div>
 <div id="ref-salomone2020spectral" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[8] </div><div class="csl-right-inline">Salomone R, Quiroz M, Kohn R, Villani M, Tran M-N. Spectral subsampling MCMC for stationary time series. In: International conference on machine learning. PMLR; 2020. p. 8449–8458.</div>
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">Salomone R, Quiroz M, Kohn R, Villani M, Tran M-N. Spectral subsampling MCMC for stationary time series. In: International conference on machine learning. PMLR; 2020. p. 8449–8458.</div>
+</div>
+<div id="ref-raitoharju2024stacked" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">Raitoharju M, Garcı́a-Fernández ÁF, Ali-Löytty S, Särkkä S. Stacked iterated posterior linearization filter. In: 2024 27th international conference on information fusion (FUSION). IEEE; 2024. p. 1–8.</div>
 </div>
 <div id="ref-celanimoderatetime" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[9] </div><div class="csl-right-inline">Celani A, Pedini L. Moderate time-varying parameter VARs. Örebro University, School of Business; 2025. Report No.: 2025:16. <a href="https://ideas.repec.org/p/hhs/oruesi/2025_016.html">https://ideas.repec.org/p/hhs/oruesi/2025_016.html</a></div>
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">Celani A, Pedini L. Moderate time-varying parameter VARs. Örebro University, School of Business; 2025. Report No.: 2025:16.</div>
+</div>
+<div id="ref-amari1998natural" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">Amari S-I. Natural gradient works efficiently in learning. Neural computation. 1998;10(2):251–276.</div>
+</div>
+<div id="ref-amari1982differential" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[16] </div><div class="csl-right-inline">Amari S-I. Differential geometry of curved exponential families-curvatures and information loss. The Annals of Statistics. 1982:357–385.</div>
 </div>
 </div>
 </section>

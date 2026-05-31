@@ -105,7 +105,7 @@ csl: vancouver.csl
 [mattiasvillani.com/seminars/nordstat2026](mattiasvillani.com/seminars/nordstat2026)
 :::
 ::: {.column width="50%" style="text-align:right;"}
-[Julia packages (unoptimized)]{.alertblue}
+![](figs/julialogo.svg){width="5%" style="vertical-align: bottom;"} [Julia packages (unoptimized, ongoing)]{.alertblue}
 
 <img src="figs/qrbayes.svg" style="width:20%;"><br>
 [https://github.com/compbayes](https://github.com/compbayes)
@@ -200,16 +200,16 @@ $$
 
 ## Bayesian inference in state-space models
 
-- [Filtering posterior]{.alertred} (instantaneous) $p(\boldsymbol{z}_{t}\vert y_{1:t})$
+- [Filtering posterior]{.alertred} (instantaneous) $p(\v\theta_{t}\vert y_{1:t})$
 
 ![](figs/filteringpost.svg){width="20%"}  
 
-- [Smoothing posterior]{.alertred} (retrospective) $p(\boldsymbol{z}_{t}\vert y_{1:T})$
+- [Smoothing posterior]{.alertred} (retrospective) $p(\v\theta_{t}\vert y_{1:T})$
 
 ![](figs/smoothingpost.svg){width="20%"} 
 
 - [Joint smoothing posterior]{.alertred} 
-$p(\boldsymbol{z}_{1:T}\vert y_{1:T})$
+$p(\v\theta_{1:T}\vert y_{1:T})$
 
 ![](figs/jointsmoothingpost.svg){width="20%"} 
 
@@ -327,12 +327,12 @@ $$
 $$
 y_t=\v z_t^{\top}\tilde{\v \phi}+\varepsilon_t
 $$
-$\tilde{\boldsymbol{\phi}}=(\phi_1,\Phi_1,{\color{red}{-\phi_{1}}\color{red}{\Phi_{1}}})^{\top}$ and $\boldsymbol{z}_{t}=(x_{t-1},x_{t-s},x_{t-(1+s)})^{\top}$
+$\tilde{\boldsymbol{\phi}}=(\phi_1,\Phi_1,\red{-\phi_1\Phi_1})^{\top}$ and $\boldsymbol{z}_{t}=(x_{t-1},x_{t-s},x_{t-(1+s)})^{\top}$
 
 
 -   Extensions
 
-    <ul style="list-style:none; padding:0;">
+    <ul style="list-style:none; padding:0; accent-color: #6C8EBF;">
 
     <li><input type="checkbox" checked> [Multi-seasonal]{.alertred} (daily, weekly, yearly cycle)</li>
 
@@ -392,7 +392,7 @@ The AR parameters $\v\phi$ are uniformly distributed over the stability region i
 
 ------------------------------------------------------------------------
 
-## Seasonal ARMA with DSP prior - US industrial production 1919-2024
+## Seasonal AR with DSP prior - US industrial production 1919-2024
 
 ::::: cols-2
 <div>
@@ -408,6 +408,10 @@ The AR parameters $\v\phi$ are uniformly distributed over the stability region i
 </div>
 :::::
 
+## Simulated example - MCMC convergence
+
+![](figs/Exp1ConvergeEps_paramPost.svg){width="100%" style="display: block; margin: auto;"}
+
 ## Time-varying generalized linear models with DSP evolution
 
 ::::::: cols-2
@@ -417,7 +421,7 @@ The AR parameters $\v\phi$ are uniformly distributed over the stability region i
 
 $$
 \begin{aligned}
-y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(\v g^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm} 
 \v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
 \v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
@@ -443,7 +447,7 @@ $$
 
 $$
 \begin{aligned}
-y_t \vert \v x_{t}, z_{t} &\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t}), \psi_t = \exp(\v z_{t}^\top\v\gamma_{t}) \big) 
+y_t \vert \v x_{t}, z_{t} &\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t})}, \, \blue{\psi_t = \exp(\v z_{t}^\top\v\gamma_{t})} \big) 
 \end{aligned}
 $$
 </div>
@@ -459,16 +463,77 @@ $$
 </div>
 :::::::
 
+## Bayesian inference in linear Gaussian model with DSP prior
+
+- Joint posterior ($\v\psi$ holds all static parameters)
+$$
+p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})
+$$
+
+- Many options: 
+  - Gibbs sampling/MCMC
+  - Particle MCMC
+  - Hamiltonian Monte Carlo (HMC)
+  - Variational approximations
+  - Integrated Nested Laplace Approximation (INLA)?
+  
+- Gibbs sampling:
+  - [Polya-Gamma augmentation]{.alertred} to turn $Z$-distribution into conditionally Gaussian. [@kowal2019dynamic; @polson2013bayesian]
+  - [Square-and-log trick]{.alertred} to turn variance $\exp(h_t)$ into a mean $h_t$. [@kim1998stochastic]
+  - Fast sampling of $\v h_{1:T}$ using [sparse multivariate Gaussian]{.alertred} [@rue2001fast]. 
+  - [Forward-filtering-backward sampling]{.alertred} (FFBS) to sample $\v\theta_{1:T}$ [@carter1994gibbs; @fruhwirth1994data]
+
+
 ## Gaussian approximation filters
 
 :::: {.columns}
 ::: {.column width="70%"}
-- [Forward-filtering-backward sampling]{.alertred} (FFBS) for linear Gaussian models [@carter1994gibbs; @fruhwirth1994data]
-  - Run Kalman filter $p(\v\theta_t\vert y_{1:t})$ forward for $t=1,2,\ldots,T$
-  - Sample $p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})$ backward for $t=T-1,T-2,\ldots,1$
 
-:::tinyskip
+- [Forward-filtering-backward sampling]{.alertred} for linear Gaussian models [@carter1994gibbs; @fruhwirth1994data]
+  - Run Kalman filter $p(\v\theta_t\vert y_{1:t})$ forward for $t=1,2,\ldots,T$
+  - Sample $p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})$ backward for $t=T,T-1,\ldots,1$
+  
+- In non-linear/non-Gaussian models, Kalman filter and FFBS are not applicable.
+
+- General idea: replace the filtering step with an approximate filter.
+
+- [Prior propagation]{.alertred}: approximate the joint distribution $$\left(\begin{array}{c}
+\v\theta_{t}\\
+\v\theta_{t-1}
+\end{array}\right)\mid\boldsymbol{y}_{1:t-1}\overset{\mathrm{approx}}{\sim}N\left[\left(\begin{array}{c}
+\mathbb{E}(\v\theta_{t})\\
+\mathbb{E}(\v\theta_{t-1})
+\end{array}\right),\left(\begin{array}{cc}
+\mathbb{V}(\v\theta_{t}) & \mathbb{C}(\v\theta_{t},\v\theta_{t-1})\\
+\mathbb{C}(\v\theta_{t},\v\theta_{t-1})^{\top} & \mathbb{V}(\v\theta_{t-1})
+\end{array}\right)\right]$$
+
+- [Observation update]{.alertred}: approximate the joint distribution $$\left(\begin{array}{c}
+\boldsymbol{y}_{t}\\
+\v\theta_{t}
+\end{array}\right)\mid\boldsymbol{y}_{1:t-1}\overset{\mathrm{approx}}{\sim}N\left[\left(\begin{array}{c}
+\mathbb{E}(\boldsymbol{y}_{t})\\
+\mathbb{E}(\v\theta_{t})
+\end{array}\right),\left(\begin{array}{cc}
+\mathbb{V}(\boldsymbol{y}_{t}) & \red{\mathbb{C}(\boldsymbol{y}_{t},\v\theta_{t})}\\
+\mathbb{C}(\boldsymbol{y}_{t},\v\theta_{t})^{\top} & \mathbb{V}(\v\theta_{t})
+\end{array}\right)\right]$$
+
 :::
+
+::: {.column width="30%"}
+
+![](figs/sarkaabook.jpg){width="50%" style="display: block; margin: auto;"}
+
+:::
+
+::::
+
+
+## Gaussian approximation filters
+
+:::: {.columns}
+::: {.column width="70%"}
 
 - [Extended Kalman filter]{.alertred}
   - Linearize measurement/transition models
@@ -506,25 +571,87 @@ $$
 
 - Laplace filter
 
-## Grouping for speed and Gaussianity
+## Grouping observations for speed and Gaussianity
 
-- Need Gaussian approximations at every time step $t$
+:::: {.columns}
 
-- The prior $\v\theta_t \sim N(\v\theta_{t\vert t-1}, \Omega_{t \vert t-1} )$ helps a lot.
+::: {.column width="80%"}
 
-- No Bernstein-von Mises effect to make the likelihood contribution at time $t$ more Gaussian.
+- Gaussian approximations at every time $t$. 
 
-- [Group observations]{.alertred}: $\v y_g = (y_t,y_{t-1},\ldots,y_{t-G+1})^\top$ share the *same* state/parameter $\v\theta_g$:
-  - Subsampling MCMC/HMC [@salomone2020spectral]
-  - Filtering [Särkää]
-  - Macroeconomic modeling [@celanimoderatetime]
+- How Gaussian are the [likelihood contributions]{.alertred} $p(y_t\vert\v\theta_t)$ in $\v\theta_t$?
+
+- No asymptotic Bernstein-von Mises effect to help.
+
+- A tight propagated prior $\v\theta_t \sim N(\hat{\v\theta}_{t\vert t-1}, \Omega_{t \vert t-1} )$ helps a lot.
+
+- But DSP can give large innovations, so $\Omega_{t \vert t-1}$ can be large.
+
+::: tinyskip
+:::
+
+- [Group observations]{.alertred} in $G$ groups of $J_g$ observations in group $g$. 
+- [Same state $\v\theta_g$ for observations within a group]{.alertred}.
+
+$$
+\begin{aligned}
+y_{gj} \vert \v x_{gj} &\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
+\v\beta_{g} &= \v\beta_{g-1}+\boldsymbol{\nu}_{g},\hspace{2cm} 
+\v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_g))\big) \\
+\v h_g &= \Phi \v h_{g-1} + \v\eta_g,\hspace{1.6cm} \eta_{g} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
+\end{aligned}
+$$
+where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
+:::
+
+::: {.column width="20%"}
+
+> "When all the hope is gone, there is no reason for pessimism". <br>
+> *Aki Kaurismäki*
+
+::: 
+
+:::
+
+## Grouping observations
+
+- Related ideas:
+  - Improve Gaussianity in Subsampling MCMC/HMC [@salomone2020spectral]
+  - Improve linearity/Gaussianity in filtering [@raitoharju2024stacked]
+  - Modeling moderate time evolutions [@celanimoderatetime]
   
 - Two views: 
   - interpolation for algorithmic performance
   - genuine model change: different time scales for observations and parameters.
+  
+- Parameter evolution is automatically adapted to different group sizes.
 
-## Natural scaled parameter evolution
+- [Massive speed-up]{.alertred}, particularly for sub-daily data. 
 
+- Example: 30 min electricity price. Group $48\times 30 = 1440$ observations by month.
+
+## Natural parameter innovations
+
+- Parameter evolution should adapt to:
+  - Scales of covariates
+  - Link functions
+  - Model geometry
+  
+- [Natural gradients]{.alertred} [@amari1998natural; @amari1982differential] in optimization. Fisher metric.
+  
+- Parameter evolution with [natural innovations]{.alertred}
+$$
+\begin{aligned}
+y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+\v\beta_{t} &= \v\beta_{t-1}+\v S(\v\beta_{t-1}) \v\nu_{t},\hspace{2cm} 
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
+\v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{4.3cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
+\end{aligned}
+$$
+where $\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})$
+- $\bar{I}(\v\beta) = \frac{1}{T}I(\v\beta)$ is the [Fisher information]{.alertred} from an "average" observation.
+
+- Non-linear transition model. Prior propagation step: $S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})$.
 
 
 ## References {.smaller}
