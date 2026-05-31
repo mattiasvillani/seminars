@@ -201,7 +201,8 @@ Mattias Villani
 </section>
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
-<ol type="1">
+<ol start="0" type="1">
+<li>Time-varying parameters and state-space models</li>
 <li>Dynamic shrinkage process priors</li>
 <li>Time-varying multi-seasonal ARMA</li>
 <li>Non-Gaussian models</li>
@@ -471,8 +472,8 @@ r=\begin{cases}
 </div>
 </div>
 </section>
-<section id="simulated-example---mcmc-convergence" class="slide level2">
-<h2>Simulated example - MCMC convergence</h2>
+<section id="simulated-example-sar22---mcmc-convergence" class="slide level2">
+<h2>Simulated example SAR(2,2) - MCMC convergence</h2>
 
 <img data-src="figs/Exp1ConvergeEps_paramPost.svg" style="display: block; margin: auto;;width:100.0%" class="r-stretch"></section>
 <section id="time-varying-generalized-linear-models-with-dsp-evolution" class="slide level2">
@@ -521,27 +522,64 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 </div>
 </div>
 </section>
-<section id="bayesian-inference-in-linear-gaussian-model-with-dsp-prior" class="slide level2">
-<h2>Bayesian inference in linear Gaussian model with DSP prior</h2>
+<section id="bayesian-inference-in-state-space-models-with-dsp-prior" class="slide level2">
+<h2>Bayesian inference in state-space models with DSP prior</h2>
 <ul>
-<li><p>Joint posterior (<span class="math inline">\(\v\psi\)</span> holds all static parameters) <span class="math display">\[
-p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})
-\]</span></p></li>
-<li><p>Many options:</p>
+<li>Joint smoothing posterior (<span class="math inline">\(\v\psi\)</span> holds all static parameters): <span class="math display">\[p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})\]</span></li>
+</ul>
+<div class="smallskip">
+
+</div>
 <ul>
 <li>Gibbs sampling/MCMC</li>
+</ul>
+<div class="smallskip">
+
+</div>
+<ul>
 <li>Particle MCMC</li>
+</ul>
+<div class="smallskip">
+
+</div>
+<ul>
 <li>Hamiltonian Monte Carlo (HMC)</li>
+</ul>
+<div class="smallskip">
+
+</div>
+<ul>
 <li>Variational approximations</li>
+</ul>
+<div class="smallskip">
+
+</div>
+<ul>
 <li>Integrated Nested Laplace Approximation (INLA)?</li>
-</ul></li>
-<li><p>Gibbs sampling:</p>
+</ul>
+</section>
+<section id="gibbs-sampling-in-linear-gaussian-model-with-dsp-prior" class="slide level2">
+<h2>Gibbs sampling in linear Gaussian model with DSP prior</h2>
 <ul>
 <li><span class="alertred">Polya-Gamma augmentation</span> to turn <span class="math inline">\(Z\)</span>-distribution into conditionally Gaussian. <span class="citation" data-cites="kowal2019dynamic polson2013bayesian">[<a href="#/references" role="doc-biblioref" onclick="">6</a>, <a href="#/references" role="doc-biblioref" onclick="">7</a>]</span></li>
+</ul>
+<div class="smallskip">
+
+</div>
+<ul>
 <li><span class="alertred">Square-and-log trick</span> to turn variance <span class="math inline">\(\exp(h_t)\)</span> into a mean <span class="math inline">\(h_t\)</span>. <span class="citation" data-cites="kim1998stochastic">[<a href="#/references" role="doc-biblioref" onclick="">8</a>]</span></li>
+</ul>
+<div class="smallskip">
+
+</div>
+<ul>
 <li>Fast sampling of <span class="math inline">\(\v h_{1:T}\)</span> using <span class="alertred">sparse multivariate Gaussian</span> <span class="citation" data-cites="rue2001fast">[<a href="#/references" role="doc-biblioref" onclick="">9</a>]</span>.</li>
+</ul>
+<div class="smallskip">
+
+</div>
+<ul>
 <li><span class="alertred">Forward-filtering-backward sampling</span> (FFBS) to sample <span class="math inline">\(\v\theta_{1:T}\)</span> <span class="citation" data-cites="carter1994gibbs fruhwirth1994data">[<a href="#/references" role="doc-biblioref" onclick="">10</a>, <a href="#/references" role="doc-biblioref" onclick="">11</a>]</span></li>
-</ul></li>
 </ul>
 </section>
 <section id="gaussian-approximation-filters" class="slide level2">
@@ -554,7 +592,7 @@ p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})
 <li>Run Kalman filter <span class="math inline">\(p(\v\theta_t\vert y_{1:t})\)</span> forward for <span class="math inline">\(t=1,2,\ldots,T\)</span></li>
 <li>Sample <span class="math inline">\(p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})\)</span> backward for <span class="math inline">\(t=T,T-1,\ldots,1\)</span></li>
 </ul></li>
-<li><p>In non-linear/non-Gaussian models, Kalman filter and FFBS are not applicable.</p></li>
+<li><p>Non-linear/non-Gaussian: Kalman filter and FFBS not applicable.</p></li>
 <li><p>General idea: replace the filtering step with an approximate filter.</p></li>
 <li><p><span class="alertred">Prior propagation</span>: approximate the joint distribution <span class="math display">\[\left(\begin{array}{c}
 \v\theta_{t}\\
@@ -610,11 +648,61 @@ p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})
 <section id="iterated-gaussian-approximation-filters" class="slide level2">
 <h2>Iterated Gaussian approximation filters</h2>
 <ul>
-<li><p>Iterated extended Kalman filter</p></li>
-<li><p>Iterated unscented Kalman filter</p></li>
-<li><p>Posterior linearization filter</p></li>
-<li><p>Laplace filter</p></li>
+<li><p>Nonlinear Gaussian models</p>
+<ul>
+<li><p><span class="alertred">Iterated extended Kalman filter</span> <span class="citation" data-cites="skoglund2015extended">[<a href="#/references" role="doc-biblioref" onclick="">12</a>]</span></p></li>
+<li><p><span class="alertred">Iterated unscented Kalman filter</span> <span class="citation" data-cites="skoglund2019iterative">[<a href="#/references" role="doc-biblioref" onclick="">13</a>]</span></p></li>
+<li><p><span class="alertred">Posterior linearization filter</span> <span class="citation" data-cites="garcia2015posterior">[<a href="#/references" role="doc-biblioref" onclick="">14</a>]</span></p></li>
+</ul></li>
+<li><p>Non-Gaussian models</p>
+<ul>
+<li><p><span class="alertred">Posterior linearization filter - conditional moments version</span> <span class="citation" data-cites="tronarp2018iterative">[<a href="#/references" role="doc-biblioref" onclick="">15</a>]</span></p></li>
+<li><p><span class="alertred">Laplace filter</span> <span class="citation" data-cites="shephard1997likelihood koyama2010approximate">[<a href="#/references" role="doc-biblioref" onclick="">16</a>, <a href="#/references" role="doc-biblioref" onclick="">17</a>]</span></p></li>
+</ul></li>
 </ul>
+</section>
+<section id="time-varying-beta-regression-for-us-layoff-proportion" class="slide level2">
+<h2>Time-varying Beta regression for US layoff proportion</h2>
+<ul>
+<li>Monthly US data from 1990:1-2026:4 on:
+<ul>
+<li><code>layoff</code> - job losers on layoff as % of total unemployed</li>
+<li><code>vix</code> - CBOE Volatility Index (“fear index”)</li>
+</ul></li>
+</ul>
+<p><img data-src="figs/layoff_time_series.svg" class="quarto-figure quarto-figure-center" style="width:40.0%"> <img data-src="figs/vixlag1_time_series.svg" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
+<div class="footnote">
+<p>Data from the FRED database at <a href="https://fred.stlouisfed.org/">https://fred.stlouisfed.org/</a></p>
+</div>
+</section>
+<section id="beta-regression-for-us-layoff-proportion---dsp-prior" class="slide level2">
+<h2>Beta regression for US layoff proportion - dsp prior</h2>
+
+<img data-src="figs/layoff_vix_param_Laplace_none_3.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
+<section id="beta-regression-for-us-layoff-proportion---homoscedastic-gauss-prior" class="slide level2">
+<h2>Beta regression for US layoff proportion - homoscedastic Gauss prior</h2>
+
+<img data-src="figs/layoff_vix_homo_param_Laplace_none_3.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
+<section id="beta-regression-for-us-layoff---fit-at-posterior-median-around-pandemic" class="slide level2">
+<h2>Beta regression for US layoff - fit at posterior median around pandemic</h2>
+<table style="width:100%; border:none;">
+<tbody><tr>
+<th style="text-align:center; font-weight:500; font-style:normal;">
+<span class="alertred">DSP</span>
+</th>
+<th style="text-align:center; font-weight:500; font-style:normal;">
+<span class="alertred">Homoscedastic Gaussian</span>
+</th>
+</tr>
+<tr>
+<td style="text-align:center; border:none;">
+<img src="figs/layoff_vix_dens_zoom_Laplace_none_3.svg" style="width:90%;">
+</td>
+<td style="text-align:center; border:none;">
+<img src="figs/layoff_vix_homo_dens_zoom_Laplace_none_3.svg" style="width:90%;">
+</td>
+</tr>
+</tbody></table>
 </section>
 <section id="grouping-observations-for-speed-and-gaussianity" class="slide level2">
 <h2>Grouping observations for speed and Gaussianity</h2>
@@ -651,20 +739,31 @@ y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\
 <section id="grouping-observations" class="slide level2">
 <h2>Grouping observations</h2>
 <ul>
-<li><p>Related ideas:</p>
+<li>Related ideas:
 <ul>
-<li>Improve Gaussianity in Subsampling MCMC/HMC <span class="citation" data-cites="salomone2020spectral">[<a href="#/references" role="doc-biblioref" onclick="">12</a>]</span></li>
-<li>Improve linearity/Gaussianity in filtering <span class="citation" data-cites="raitoharju2024stacked">[<a href="#/references" role="doc-biblioref" onclick="">13</a>]</span></li>
-<li>Modeling moderate time evolutions <span class="citation" data-cites="celanimoderatetime">[<a href="#/references" role="doc-biblioref" onclick="">14</a>]</span></li>
+<li>Improve Gaussianity in Subsampling MCMC/HMC <span class="citation" data-cites="salomone2020spectral">[<a href="#/references" role="doc-biblioref" onclick="">18</a>]</span></li>
+<li>Improve linearity/Gaussianity in filtering <span class="citation" data-cites="raitoharju2024stacked">[<a href="#/references" role="doc-biblioref" onclick="">19</a>]</span></li>
+<li>Modeling moderate time evolutions <span class="citation" data-cites="celanimoderatetime">[<a href="#/references" role="doc-biblioref" onclick="">20</a>]</span></li>
 </ul></li>
-<li><p>Two views:</p>
+</ul>
+<div class="tinyskip">
+
+</div>
+<ul>
+<li>Two views:
 <ul>
 <li>interpolation for algorithmic performance</li>
 <li>genuine model change: different time scales for observations and parameters.</li>
 </ul></li>
-<li><p>Parameter evolution is automatically adapted to different group sizes.</p></li>
+</ul>
+<div class="tinyskip">
+
+</div>
+<ul>
+<li><p><span class="alertred">Parameter evolution is automatically adapted</span> to different group sizes.</p></li>
 <li><p><span class="alertred">Massive speed-up</span>, particularly for sub-daily data.</p></li>
 <li><p>Example: 30 min electricity price. Group <span class="math inline">\(48\times 30 = 1440\)</span> observations by month.</p></li>
+<li><p>Large groups: Sequential filtering of individual observations within group.</p></li>
 </ul>
 </section>
 <section id="natural-parameter-innovations" class="slide level2">
@@ -676,7 +775,7 @@ y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\
 <li>Link functions</li>
 <li>Model geometry</li>
 </ul></li>
-<li><p><span class="alertred">Natural gradients</span> <span class="citation" data-cites="amari1998natural amari1982differential">[<a href="#/references" role="doc-biblioref" onclick="">15</a>, <a href="#/references" role="doc-biblioref" onclick="">16</a>]</span> in optimization. Fisher metric.</p></li>
+<li><p><span class="alertred">Natural gradients</span> <span class="citation" data-cites="amari1998natural amari1982differential">[<a href="#/references" role="doc-biblioref" onclick="">21</a>, <a href="#/references" role="doc-biblioref" onclick="">22</a>]</span> in optimization. Fisher metric.</p></li>
 <li><p>Parameter evolution with <span class="alertred">natural innovations</span> <span class="math display">\[
 \begin{aligned}
 y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
@@ -688,6 +787,49 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_
 <li><p><span class="math inline">\(\bar{I}(\v\beta) = \frac{1}{T}I(\v\beta)\)</span> is the <span class="alertred">Fisher information</span> from an “average” observation.</p></li>
 <li><p>Non-linear transition model. Prior propagation step: <span class="math inline">\(S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})\)</span>.</p></li>
 </ul>
+</section>
+<section id="ongoing-and-future-work" class="slide level2">
+<h2>Ongoing and Future work</h2>
+<ul>
+<li><span class="alertred">Multivariate</span> extensions.</li>
+</ul>
+<div class="tinyskip">
+
+</div>
+<ul>
+<li><span class="alertred">Forecasting</span>.</li>
+</ul>
+<div class="tinyskip">
+
+</div>
+<ul>
+<li>More <span class="alertred">efficient sampling of dsp</span>.</li>
+</ul>
+<div class="tinyskip">
+
+</div>
+<ul>
+<li>Better <span class="alertred">prior elicitation for dsp</span>.</li>
+</ul>
+<div class="tinyskip">
+
+</div>
+<ul>
+<li><span class="alertred">Metropolis-Hastings correction</span> by blocking the state. Filtering version of <span class="citation" data-cites="shephard1997likelihood">[<a href="#/references" role="doc-biblioref" onclick="">16</a>]</span>.</li>
+</ul>
+<div class="tinyskip">
+
+</div>
+<ul>
+<li><span class="alertred">Delayed rejection</span>:
+<ul>
+<li>first try with cheap proposal (e.g.&nbsp;EKF)</li>
+<li>if rejected try more expensive proposal (e.g.&nbsp;Iterated EKF with line search)</li>
+</ul></li>
+</ul>
+<div class="tinyskip">
+
+</div>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -727,20 +869,38 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_
 <div id="ref-fruhwirth1994data" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[11] </div><div class="csl-right-inline">Frühwirth-Schnatter S. Data augmentation and dynamic linear models. Journal of time series analysis. 1994;15(2):183–202.</div>
 </div>
+<div id="ref-skoglund2015extended" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">Skoglund MA, Hendeby G, Axehill D. Extended <span>K</span>alman filter modifications based on an optimization view point. In: 2015 18th international conference on information fusion (fusion). IEEE; 2015. p. 1856–1861.</div>
+</div>
+<div id="ref-skoglund2019iterative" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">Skoglund MA, Gustafsson F, Hendeby G. On iterative unscented kalman filter using optimization. In: 2019 22th international conference on information fusion (FUSION). IEEE; 2019. p. 1–8.</div>
+</div>
+<div id="ref-garcia2015posterior" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">Garcı́a-Fernández ÁF, Svensson L, Morelande MR, Särkkä S. Posterior linearization filter: Principles and implementation using sigma points. IEEE transactions on signal processing. 2015;63(20):5561–5573.</div>
+</div>
+<div id="ref-tronarp2018iterative" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">Tronarp F, Garcı́a-Fernández ÁF, Särkkä S. Iterative filtering and smoothing in nonlinear and non-gaussian systems using conditional moments. IEEE Signal Processing Letters. 2018;25(3):408–412.</div>
+</div>
+<div id="ref-shephard1997likelihood" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[16] </div><div class="csl-right-inline">Shephard N, Pitt MK. Likelihood analysis of non-gaussian measurement time series. Biometrika. 1997;84(3):653–667.</div>
+</div>
+<div id="ref-koyama2010approximate" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[17] </div><div class="csl-right-inline">Koyama S, Castellanos Pérez-Bolde L, Shalizi CR, Kass RE. Approximate methods for state-space models. Journal of the American Statistical Association. 2010;105(489):170–180.</div>
+</div>
 <div id="ref-salomone2020spectral" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[12] </div><div class="csl-right-inline">Salomone R, Quiroz M, Kohn R, Villani M, Tran M-N. Spectral subsampling MCMC for stationary time series. In: International conference on machine learning. PMLR; 2020. p. 8449–8458.</div>
+<div class="csl-left-margin">[18] </div><div class="csl-right-inline">Salomone R, Quiroz M, Kohn R, Villani M, Tran M-N. Spectral subsampling MCMC for stationary time series. In: International conference on machine learning. PMLR; 2020. p. 8449–8458.</div>
 </div>
 <div id="ref-raitoharju2024stacked" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[13] </div><div class="csl-right-inline">Raitoharju M, Garcı́a-Fernández ÁF, Ali-Löytty S, Särkkä S. Stacked iterated posterior linearization filter. In: 2024 27th international conference on information fusion (FUSION). IEEE; 2024. p. 1–8.</div>
+<div class="csl-left-margin">[19] </div><div class="csl-right-inline">Raitoharju M, Garcı́a-Fernández ÁF, Ali-Löytty S, Särkkä S. Stacked iterated posterior linearization filter. In: 2024 27th international conference on information fusion (FUSION). IEEE; 2024. p. 1–8.</div>
 </div>
 <div id="ref-celanimoderatetime" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[14] </div><div class="csl-right-inline">Celani A, Pedini L. Moderate time-varying parameter VARs. Örebro University, School of Business; 2025. Report No.: 2025:16.</div>
+<div class="csl-left-margin">[20] </div><div class="csl-right-inline">Celani A, Pedini L. Moderate time-varying parameter VARs. Örebro University, School of Business; 2025. Report No.: 2025:16.</div>
 </div>
 <div id="ref-amari1998natural" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[15] </div><div class="csl-right-inline">Amari S-I. Natural gradient works efficiently in learning. Neural computation. 1998;10(2):251–276.</div>
+<div class="csl-left-margin">[21] </div><div class="csl-right-inline">Amari S-I. Natural gradient works efficiently in learning. Neural computation. 1998;10(2):251–276.</div>
 </div>
 <div id="ref-amari1982differential" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[16] </div><div class="csl-right-inline">Amari S-I. Differential geometry of curved exponential families-curvatures and information loss. The Annals of Statistics. 1982:357–385.</div>
+<div class="csl-left-margin">[22] </div><div class="csl-right-inline">Amari S-I. Differential geometry of curved exponential families-curvatures and information loss. The Annals of Statistics. 1982:357–385.</div>
 </div>
 </div>
 </section>

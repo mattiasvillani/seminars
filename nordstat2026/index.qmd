@@ -117,6 +117,7 @@ csl: vancouver.csl
 
 ## Outline
 
+0.  Time-varying parameters and state-space models
 1.  Dynamic shrinkage process priors
 2.  Time-varying multi-seasonal ARMA
 3.  Non-Gaussian models
@@ -408,7 +409,7 @@ The AR parameters $\v\phi$ are uniformly distributed over the stability region i
 </div>
 :::::
 
-## Simulated example - MCMC convergence
+## Simulated example SAR(2,2) - MCMC convergence
 
 ![](figs/Exp1ConvergeEps_paramPost.svg){width="100%" style="display: block; margin: auto;"}
 
@@ -463,25 +464,54 @@ $$
 </div>
 :::::::
 
-## Bayesian inference in linear Gaussian model with DSP prior
+## Bayesian inference in state-space models with DSP prior
 
-- Joint posterior ($\v\psi$ holds all static parameters)
-$$
-p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})
-$$
+- Joint smoothing posterior ($\v\psi$ holds all static parameters): 
+$$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
 
-- Many options: 
-  - Gibbs sampling/MCMC
-  - Particle MCMC
-  - Hamiltonian Monte Carlo (HMC)
-  - Variational approximations
-  - Integrated Nested Laplace Approximation (INLA)?
+::: smallskip
+:::
+
+- Gibbs sampling/MCMC
+
+::: smallskip
+:::
+
+- Particle MCMC
+
+::: smallskip
+:::
+
+- Hamiltonian Monte Carlo (HMC)
+
+::: smallskip
+:::
+
+- Variational approximations
+
+::: smallskip
+:::
+
+- Integrated Nested Laplace Approximation (INLA)?
   
-- Gibbs sampling:
-  - [Polya-Gamma augmentation]{.alertred} to turn $Z$-distribution into conditionally Gaussian. [@kowal2019dynamic; @polson2013bayesian]
-  - [Square-and-log trick]{.alertred} to turn variance $\exp(h_t)$ into a mean $h_t$. [@kim1998stochastic]
-  - Fast sampling of $\v h_{1:T}$ using [sparse multivariate Gaussian]{.alertred} [@rue2001fast]. 
-  - [Forward-filtering-backward sampling]{.alertred} (FFBS) to sample $\v\theta_{1:T}$ [@carter1994gibbs; @fruhwirth1994data]
+## Gibbs sampling in linear Gaussian model with DSP prior
+
+- [Polya-Gamma augmentation]{.alertred} to turn $Z$-distribution into conditionally Gaussian. [@kowal2019dynamic; @polson2013bayesian]
+
+::: smallskip
+:::
+
+- [Square-and-log trick]{.alertred} to turn variance $\exp(h_t)$ into a mean $h_t$. [@kim1998stochastic]
+
+::: smallskip
+:::
+
+- Fast sampling of $\v h_{1:T}$ using [sparse multivariate Gaussian]{.alertred} [@rue2001fast]. 
+
+::: smallskip
+:::
+
+- [Forward-filtering-backward sampling]{.alertred} (FFBS) to sample $\v\theta_{1:T}$ [@carter1994gibbs; @fruhwirth1994data]
 
 
 ## Gaussian approximation filters
@@ -493,7 +523,7 @@ $$
   - Run Kalman filter $p(\v\theta_t\vert y_{1:t})$ forward for $t=1,2,\ldots,T$
   - Sample $p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})$ backward for $t=T,T-1,\ldots,1$
   
-- In non-linear/non-Gaussian models, Kalman filter and FFBS are not applicable.
+- Non-linear/non-Gaussian: Kalman filter and FFBS not applicable.
 
 - General idea: replace the filtering step with an approximate filter.
 
@@ -563,13 +593,56 @@ $$
 
 ## Iterated Gaussian approximation filters
 
-- Iterated extended Kalman filter
+- Nonlinear Gaussian models
 
-- Iterated unscented Kalman filter
+  - [Iterated extended Kalman filter]{.alertred} [@skoglund2015extended]
 
-- Posterior linearization filter
+  - [Iterated unscented Kalman filter]{.alertred} [@skoglund2019iterative]
 
-- Laplace filter
+  - [Posterior linearization filter]{.alertred} [@garcia2015posterior]
+  
+- Non-Gaussian models
+
+  - [Posterior linearization filter - conditional moments version]{.alertred} [@tronarp2018iterative]
+  
+  - [Laplace filter]{.alertred} [@shephard1997likelihood; @koyama2010approximate]
+
+## Time-varying Beta regression for US layoff proportion
+
+- Monthly US data from 1990:1-2026:4 on:
+  - `layoff` - job losers on layoff as % of total unemployed
+  - `vix` - CBOE Volatility Index ("fear index")
+  
+![](figs/layoff_time_series.svg){width="40%" fig-align="center"} ![](figs/vixlag1_time_series.svg){width="40%" fig-align="center"}
+
+::: footnote
+Data from the FRED database at [https://fred.stlouisfed.org/](https://fred.stlouisfed.org/)
+:::
+
+## Beta regression for US layoff proportion - dsp prior
+
+![](figs/layoff_vix_param_Laplace_none_3.svg){width="80%" fig-align="center"}
+
+## Beta regression for US layoff proportion - homoscedastic Gauss prior
+
+![](figs/layoff_vix_homo_param_Laplace_none_3.svg){width="80%" fig-align="center"}
+
+## Beta regression for US layoff - fit at posterior median around pandemic 
+
+<table style="width:100%; border:none;">
+  <tr>
+    <th style="text-align:center; font-weight:500; font-style:normal;">[DSP]{.alertred}</th>
+    <th style="text-align:center; font-weight:500; font-style:normal;">[Homoscedastic Gaussian]{.alertred}</th>
+  </tr>
+  <tr>
+    <td style="text-align:center; border:none;">
+      <img src="figs/layoff_vix_dens_zoom_Laplace_none_3.svg" style="width:90%;"/>
+    </td>
+    <td style="text-align:center; border:none;">
+      <img src="figs/layoff_vix_homo_dens_zoom_Laplace_none_3.svg" style="width:90%;"/>
+    </td>
+  </tr>
+</table>
 
 ## Grouping observations for speed and Gaussianity
 
@@ -620,15 +693,23 @@ where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
   - Improve linearity/Gaussianity in filtering [@raitoharju2024stacked]
   - Modeling moderate time evolutions [@celanimoderatetime]
   
+::: tinyskip
+:::
+
 - Two views: 
   - interpolation for algorithmic performance
   - genuine model change: different time scales for observations and parameters.
   
-- Parameter evolution is automatically adapted to different group sizes.
+::: tinyskip
+:::
+
+- [Parameter evolution is automatically adapted]{.alertred} to different group sizes.
 
 - [Massive speed-up]{.alertred}, particularly for sub-daily data. 
 
 - Example: 30 min electricity price. Group $48\times 30 = 1440$ observations by month.
+
+- Large groups: Sequential filtering of individual observations within group.
 
 ## Natural parameter innovations
 
@@ -653,5 +734,38 @@ where $\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})$
 
 - Non-linear transition model. Prior propagation step: $S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})$.
 
+## Ongoing and Future work
+
+- [Multivariate]{.alertred} extensions.
+
+::: tinyskip
+:::
+
+- [Forecasting]{.alertred}.
+
+::: tinyskip
+:::
+
+- More [efficient sampling of dsp]{.alertred}. 
+
+::: tinyskip
+:::
+
+- Better [prior elicitation for dsp]{.alertred}.
+
+::: tinyskip
+:::
+
+- [Metropolis-Hastings correction]{.alertred} by blocking the state. Filtering version of [@shephard1997likelihood].
+
+::: tinyskip
+:::
+
+- [Delayed rejection]{.alertred}: 
+  - first try with cheap proposal (e.g. EKF) 
+  - if rejected try more expensive proposal (e.g. Iterated EKF with line search)
+  
+::: tinyskip
+:::
 
 ## References {.smaller}

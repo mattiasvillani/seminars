@@ -4,7 +4,7 @@
     "href": "nordstat2026/index.html#outline",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Outline",
-    "text": "Outline\n\nDynamic shrinkage process priors\nTime-varying multi-seasonal ARMA\nNon-Gaussian models\nPosterior inference"
+    "text": "Outline\n\nTime-varying parameters and state-space models\nDynamic shrinkage process priors\nTime-varying multi-seasonal ARMA\nNon-Gaussian models\nPosterior inference"
   },
   {
     "objectID": "nordstat2026/index.html#time-varying-parameter-models",
@@ -77,11 +77,11 @@
     "text": "Seasonal AR with DSP prior - US industrial production 1919-2024\n\n\nSAR(1,2) - Homoscedastic Gaussian \n\n\nSAR(1,2) - DSP"
   },
   {
-    "objectID": "nordstat2026/index.html#simulated-example---mcmc-convergence",
-    "href": "nordstat2026/index.html#simulated-example---mcmc-convergence",
+    "objectID": "nordstat2026/index.html#simulated-example-sar22---mcmc-convergence",
+    "href": "nordstat2026/index.html#simulated-example-sar22---mcmc-convergence",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Simulated example - MCMC convergence",
-    "text": "Simulated example - MCMC convergence"
+    "section": "Simulated example SAR(2,2) - MCMC convergence",
+    "text": "Simulated example SAR(2,2) - MCMC convergence"
   },
   {
     "objectID": "nordstat2026/index.html#time-varying-generalized-linear-models-with-dsp-evolution",
@@ -91,18 +91,25 @@
     "text": "Time-varying generalized linear models with DSP evolution\n\n\n\nGLMs with time-varying parameters\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{ExpFamily}\\Big(k^{-1}(\\v x_{t}^\\top\\v\\beta_{t}), \\varphi_t  \\Big) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\boldsymbol{\\nu}_{t},\\hspace{2cm}\n\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\cdot  \\v h_t))\\big) \\\\\n\\v h_t &= \\Phi \\v h_{t-1} + \\v\\eta_t,\\hspace{1.6cm} \\eta_{tk} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\]\n\n\n\n\nPoisson regression with DSP prior\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{Pois}\\big(\\mu_t = \\exp(\\v x_{t}^\\top\\v\\beta_{t}) \\big)\n\\end{aligned}\n\\]\n\n\n\n\nBeta regression with DSP prior\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t}, z_{t} &\\sim \\mathrm{Beta}\\big(\\red{\\mu_t = \\mathrm{logistic}(\\v x_{t}^\\top\\v\\beta_{t})}, \\, \\blue{\\psi_t = \\exp(\\v z_{t}^\\top\\v\\gamma_{t})} \\big)\n\\end{aligned}\n\\]"
   },
   {
-    "objectID": "nordstat2026/index.html#bayesian-inference-in-linear-gaussian-model-with-dsp-prior",
-    "href": "nordstat2026/index.html#bayesian-inference-in-linear-gaussian-model-with-dsp-prior",
+    "objectID": "nordstat2026/index.html#bayesian-inference-in-state-space-models-with-dsp-prior",
+    "href": "nordstat2026/index.html#bayesian-inference-in-state-space-models-with-dsp-prior",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Bayesian inference in linear Gaussian model with DSP prior",
-    "text": "Bayesian inference in linear Gaussian model with DSP prior\n\nJoint posterior (\\(\\v\\psi\\) holds all static parameters) \\[\np(\\v\\theta_{1:T}, \\v h_{1:T}, \\v\\psi \\vert y_{1:T})\n\\]\nMany options:\n\nGibbs sampling/MCMC\nParticle MCMC\nHamiltonian Monte Carlo (HMC)\nVariational approximations\nIntegrated Nested Laplace Approximation (INLA)?\n\nGibbs sampling:\n\nPolya-Gamma augmentation to turn \\(Z\\)-distribution into conditionally Gaussian. [6, 7]\nSquare-and-log trick to turn variance \\(\\exp(h_t)\\) into a mean \\(h_t\\). [8]\nFast sampling of \\(\\v h_{1:T}\\) using sparse multivariate Gaussian [9].\nForward-filtering-backward sampling (FFBS) to sample \\(\\v\\theta_{1:T}\\) [10, 11]"
+    "section": "Bayesian inference in state-space models with DSP prior",
+    "text": "Bayesian inference in state-space models with DSP prior\n\nJoint smoothing posterior (\\(\\v\\psi\\) holds all static parameters): \\[p(\\v\\theta_{1:T}, \\v h_{1:T}, \\v\\psi \\vert y_{1:T})\\]\n\n\n\n\n\nGibbs sampling/MCMC\n\n\n\n\n\nParticle MCMC\n\n\n\n\n\nHamiltonian Monte Carlo (HMC)\n\n\n\n\n\nVariational approximations\n\n\n\n\n\nIntegrated Nested Laplace Approximation (INLA)?"
+  },
+  {
+    "objectID": "nordstat2026/index.html#gibbs-sampling-in-linear-gaussian-model-with-dsp-prior",
+    "href": "nordstat2026/index.html#gibbs-sampling-in-linear-gaussian-model-with-dsp-prior",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Gibbs sampling in linear Gaussian model with DSP prior",
+    "text": "Gibbs sampling in linear Gaussian model with DSP prior\n\nPolya-Gamma augmentation to turn \\(Z\\)-distribution into conditionally Gaussian. [6, 7]\n\n\n\n\n\nSquare-and-log trick to turn variance \\(\\exp(h_t)\\) into a mean \\(h_t\\). [8]\n\n\n\n\n\nFast sampling of \\(\\v h_{1:T}\\) using sparse multivariate Gaussian [9].\n\n\n\n\n\nForward-filtering-backward sampling (FFBS) to sample \\(\\v\\theta_{1:T}\\) [10, 11]"
   },
   {
     "objectID": "nordstat2026/index.html#gaussian-approximation-filters",
     "href": "nordstat2026/index.html#gaussian-approximation-filters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Gaussian approximation filters",
-    "text": "Gaussian approximation filters\n\n\n\nForward-filtering-backward sampling for linear Gaussian models [10, 11]\n\nRun Kalman filter \\(p(\\v\\theta_t\\vert y_{1:t})\\) forward for \\(t=1,2,\\ldots,T\\)\nSample \\(p(\\v\\theta_{t}\\vert \\v\\theta_{t+1}, y_{1:T})\\) backward for \\(t=T,T-1,\\ldots,1\\)\n\nIn non-linear/non-Gaussian models, Kalman filter and FFBS are not applicable.\nGeneral idea: replace the filtering step with an approximate filter.\nPrior propagation: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\v\\theta_{t}\\\\\n\\v\\theta_{t-1}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\v\\theta_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t-1})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\v\\theta_{t}) & \\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})\\\\\n\\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})^{\\top} & \\mathbb{V}(\\v\\theta_{t-1})\n\\end{array}\\right)\\right]\\]\nObservation update: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\boldsymbol{y}_{t}\\\\\n\\v\\theta_{t}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\boldsymbol{y}_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\boldsymbol{y}_{t}) & \\red{\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})}\\\\\n\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})^{\\top} & \\mathbb{V}(\\v\\theta_{t})\n\\end{array}\\right)\\right]\\]"
+    "text": "Gaussian approximation filters\n\n\n\nForward-filtering-backward sampling for linear Gaussian models [10, 11]\n\nRun Kalman filter \\(p(\\v\\theta_t\\vert y_{1:t})\\) forward for \\(t=1,2,\\ldots,T\\)\nSample \\(p(\\v\\theta_{t}\\vert \\v\\theta_{t+1}, y_{1:T})\\) backward for \\(t=T,T-1,\\ldots,1\\)\n\nNon-linear/non-Gaussian: Kalman filter and FFBS not applicable.\nGeneral idea: replace the filtering step with an approximate filter.\nPrior propagation: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\v\\theta_{t}\\\\\n\\v\\theta_{t-1}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\v\\theta_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t-1})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\v\\theta_{t}) & \\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})\\\\\n\\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})^{\\top} & \\mathbb{V}(\\v\\theta_{t-1})\n\\end{array}\\right)\\right]\\]\nObservation update: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\boldsymbol{y}_{t}\\\\\n\\v\\theta_{t}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\boldsymbol{y}_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\boldsymbol{y}_{t}) & \\red{\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})}\\\\\n\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})^{\\top} & \\mathbb{V}(\\v\\theta_{t})\n\\end{array}\\right)\\right]\\]"
   },
   {
     "objectID": "nordstat2026/index.html#gaussian-approximation-filters-1",
@@ -116,7 +123,35 @@
     "href": "nordstat2026/index.html#iterated-gaussian-approximation-filters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Iterated Gaussian approximation filters",
-    "text": "Iterated Gaussian approximation filters\n\nIterated extended Kalman filter\nIterated unscented Kalman filter\nPosterior linearization filter\nLaplace filter"
+    "text": "Iterated Gaussian approximation filters\n\nNonlinear Gaussian models\n\nIterated extended Kalman filter [12]\nIterated unscented Kalman filter [13]\nPosterior linearization filter [14]\n\nNon-Gaussian models\n\nPosterior linearization filter - conditional moments version [15]\nLaplace filter [16, 17]"
+  },
+  {
+    "objectID": "nordstat2026/index.html#time-varying-beta-regression-for-us-layoff-proportion",
+    "href": "nordstat2026/index.html#time-varying-beta-regression-for-us-layoff-proportion",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Time-varying Beta regression for US layoff proportion",
+    "text": "Time-varying Beta regression for US layoff proportion\n\nMonthly US data from 1990:1-2026:4 on:\n\nlayoff - job losers on layoff as % of total unemployed\nvix - CBOE Volatility Index (“fear index”)\n\n\n \n\nData from the FRED database at https://fred.stlouisfed.org/"
+  },
+  {
+    "objectID": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---dsp-prior",
+    "href": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---dsp-prior",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Beta regression for US layoff proportion - dsp prior",
+    "text": "Beta regression for US layoff proportion - dsp prior"
+  },
+  {
+    "objectID": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---homoscedastic-gauss-prior",
+    "href": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---homoscedastic-gauss-prior",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Beta regression for US layoff proportion - homoscedastic Gauss prior",
+    "text": "Beta regression for US layoff proportion - homoscedastic Gauss prior"
+  },
+  {
+    "objectID": "nordstat2026/index.html#beta-regression-for-us-layoff---fit-at-posterior-median-around-pandemic",
+    "href": "nordstat2026/index.html#beta-regression-for-us-layoff---fit-at-posterior-median-around-pandemic",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Beta regression for US layoff - fit at posterior median around pandemic",
+    "text": "Beta regression for US layoff - fit at posterior median around pandemic\n\n\n\nDSP\n\n\nHomoscedastic Gaussian"
   },
   {
     "objectID": "nordstat2026/index.html#grouping-observations-for-speed-and-gaussianity",
@@ -130,20 +165,27 @@
     "href": "nordstat2026/index.html#grouping-observations",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Grouping observations",
-    "text": "Grouping observations\n\nRelated ideas:\n\nImprove Gaussianity in Subsampling MCMC/HMC [12]\nImprove linearity/Gaussianity in filtering [13]\nModeling moderate time evolutions [14]\n\nTwo views:\n\ninterpolation for algorithmic performance\ngenuine model change: different time scales for observations and parameters.\n\nParameter evolution is automatically adapted to different group sizes.\nMassive speed-up, particularly for sub-daily data.\nExample: 30 min electricity price. Group \\(48\\times 30 = 1440\\) observations by month."
+    "text": "Grouping observations\n\nRelated ideas:\n\nImprove Gaussianity in Subsampling MCMC/HMC [18]\nImprove linearity/Gaussianity in filtering [19]\nModeling moderate time evolutions [20]\n\n\n\n\n\n\nTwo views:\n\ninterpolation for algorithmic performance\ngenuine model change: different time scales for observations and parameters.\n\n\n\n\n\n\nParameter evolution is automatically adapted to different group sizes.\nMassive speed-up, particularly for sub-daily data.\nExample: 30 min electricity price. Group \\(48\\times 30 = 1440\\) observations by month.\nLarge groups: Sequential filtering of individual observations within group."
   },
   {
     "objectID": "nordstat2026/index.html#natural-parameter-innovations",
     "href": "nordstat2026/index.html#natural-parameter-innovations",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Natural parameter innovations",
-    "text": "Natural parameter innovations\n\nParameter evolution should adapt to:\n\nScales of covariates\nLink functions\nModel geometry\n\nNatural gradients [15, 16] in optimization. Fisher metric.\nParameter evolution with natural innovations \\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{ExpFamily}\\Big(k^{-1}(\\v x_{t}^\\top\\v\\beta_{t}), \\varphi_t  \\Big) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\v S(\\v\\beta_{t-1}) \\v\\nu_{t},\\hspace{2cm}\n\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\cdot  \\v h_t))\\big) \\\\\n\\v h_t &= \\Phi \\v h_{t-1} + \\v\\eta_t,\\hspace{4.3cm} \\eta_{tk} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\] where \\(\\v S(\\v\\beta_{t-1}) = \\bar{I}^{-1/2}(\\v\\beta_{t-1})\\)\n\\(\\bar{I}(\\v\\beta) = \\frac{1}{T}I(\\v\\beta)\\) is the Fisher information from an “average” observation.\nNon-linear transition model. Prior propagation step: \\(S(\\v\\beta_{t-1}) \\approx S(\\hat{\\v\\beta}_{t-1 \\vert t-1})\\)."
+    "text": "Natural parameter innovations\n\nParameter evolution should adapt to:\n\nScales of covariates\nLink functions\nModel geometry\n\nNatural gradients [21, 22] in optimization. Fisher metric.\nParameter evolution with natural innovations \\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{ExpFamily}\\Big(k^{-1}(\\v x_{t}^\\top\\v\\beta_{t}), \\varphi_t  \\Big) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\v S(\\v\\beta_{t-1}) \\v\\nu_{t},\\hspace{2cm}\n\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\cdot  \\v h_t))\\big) \\\\\n\\v h_t &= \\Phi \\v h_{t-1} + \\v\\eta_t,\\hspace{4.3cm} \\eta_{tk} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\] where \\(\\v S(\\v\\beta_{t-1}) = \\bar{I}^{-1/2}(\\v\\beta_{t-1})\\)\n\\(\\bar{I}(\\v\\beta) = \\frac{1}{T}I(\\v\\beta)\\) is the Fisher information from an “average” observation.\nNon-linear transition model. Prior propagation step: \\(S(\\v\\beta_{t-1}) \\approx S(\\hat{\\v\\beta}_{t-1 \\vert t-1})\\)."
+  },
+  {
+    "objectID": "nordstat2026/index.html#ongoing-and-future-work",
+    "href": "nordstat2026/index.html#ongoing-and-future-work",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Ongoing and Future work",
+    "text": "Ongoing and Future work\n\nMultivariate extensions.\n\n\n\n\n\nForecasting.\n\n\n\n\n\nMore efficient sampling of dsp.\n\n\n\n\n\nBetter prior elicitation for dsp.\n\n\n\n\n\nMetropolis-Hastings correction by blocking the state. Filtering version of [16].\n\n\n\n\n\nDelayed rejection:\n\nfirst try with cheap proposal (e.g. EKF)\nif rejected try more expensive proposal (e.g. Iterated EKF with line search)"
   },
   {
     "objectID": "nordstat2026/index.html#references",
     "href": "nordstat2026/index.html#references",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "References",
-    "text": "References\n\n\n\n\n[1] Carvalho CM, Polson NG, Scott JG. The horseshoe estimator for sparse signals. Biometrika. 2010;97(2):465–480.\n\n\n[2] Polson NG, Scott JG. Shrink globally, act locally: Sparse Bayesian regularization and prediction. Bayesian statistics. 2010;9(501-538):105.\n\n\n[3] Barndorff-Nielsen O, Kent J, Sørensen M. Normal variance-mean mixtures and z distributions. International Statistical Review/Revue Internationale de Statistique. 1982:145–159.\n\n\n[4] Fagerberg G, Villani M, Kohn R. Time-varying multi-seasonal AR models. Journal of Computational and Graphical Statistics. 2026.\n\n\n[5] Jones MC, Faddy M. A skew extension of the t-distribution, with applications. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2003;65(1):159–174.\n\n\n[6] Kowal DR, Matteson DS, Ruppert D. Dynamic shrinkage processes. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2019;81(4):781–804.\n\n\n[7] Polson NG, Scott JG, Windle J. Bayesian inference for logistic models using pólya–gamma latent variables. Journal of the American statistical Association. 2013;108(504):1339–1349.\n\n\n[8] Kim S, Shephard N, Chib S. Stochastic volatility: Likelihood inference and comparison with ARCH models. The review of economic studies. 1998;65(3):361–393.\n\n\n[9] Rue H. Fast sampling of Gaussian Markov random fields. Journal of the Royal Statistical Society: Series B (Statistical Methodology). 2001;63(2):325–338.\n\n\n[10] Carter CK, Kohn R. On Gibbs sampling for state space models. Biometrika. 1994;81(3):541–553.\n\n\n[11] Frühwirth-Schnatter S. Data augmentation and dynamic linear models. Journal of time series analysis. 1994;15(2):183–202.\n\n\n[12] Salomone R, Quiroz M, Kohn R, Villani M, Tran M-N. Spectral subsampling MCMC for stationary time series. In: International conference on machine learning. PMLR; 2020. p. 8449–8458.\n\n\n[13] Raitoharju M, Garcı́a-Fernández ÁF, Ali-Löytty S, Särkkä S. Stacked iterated posterior linearization filter. In: 2024 27th international conference on information fusion (FUSION). IEEE; 2024. p. 1–8.\n\n\n[14] Celani A, Pedini L. Moderate time-varying parameter VARs. Örebro University, School of Business; 2025. Report No.: 2025:16.\n\n\n[15] Amari S-I. Natural gradient works efficiently in learning. Neural computation. 1998;10(2):251–276.\n\n\n[16] Amari S-I. Differential geometry of curved exponential families-curvatures and information loss. The Annals of Statistics. 1982:357–385."
+    "text": "References\n\n\n\n\n[1] Carvalho CM, Polson NG, Scott JG. The horseshoe estimator for sparse signals. Biometrika. 2010;97(2):465–480.\n\n\n[2] Polson NG, Scott JG. Shrink globally, act locally: Sparse Bayesian regularization and prediction. Bayesian statistics. 2010;9(501-538):105.\n\n\n[3] Barndorff-Nielsen O, Kent J, Sørensen M. Normal variance-mean mixtures and z distributions. International Statistical Review/Revue Internationale de Statistique. 1982:145–159.\n\n\n[4] Fagerberg G, Villani M, Kohn R. Time-varying multi-seasonal AR models. Journal of Computational and Graphical Statistics. 2026.\n\n\n[5] Jones MC, Faddy M. A skew extension of the t-distribution, with applications. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2003;65(1):159–174.\n\n\n[6] Kowal DR, Matteson DS, Ruppert D. Dynamic shrinkage processes. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2019;81(4):781–804.\n\n\n[7] Polson NG, Scott JG, Windle J. Bayesian inference for logistic models using pólya–gamma latent variables. Journal of the American statistical Association. 2013;108(504):1339–1349.\n\n\n[8] Kim S, Shephard N, Chib S. Stochastic volatility: Likelihood inference and comparison with ARCH models. The review of economic studies. 1998;65(3):361–393.\n\n\n[9] Rue H. Fast sampling of Gaussian Markov random fields. Journal of the Royal Statistical Society: Series B (Statistical Methodology). 2001;63(2):325–338.\n\n\n[10] Carter CK, Kohn R. On Gibbs sampling for state space models. Biometrika. 1994;81(3):541–553.\n\n\n[11] Frühwirth-Schnatter S. Data augmentation and dynamic linear models. Journal of time series analysis. 1994;15(2):183–202.\n\n\n[12] Skoglund MA, Hendeby G, Axehill D. Extended Kalman filter modifications based on an optimization view point. In: 2015 18th international conference on information fusion (fusion). IEEE; 2015. p. 1856–1861.\n\n\n[13] Skoglund MA, Gustafsson F, Hendeby G. On iterative unscented kalman filter using optimization. In: 2019 22th international conference on information fusion (FUSION). IEEE; 2019. p. 1–8.\n\n\n[14] Garcı́a-Fernández ÁF, Svensson L, Morelande MR, Särkkä S. Posterior linearization filter: Principles and implementation using sigma points. IEEE transactions on signal processing. 2015;63(20):5561–5573.\n\n\n[15] Tronarp F, Garcı́a-Fernández ÁF, Särkkä S. Iterative filtering and smoothing in nonlinear and non-gaussian systems using conditional moments. IEEE Signal Processing Letters. 2018;25(3):408–412.\n\n\n[16] Shephard N, Pitt MK. Likelihood analysis of non-gaussian measurement time series. Biometrika. 1997;84(3):653–667.\n\n\n[17] Koyama S, Castellanos Pérez-Bolde L, Shalizi CR, Kass RE. Approximate methods for state-space models. Journal of the American Statistical Association. 2010;105(489):170–180.\n\n\n[18] Salomone R, Quiroz M, Kohn R, Villani M, Tran M-N. Spectral subsampling MCMC for stationary time series. In: International conference on machine learning. PMLR; 2020. p. 8449–8458.\n\n\n[19] Raitoharju M, Garcı́a-Fernández ÁF, Ali-Löytty S, Särkkä S. Stacked iterated posterior linearization filter. In: 2024 27th international conference on information fusion (FUSION). IEEE; 2024. p. 1–8.\n\n\n[20] Celani A, Pedini L. Moderate time-varying parameter VARs. Örebro University, School of Business; 2025. Report No.: 2025:16.\n\n\n[21] Amari S-I. Natural gradient works efficiently in learning. Neural computation. 1998;10(2):251–276.\n\n\n[22] Amari S-I. Differential geometry of curved exponential families-curvatures and information loss. The Annals of Statistics. 1982:357–385."
   }
 ]
