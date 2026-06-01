@@ -2,6 +2,7 @@
 const logo = document.createElement('img');
 logo.src = 'figs/compBayesLogo_mvcolors.png';
 logo.style.cssText = 'position:fixed; bottom: 50px; left:50%; transform:translateX(-50%); width:600px; z-index:9998; pointer-events:none; display:none;';
+logo.classList.add('no-print');
 document.body.appendChild(logo);
 
 Reveal.on('ready', event => {

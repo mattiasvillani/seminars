@@ -258,17 +258,8 @@ y_{t} &amp;= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t}\qquad
 <section id="regression-with-time-varying-parameters" class="slide level2">
 <h2>Regression with time-varying parameters</h2>
 <div class="iframe-slide">
-<style>
-@media print {
-  .widget-container iframe { display: none; }
-  .widget-container .print-fallback { display: block !important; }
-}
-</style>
-<div class="widget-container">
 <iframe width="100%" height="787" frameborder="0" src="https://observablehq.com/embed/2eac471324f40b89?cells=viewof+input%2Cviewof+obsnumber%2Cviewof+simulatebutton%2Cbothplots&amp;banner=false">
 </iframe>
-<p><img src="figs/tvreg_screen.png" class="print-fallback" style="display:none; width:100%;"></p>
-</div>
 </div>
 </section>
 <section id="taxonomy-of-state-space-models" class="slide level2">
@@ -711,7 +702,7 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 </div>
 </section>
 <section id="beta-regression-for-us-layoff-proportion---dsp-prior" class="slide level2">
-<h2>Beta regression for US layoff proportion - dsp prior</h2>
+<h2>Beta regression for US layoff proportion - DSP prior</h2>
 
 <img data-src="figs/layoff_vix_param_Laplace_none_3.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
 <section id="linear-approximations-struggle-with-beta-regression" class="slide level2">
@@ -842,13 +833,13 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_
 
 </div>
 <ul>
-<li>More <span class="alertred">efficient sampling of dsp</span>.</li>
+<li>More <span class="alertred">efficient sampling of DSP</span>.</li>
 </ul>
 <div class="tinyskip">
 
 </div>
 <ul>
-<li>Better <span class="alertred">prior elicitation for dsp</span>.</li>
+<li>Better <span class="alertred">prior elicitation for DSP</span>.</li>
 </ul>
 <div class="tinyskip">
 
@@ -1234,6 +1225,7 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_
     const logo = document.createElement('img');
     logo.src = 'figs/compBayesLogo_mvcolors.png';
     logo.style.cssText = 'position:fixed; bottom: 50px; left:50%; transform:translateX(-50%); width:600px; z-index:9998; pointer-events:none; display:none;';
+    logo.classList.add('no-print');
     document.body.appendChild(logo);
 
     Reveal.on('ready', event => {

@@ -136,8 +136,8 @@
     "objectID": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---dsp-prior",
     "href": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---dsp-prior",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Beta regression for US layoff proportion - dsp prior",
-    "text": "Beta regression for US layoff proportion - dsp prior"
+    "section": "Beta regression for US layoff proportion - DSP prior",
+    "text": "Beta regression for US layoff proportion - DSP prior"
   },
   {
     "objectID": "nordstat2026/index.html#linear-approximations-struggle-with-beta-regression",
@@ -186,7 +186,7 @@
     "href": "nordstat2026/index.html#ongoing-and-future-work",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Ongoing and Future work",
-    "text": "Ongoing and Future work\n\nMultivariate extensions.\n\n\n\n\n\nForecasting.\n\n\n\n\n\nMore efficient sampling of dsp.\n\n\n\n\n\nBetter prior elicitation for dsp.\n\n\n\n\n\nMetropolis-Hastings correction by blocking the state. Filtering version of [16].\n\n\n\n\n\nDelayed rejection:\n\nfirst try with cheap proposal (e.g. EKF)\nif rejected try more expensive proposal (e.g. Iterated EKF with line search)"
+    "text": "Ongoing and Future work\n\nMultivariate extensions.\n\n\n\n\n\nForecasting.\n\n\n\n\n\nMore efficient sampling of DSP.\n\n\n\n\n\nBetter prior elicitation for DSP.\n\n\n\n\n\nMetropolis-Hastings correction by blocking the state. Filtering version of [16].\n\n\n\n\n\nDelayed rejection:\n\nfirst try with cheap proposal (e.g. EKF)\nif rejected try more expensive proposal (e.g. Iterated EKF with line search)"
   },
   {
     "objectID": "nordstat2026/index.html#references",

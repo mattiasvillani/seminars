@@ -13,8 +13,7 @@
 /* ── Latin Modern Roman ────────────────────────────────────────────────────── */
 
 @media print {
-  .widget-container iframe { display: none; }
-  .widget-container .print-fallback { display: block !important; }
+  .no-print { display: none !important; }
 }
 
 table td, table th {
