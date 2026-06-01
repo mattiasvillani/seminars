@@ -107,7 +107,27 @@ csl: vancouver.csl
 ::: {.column width="50%" style="text-align:right;"}
 ![](figs/julialogo.svg){width="5%" style="vertical-align: bottom;"} [Julia packages (unoptimized, ongoing)]{.alertblue}
 
-<img src="figs/qrbayes.svg" style="width:20%;"><br>
+```{=html}
+<div style="position: relative; display: inline-block; width: 20%;"
+     onmouseenter="this.querySelector('.popup').style.display='block'"
+     onmouseleave="this.querySelector('.popup').style.display='none'">
+  <img src="figs/qrbayes.svg" style="width: 100%;"/>
+  <div class="popup" style="
+    display: none;
+    position: absolute;
+    bottom: 105%;
+    right: 0;
+    z-index: 100;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 4px;
+    border-radius: 4px;
+    width: 600px;
+  ">
+    <img src="figs/compBayesGithub.png" style="width: 100%;"/>
+  </div>
+</div>
+```
 [https://github.com/compbayes](https://github.com/compbayes)
 :::
 ::::
@@ -227,7 +247,7 @@ y_i &=  \v x_i^\top\v\beta + \varepsilon_i,\quad \varepsilon_i \overset{\mathrm{
 \lambda_j &\overset{\mathrm{iid}}{\sim} C^+(0,1)
 \end{aligned}
 $$
-- Posterior mean (orthogonal $\v x$) equals shrunken ML estimator
+- Posterior mean (for orthogonal $\v x$) equals shrunken ML estimator
 $$
 \tilde{\beta}_j = (1-\kappa_j)\hat\beta_j
 $$
@@ -260,7 +280,7 @@ $$
 ::: smallskip
 :::
     
--   DSP = horseshoe when $\rho=0$:
+-   DSP becomes horseshoe when $\rho=0$:
 $$
 h_t \sim Z(\alpha,\beta,0,1) \Longleftrightarrow \lambda_t = \exp(h_t/2) \sim C^+(0,1)
 $$
@@ -324,7 +344,7 @@ $$
     \phi_{p,t}(L)\Phi_{P,t}(L^{s})(y_{t}-\mu_t) = \varepsilon_{t},\quad\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(0,\sigma_{t}^{2})
     $$
 
--   SAR as [nonlinear Gaussian regression]{.alertred}
+-   SAR(1,1) as a [nonlinear Gaussian regression]{.alertred}
 $$
 y_t=\v z_t^{\top}\tilde{\v \phi}+\varepsilon_t
 $$
@@ -354,7 +374,7 @@ $\tilde{\boldsymbol{\phi}}=(\phi_1,\Phi_1,\red{-\phi_1\Phi_1})^{\top}$ and $\bol
 
 <div>
 
-[Transformation to stability at every $t$]{.alertred} ![](figs/illustration_transformation.svg){width="100%"}
+[Transformation to stability at every $t$]{.alertred} ![](figs/illustration_transformation.svg){width="100%" fig-align="center"}
 
 ::: {.callout-important appearance="simple" icon="false" style="width: 100%;"}
 ## Lemma - uniform prior over the stability region [@fagerberg2026time; @jones2003skew]
@@ -409,9 +429,7 @@ The AR parameters $\v\phi$ are uniformly distributed over the stability region i
 </div>
 :::::
 
-## Simulated example SAR(2,2) - MCMC convergence
 
-![](figs/Exp1ConvergeEps_paramPost.svg){width="100%" style="display: block; margin: auto;"}
 
 ## Time-varying generalized linear models with DSP evolution
 
@@ -424,7 +442,7 @@ $$
 \begin{aligned}
 y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm} 
-\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
 \v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 $$
@@ -589,6 +607,9 @@ $$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
 
 ::::
 
+## Simulated example SAR(2,2) - MCMC convergence
+
+![](figs/Exp1ConvergeEps_paramPost.svg){width="100%" style="display: block; margin: auto;"}
 
 
 ## Iterated Gaussian approximation filters
@@ -604,8 +625,15 @@ $$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
 - Non-Gaussian models
 
   - [Posterior linearization filter - conditional moments version]{.alertred} [@tronarp2018iterative]
+    - Statistical linearization using $\mathbb{E}(Y \vert \v x)$  and $\mathbb{V}(Y \vert \v x)$.
   
   - [Laplace filter]{.alertred} [@shephard1997likelihood; @koyama2010approximate]
+    - Direct Gaussian approximation of filtering posterior at every $t$
+      $$
+      \v{\theta}_{t} \vert y_{1:t} \overset{\mathrm{approx}}{\sim} N(\tilde{\v{\theta}}_{t \vert t},     \tilde{\v{\Omega}}_{t\vert t})
+    $$
+    where $\tilde{\v\theta}_{t\vert t}$ is posterior mode and $\tilde{\v\Omega}_{t\vert t}$ is inverse of observed information.
+    - [Automatic differentiation]{.alertred} makes it automatic.
 
 ## Time-varying Beta regression for US layoff proportion
 
@@ -622,6 +650,10 @@ Data from the FRED database at [https://fred.stlouisfed.org/](https://fred.stlou
 ## Beta regression for US layoff proportion - dsp prior
 
 ![](figs/layoff_vix_param_Laplace_none_3.svg){width="80%" fig-align="center"}
+
+## Linear approximations struggle with Beta regression
+
+![](figs/layoff_vix_param_IPLF_none_3_withIPLF.svg){width="80%" fig-align="center"}
 
 ## Beta regression for US layoff proportion - homoscedastic Gauss prior
 
@@ -670,7 +702,7 @@ $$
 \begin{aligned}
 y_{gj} \vert \v x_{gj} &\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
 \v\beta_{g} &= \v\beta_{g-1}+\boldsymbol{\nu}_{g},\hspace{2cm} 
-\v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_g))\big) \\
+\v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_g))\big) \\
 \v h_g &= \Phi \v h_{g-1} + \v\eta_g,\hspace{1.6cm} \eta_{g} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 $$
@@ -725,7 +757,7 @@ $$
 \begin{aligned}
 y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &= \v\beta_{t-1}+\v S(\v\beta_{t-1}) \v\nu_{t},\hspace{2cm} 
-\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
 \v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{4.3cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 $$

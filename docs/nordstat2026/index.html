@@ -196,7 +196,24 @@ Mattias Villani
 <p><img src="figs/qr.svg" style="width:20%;"><br> <a href="mattiasvillani.com/seminars/nordstat2026">mattiasvillani.com/seminars/nordstat2026</a></p>
 </div><div class="column" style="text-align:right;">
 <p><img data-src="figs/julialogo.svg" style="vertical-align: bottom;;width:5.0%"> <span class="alertblue">Julia packages (unoptimized, ongoing)</span></p>
-<p><img src="figs/qrbayes.svg" style="width:20%;"><br> <a href="https://github.com/compbayes">https://github.com/compbayes</a></p>
+<div style="position: relative; display: inline-block; width: 20%;" onmouseenter="this.querySelector('.popup').style.display='block'" onmouseleave="this.querySelector('.popup').style.display='none'">
+  <img src="figs/qrbayes.svg" style="width: 100%;">
+  <div class="popup" style="
+    display: none;
+    position: absolute;
+    bottom: 105%;
+    right: 0;
+    z-index: 100;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 4px;
+    border-radius: 4px;
+    width: 600px;
+  ">
+    <img src="figs/compBayesGithub.png" style="width: 100%;">
+  </div>
+</div>
+<p><a href="https://github.com/compbayes">https://github.com/compbayes</a></p>
 </div></div>
 </section>
 <section id="outline" class="slide level2">
@@ -309,7 +326,7 @@ y_i &amp;=  \v x_i^\top\v\beta + \varepsilon_i,\quad \varepsilon_i \overset{\mat
 \lambda_j &amp;\overset{\mathrm{iid}}{\sim} C^+(0,1)
 \end{aligned}
 \]</span></li>
-<li>Posterior mean (orthogonal <span class="math inline">\(\v x\)</span>) equals shrunken ML estimator <span class="math display">\[
+<li>Posterior mean (for orthogonal <span class="math inline">\(\v x\)</span>) equals shrunken ML estimator <span class="math display">\[
 \tilde{\beta}_j = (1-\kappa_j)\hat\beta_j
 \]</span></li>
 </ul>
@@ -340,7 +357,7 @@ h_t &amp;= \rho h_{t-1}  + \eta_t,\hspace{2.5cm} \eta_t \overset{\mathrm{iid}}{\
 
 </div>
 <ul>
-<li>DSP = horseshoe when <span class="math inline">\(\rho=0\)</span>: <span class="math display">\[
+<li>DSP becomes horseshoe when <span class="math inline">\(\rho=0\)</span>: <span class="math display">\[
 h_t \sim Z(\alpha,\beta,0,1) \Longleftrightarrow \lambda_t = \exp(h_t/2) \sim C^+(0,1)
 \]</span></li>
 </ul>
@@ -387,7 +404,7 @@ Z \vert \xi &amp;\sim N \big(\xi^{-1}(\alpha-\beta)/2,\xi^{-1}\big)  \\
 <li><p>Seasonal AR with DSP evolution <span class="math display">\[
 \phi_{p,t}(L)\Phi_{P,t}(L^{s})(y_{t}-\mu_t) = \varepsilon_{t},\quad\varepsilon_{t}\overset{\mathrm{iid}}{\sim}N(0,\sigma_{t}^{2})
 \]</span></p></li>
-<li><p>SAR as <span class="alertred">nonlinear Gaussian regression</span> <span class="math display">\[
+<li><p>SAR(1,1) as a <span class="alertred">nonlinear Gaussian regression</span> <span class="math display">\[
 y_t=\v z_t^{\top}\tilde{\v \phi}+\varepsilon_t
 \]</span> <span class="math inline">\(\tilde{\boldsymbol{\phi}}=(\phi_1,\Phi_1,\red{-\phi_1\Phi_1})^{\top}\)</span> and <span class="math inline">\(\boldsymbol{z}_{t}=(x_{t-1},x_{t-s},x_{t-(1+s)})^{\top}\)</span></p></li>
 <li><p>Extensions</p>
@@ -414,7 +431,7 @@ y_t=\v z_t^{\top}\tilde{\v \phi}+\varepsilon_t
 <h2>Stability restrictions</h2>
 <div class="cols-2">
 <div>
-<p><span class="alertred">Transformation to stability at every <span class="math inline">\(t\)</span></span> <img data-src="figs/illustration_transformation.svg" style="width:100.0%"></p>
+<p><span class="alertred">Transformation to stability at every <span class="math inline">\(t\)</span></span> <img data-src="figs/illustration_transformation.svg" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
 <div style="width: 100%;">
 <div class="callout callout-important no-icon callout-titled callout-style-simple">
 <div class="callout-body">
@@ -472,10 +489,6 @@ r=\begin{cases}
 </div>
 </div>
 </section>
-<section id="simulated-example-sar22---mcmc-convergence" class="slide level2">
-<h2>Simulated example SAR(2,2) - MCMC convergence</h2>
-
-<img data-src="figs/Exp1ConvergeEps_paramPost.svg" style="display: block; margin: auto;;width:100.0%" class="r-stretch"></section>
 <section id="time-varying-generalized-linear-models-with-dsp-evolution" class="slide level2">
 <h2>Time-varying generalized linear models with DSP evolution</h2>
 <div class="cols-2">
@@ -487,7 +500,7 @@ r=\begin{cases}
 \begin{aligned}
 y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &amp;= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm}
-\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
 \v h_t &amp;= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 \]</span></p>
@@ -645,6 +658,10 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <p><img data-src="figs/UKFtrue.png" style="width:40.0%"> <img data-src="figs/UKFapprox.png" style="width:40.0%"></p>
 </div></div>
 </section>
+<section id="simulated-example-sar22---mcmc-convergence" class="slide level2">
+<h2>Simulated example SAR(2,2) - MCMC convergence</h2>
+
+<img data-src="figs/Exp1ConvergeEps_paramPost.svg" style="display: block; margin: auto;;width:100.0%" class="r-stretch"></section>
 <section id="iterated-gaussian-approximation-filters" class="slide level2">
 <h2>Iterated Gaussian approximation filters</h2>
 <ul>
@@ -656,8 +673,17 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 </ul></li>
 <li><p>Non-Gaussian models</p>
 <ul>
-<li><p><span class="alertred">Posterior linearization filter - conditional moments version</span> <span class="citation" data-cites="tronarp2018iterative">[<a href="#/references" role="doc-biblioref" onclick="">15</a>]</span></p></li>
-<li><p><span class="alertred">Laplace filter</span> <span class="citation" data-cites="shephard1997likelihood koyama2010approximate">[<a href="#/references" role="doc-biblioref" onclick="">16</a>, <a href="#/references" role="doc-biblioref" onclick="">17</a>]</span></p></li>
+<li><span class="alertred">Posterior linearization filter - conditional moments version</span> <span class="citation" data-cites="tronarp2018iterative">[<a href="#/references" role="doc-biblioref" onclick="">15</a>]</span>
+<ul>
+<li>Statistical linearization using <span class="math inline">\(\mathbb{E}(Y \vert \v x)\)</span> and <span class="math inline">\(\mathbb{V}(Y \vert \v x)\)</span>.</li>
+</ul></li>
+<li><span class="alertred">Laplace filter</span> <span class="citation" data-cites="shephard1997likelihood koyama2010approximate">[<a href="#/references" role="doc-biblioref" onclick="">16</a>, <a href="#/references" role="doc-biblioref" onclick="">17</a>]</span>
+<ul>
+<li>Direct Gaussian approximation of filtering posterior at every <span class="math inline">\(t\)</span> <span class="math display">\[
+\v{\theta}_{t} \vert y_{1:t} \overset{\mathrm{approx}}{\sim} N(\tilde{\v{\theta}}_{t \vert t},     \tilde{\v{\Omega}}_{t\vert t})
+\]</span> where <span class="math inline">\(\tilde{\v\theta}_{t\vert t}\)</span> is posterior mode and <span class="math inline">\(\tilde{\v\Omega}_{t\vert t}\)</span> is inverse of observed information.</li>
+<li><span class="alertred">Automatic differentiation</span> makes it automatic.</li>
+</ul></li>
 </ul></li>
 </ul>
 </section>
@@ -679,6 +705,10 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <h2>Beta regression for US layoff proportion - dsp prior</h2>
 
 <img data-src="figs/layoff_vix_param_Laplace_none_3.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
+<section id="linear-approximations-struggle-with-beta-regression" class="slide level2">
+<h2>Linear approximations struggle with Beta regression</h2>
+
+<img data-src="figs/layoff_vix_param_IPLF_none_3_withIPLF.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
 <section id="beta-regression-for-us-layoff-proportion---homoscedastic-gauss-prior" class="slide level2">
 <h2>Beta regression for US layoff proportion - homoscedastic Gauss prior</h2>
 
@@ -726,7 +756,7 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 \begin{aligned}
 y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
 \v\beta_{g} &amp;= \v\beta_{g-1}+\boldsymbol{\nu}_{g},\hspace{2cm}
-\v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_g))\big) \\
+\v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_g))\big) \\
 \v h_g &amp;= \Phi \v h_{g-1} + \v\eta_g,\hspace{1.6cm} \eta_{g} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 \]</span> where <span class="math inline">\(j=1,\ldots,J_g\)</span> for <span class="math inline">\(g=1,\ldots,G\)</span>.</p>
@@ -780,7 +810,7 @@ y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\
 \begin{aligned}
 y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &amp;= \v\beta_{t-1}+\v S(\v\beta_{t-1}) \v\nu_{t},\hspace{2cm}
-\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \cdot  \v h_t))\big) \\
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
 \v h_t &amp;= \Phi \v h_{t-1} + \v\eta_t,\hspace{4.3cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 \]</span> where <span class="math inline">\(\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})\)</span></p></li>
