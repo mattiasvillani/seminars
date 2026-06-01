@@ -440,7 +440,7 @@ The AR parameters $\v\phi$ are uniformly distributed over the stability region i
 
 $$
 \begin{aligned}
-y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm} 
 \v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
 \v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
@@ -466,7 +466,7 @@ $$
 
 $$
 \begin{aligned}
-y_t \vert \v x_{t}, z_{t} &\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t})}, \, \blue{\psi_t = \exp(\v z_{t}^\top\v\gamma_{t})} \big) 
+y_t \vert \v x_{t}, z_{t} &\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t})}, \, \blue{\phi_t = \exp(\v z_{t}^\top\v\gamma_{t})} \big) 
 \end{aligned}
 $$
 </div>
@@ -633,19 +633,22 @@ $$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
       \v{\theta}_{t} \vert y_{1:t} \overset{\mathrm{approx}}{\sim} N(\tilde{\v{\theta}}_{t \vert t},     \tilde{\v{\Omega}}_{t\vert t})
     $$
     where $\tilde{\v\theta}_{t\vert t}$ is posterior mode and $\tilde{\v\Omega}_{t\vert t}$ is inverse of observed information.
-    - [Automatic differentiation]{.alertred} makes it automatic.
+    - [Automatic differentiation]{.alertred} makes it ... automatic.
 
 ## Time-varying Beta regression for US layoff proportion
 
-- Monthly US data from 1990:1-2026:4 on:
+- Beta regression
+$$
+\begin{aligned}
+y_t \vert \v x_{t} &\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t}), \, \phi_t \big) 
+\end{aligned}
+$$
+
+- Monthly US data from 1990:1-2026:4
   - `layoff` - job losers on layoff as % of total unemployed
   - `vix` - CBOE Volatility Index ("fear index")
   
 ![](figs/layoff_time_series.svg){width="40%" fig-align="center"} ![](figs/vixlag1_time_series.svg){width="40%" fig-align="center"}
-
-::: footnote
-Data from the FRED database at [https://fred.stlouisfed.org/](https://fred.stlouisfed.org/)
-:::
 
 ## Beta regression for US layoff proportion - DSP prior
 
@@ -676,11 +679,9 @@ Data from the FRED database at [https://fred.stlouisfed.org/](https://fred.stlou
   </tr>
 </table>
 
-## Grouping observations for speed and Gaussianity
+## How Gaussian are we at each time step?
 
-:::: {.columns}
 
-::: {.column width="80%"}
 
 - Gaussian approximations at every time $t$. 
 
@@ -692,21 +693,37 @@ Data from the FRED database at [https://fred.stlouisfed.org/](https://fred.stlou
 
 - But DSP can give large innovations, so $\Omega_{t \vert t-1}$ can be large.
 
-::: tinyskip
-:::
+
+[Poisson model]{.alertred}
+
+![](figs/PoissonLikeContributions.svg){width="30%"} ![](figs/PoissonPosteriorInformativePrior.svg){width="30%"}
+![](figs/PoissonPosteriorNonInformativePrior.svg){width="30%"}
+
+
+
+
+
+## Grouping
+
+:::: {.columns}
+
+::: {.column width="80%"}
 
 - [Group observations]{.alertred} in $G$ groups of $J_g$ observations in group $g$. 
 - [Same state $\v\theta_g$ for observations within a group]{.alertred}.
 
 $$
 \begin{aligned}
-y_{gj} \vert \v x_{gj} &\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
+y_{gj} \vert \v x_{gj} &\sim \mathrm{ExpFamily}\Big(k(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
 \v\beta_{g} &= \v\beta_{g-1}+\boldsymbol{\nu}_{g},\hspace{2cm} 
 \v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_g))\big) \\
 \v h_g &= \Phi \v h_{g-1} + \v\eta_g,\hspace{1.6cm} \eta_{g} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 $$
 where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
+
+![](figs/PoissonLikeContributionsGroup.svg){width="35%" fig-align="center"}
+
 :::
 
 ::: {.column width="20%"}
@@ -755,7 +772,7 @@ where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
 - Parameter evolution with [natural innovations]{.alertred}
 $$
 \begin{aligned}
-y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &= \v\beta_{t-1}+\v S(\v\beta_{t-1}) \v\nu_{t},\hspace{2cm} 
 \v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
 \v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{4.3cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)

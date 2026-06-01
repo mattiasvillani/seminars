@@ -498,7 +498,7 @@ r=\begin{cases}
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
-y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &amp;= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm}
 \v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
 \v h_t &amp;= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
@@ -523,7 +523,7 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{Pois}\big(\mu_t = \exp(\v x_{t}^\top\v\beta
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
-y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t})}, \, \blue{\psi_t = \exp(\v z_{t}^\top\v\gamma_{t})} \big)
+y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t})}, \, \blue{\phi_t = \exp(\v z_{t}^\top\v\gamma_{t})} \big)
 \end{aligned}
 \]</span></p>
 </div>
@@ -682,7 +682,7 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <li>Direct Gaussian approximation of filtering posterior at every <span class="math inline">\(t\)</span> <span class="math display">\[
 \v{\theta}_{t} \vert y_{1:t} \overset{\mathrm{approx}}{\sim} N(\tilde{\v{\theta}}_{t \vert t},     \tilde{\v{\Omega}}_{t\vert t})
 \]</span> where <span class="math inline">\(\tilde{\v\theta}_{t\vert t}\)</span> is posterior mode and <span class="math inline">\(\tilde{\v\Omega}_{t\vert t}\)</span> is inverse of observed information.</li>
-<li><span class="alertred">Automatic differentiation</span> makes it automatic.</li>
+<li><span class="alertred">Automatic differentiation</span> makes it … automatic.</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -690,16 +690,18 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <section id="time-varying-beta-regression-for-us-layoff-proportion" class="slide level2">
 <h2>Time-varying Beta regression for US layoff proportion</h2>
 <ul>
-<li>Monthly US data from 1990:1-2026:4 on:
+<li><p>Beta regression <span class="math display">\[
+\begin{aligned}
+y_t \vert \v x_{t} &amp;\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t}), \, \phi_t \big)
+\end{aligned}
+\]</span></p></li>
+<li><p>Monthly US data from 1990:1-2026:4</p>
 <ul>
 <li><code>layoff</code> - job losers on layoff as % of total unemployed</li>
 <li><code>vix</code> - CBOE Volatility Index (“fear index”)</li>
 </ul></li>
 </ul>
 <p><img data-src="figs/layoff_time_series.svg" class="quarto-figure quarto-figure-center" style="width:40.0%"> <img data-src="figs/vixlag1_time_series.svg" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
-<div class="footnote">
-<p>Data from the FRED database at <a href="https://fred.stlouisfed.org/">https://fred.stlouisfed.org/</a></p>
-</div>
 </section>
 <section id="beta-regression-for-us-layoff-proportion---dsp-prior" class="slide level2">
 <h2>Beta regression for US layoff proportion - DSP prior</h2>
@@ -734,10 +736,8 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 </tr>
 </tbody></table>
 </section>
-<section id="grouping-observations-for-speed-and-gaussianity" class="slide level2">
-<h2>Grouping observations for speed and Gaussianity</h2>
-<div class="columns">
-<div class="column" style="width:80%;">
+<section id="how-gaussian-are-we-at-each-time-step" class="slide level2">
+<h2>How Gaussian are we at each time step?</h2>
 <ul>
 <li><p>Gaussian approximations at every time <span class="math inline">\(t\)</span>.</p></li>
 <li><p>How Gaussian are the <span class="alertred">likelihood contributions</span> <span class="math inline">\(p(y_t\vert\v\theta_t)\)</span> in <span class="math inline">\(\v\theta_t\)</span>?</p></li>
@@ -745,21 +745,30 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <li><p>A tight propagated prior <span class="math inline">\(\v\theta_t \sim N(\hat{\v\theta}_{t\vert t-1}, \Omega_{t \vert t-1} )\)</span> helps a lot.</p></li>
 <li><p>But DSP can give large innovations, so <span class="math inline">\(\Omega_{t \vert t-1}\)</span> can be large.</p></li>
 </ul>
-<div class="tinyskip">
-
-</div>
+<p><span class="alertred">Poisson model</span></p>
+<p><img data-src="figs/PoissonLikeContributions.svg" style="width:30.0%"> <img data-src="figs/PoissonPosteriorInformativePrior.svg" style="width:30.0%"> <img data-src="figs/PoissonPosteriorNonInformativePrior.svg" style="width:30.0%"></p>
+</section>
+<section id="grouping" class="slide level2">
+<h2>Grouping</h2>
+<div class="columns">
+<div class="column" style="width:80%;">
 <ul>
 <li><span class="alertred">Group observations</span> in <span class="math inline">\(G\)</span> groups of <span class="math inline">\(J_g\)</span> observations in group <span class="math inline">\(g\)</span>.</li>
 <li><span class="alertred">Same state <span class="math inline">\(\v\theta_g\)</span> for observations within a group</span>.</li>
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
-y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
+y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
 \v\beta_{g} &amp;= \v\beta_{g-1}+\boldsymbol{\nu}_{g},\hspace{2cm}
 \v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_g))\big) \\
 \v h_g &amp;= \Phi \v h_{g-1} + \v\eta_g,\hspace{1.6cm} \eta_{g} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 \]</span> where <span class="math inline">\(j=1,\ldots,J_g\)</span> for <span class="math inline">\(g=1,\ldots,G\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figs/PoissonLikeContributionsGroup.svg" class="quarto-figure quarto-figure-center" style="width:35.0%"></p>
+</figure>
+</div>
 </div><div class="column" style="width:20%;">
 <blockquote>
 <p>“When all the hope is gone, there is no reason for pessimism”. <br> <em>Aki Kaurismäki</em></p>
@@ -808,7 +817,7 @@ y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{gj}^\top\v\
 <li><p><span class="alertred">Natural gradients</span> <span class="citation" data-cites="amari1998natural amari1982differential">[<a href="#/references" role="doc-biblioref" onclick="">21</a>, <a href="#/references" role="doc-biblioref" onclick="">22</a>]</span> in optimization. Fisher metric.</p></li>
 <li><p>Parameter evolution with <span class="alertred">natural innovations</span> <span class="math display">\[
 \begin{aligned}
-y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k^{-1}(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
+y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
 \v\beta_{t} &amp;= \v\beta_{t-1}+\v S(\v\beta_{t-1}) \v\nu_{t},\hspace{2cm}
 \v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
 \v h_t &amp;= \Phi \v h_{t-1} + \v\eta_t,\hspace{4.3cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
