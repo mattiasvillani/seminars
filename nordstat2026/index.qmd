@@ -11,7 +11,7 @@ format:
     css: ../custom.css
     include-after-body: 
       - ../cursor.js
-      - ../logo.js
+      #- ../logo.js
       - ../hover-refs.html
     include-in-header: 
       text: |
@@ -766,7 +766,7 @@ where $\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})$
 
 - Non-linear transition model. Prior propagation step: $S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})$.
 
-## Ongoing and Future work
+## Ongoing and future work
 
 - [Multivariate]{.alertred} extensions.
 

@@ -185,8 +185,8 @@
     "objectID": "nordstat2026/index.html#ongoing-and-future-work",
     "href": "nordstat2026/index.html#ongoing-and-future-work",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Ongoing and Future work",
-    "text": "Ongoing and Future work\n\nMultivariate extensions.\n\n\n\n\n\nForecasting.\n\n\n\n\n\nMore efficient sampling of DSP.\n\n\n\n\n\nBetter prior elicitation for DSP.\n\n\n\n\n\nMetropolis-Hastings correction by blocking the state. Filtering version of [16].\n\n\n\n\n\nDelayed rejection:\n\nfirst try with cheap proposal (e.g. EKF)\nif rejected try more expensive proposal (e.g. Iterated EKF with line search)"
+    "section": "Ongoing and future work",
+    "text": "Ongoing and future work\n\nMultivariate extensions.\n\n\n\n\n\nForecasting.\n\n\n\n\n\nMore efficient sampling of DSP.\n\n\n\n\n\nBetter prior elicitation for DSP.\n\n\n\n\n\nMetropolis-Hastings correction by blocking the state. Filtering version of [16].\n\n\n\n\n\nDelayed rejection:\n\nfirst try with cheap proposal (e.g. EKF)\nif rejected try more expensive proposal (e.g. Iterated EKF with line search)"
   },
   {
     "objectID": "nordstat2026/index.html#references",
