@@ -11,7 +11,7 @@ format:
     css: ../custom.css
     include-after-body: 
       - ../cursor.js
-      #- ../logo.js
+      - ../logo.js
       - ../hover-refs.html
     include-in-header: 
       text: |
