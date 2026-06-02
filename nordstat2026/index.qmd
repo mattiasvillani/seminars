@@ -174,6 +174,14 @@ $$
     &\v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu, t})
     \end{aligned}
     $$ with state $\v \theta_t=\v\beta_t$, $\v C_t = \v x_t^\top$ and $\v A_t = \v I_p$.
+    
+::: smallskip
+:::
+
+- [Initial prior]{.alertred} at time $t=0$
+    $$
+    \v\theta_0 \sim N(\v\mu_0,\v\Omega_0)
+    $$
 
 ## Regression with time-varying parameters
 
@@ -236,7 +244,7 @@ $p(\v\theta_{1:T}\vert y_{1:T})$
 
 ------------------------------------------------------------------------
 
-## Global-local shrinkage priors - regression [@carvalho2010horseshoe; @polson2010shrink]
+## Global-local shrinkage priors - regression [@carvalho2010horseshoe; @polson2010shrink] [@piironen2017sparsity]
 
 - Linear Gaussian regression with [horseshoe prior]{.alertred}
 $$
@@ -255,7 +263,7 @@ $$
 <img src="figs/horseshoe_kappa.svg" style="width:30%;  margin:0 1em;"><img src="figs/LassoHSEstimatesSimDataNoCorr.svg" style="width:30%;  margin:0 1em;">
 
 
-## Dynamic global-local shrinkage priors for time series
+## Dynamic global-local shrinkage priors for time series [@kowal2019dynamic]
 
 :::::: cols-2
 
@@ -387,6 +395,10 @@ The AR parameters $\v\phi$ are uniformly distributed over the stability region i
     \end{cases}
 \end{equation}
 :::
+
+- Same restriction on each AR polynomial.
+
+- Same restriction for invertibility of MA.
 
 </div>
 <div>
@@ -570,6 +582,12 @@ $$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
 :::
 
 ::: {.column width="30%"}
+
+::: bigskip
+:::
+
+
+
 
 ![](figs/sarkaabook.jpg){width="50%" style="display: block; margin: auto;"}
 
@@ -767,21 +785,43 @@ where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
   - Link functions
   - Model geometry
   
-- [Natural gradients]{.alertred} [@amari1998natural; @amari1982differential] in optimization. Fisher metric.
+- [Natural gradients]{.alertred} [@amari1998natural; @amari1982differential] in optimization. 
+
+- [Fisher metric]{.alertred}. Step sizes scaled with respect to model geometry.
   
+::: tinyskip
+:::
+
 - Parameter evolution with [natural innovations]{.alertred}
 $$
 \begin{aligned}
 y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
-\v\beta_{t} &= \v\beta_{t-1}+\v S(\v\beta_{t-1}) \v\nu_{t},\hspace{2cm} 
-\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
-\v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{4.3cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
+\v\beta_{t} &= \v\beta_{t-1}+\v S(\v\beta_{t-1}) \v\nu_{t},
 \end{aligned}
 $$
 where $\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})$
+
+
 - $\bar{I}(\v\beta) = \frac{1}{T}I(\v\beta)$ is the [Fisher information]{.alertred} from an "average" observation.
 
+
+
 - Non-linear transition model. Prior propagation step: $S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})$.
+
+## Natural parameter innovations - Poisson($\lambda$)
+
+
+![](figs/KLPoissonLambdaNoScaling.svg){width="70%" fig-align="center"}
+
+![](figs/KLPoissonLambdaScaling.svg){width="70%" fig-align="center"}
+
+## Natural parameter innovations - Poisson($\exp(\theta)$)
+
+
+![](figs/KLPoissonLogLambdaNoScaling.svg){width="70%" fig-align="center"}
+
+![](figs/KLPoissonLogLambdaScaling.svg){width="70%" fig-align="center"}
+
 
 ## Ongoing and future work
 
@@ -802,6 +842,12 @@ where $\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})$
 
 - Better [prior elicitation for DSP]{.alertred}.
 
+  
+::: tinyskip
+:::
+
+- [Posterior perturbation bounds]{.alertred} from the true target posterior. 
+
 ::: tinyskip
 :::
 
@@ -813,8 +859,6 @@ where $\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})$
 - [Delayed rejection]{.alertred}: 
   - first try with cheap proposal (e.g. EKF) 
   - if rejected try more expensive proposal (e.g. Iterated EKF with line search)
-  
-::: tinyskip
-:::
+
 
 ## References {.smaller}
