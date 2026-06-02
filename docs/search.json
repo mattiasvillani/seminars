@@ -126,6 +126,13 @@
     "text": "Iterated Gaussian approximation filters\n\nNonlinear Gaussian models\n\nIterated extended Kalman filter [13]\nIterated unscented Kalman filter [14]\nPosterior linearization filter [15]\n\nNon-Gaussian models\n\nPosterior linearization filter - conditional moments version [16]\n\nStatistical linearization using \\(\\mathbb{E}(Y \\vert \\v x)\\) and \\(\\mathbb{V}(Y \\vert \\v x)\\).\n\nLaplace filter [17, 18]\n\nDirect Gaussian approximation of filtering posterior at every \\(t\\) \\[\n\\v{\\theta}_{t} \\vert y_{1:t} \\overset{\\mathrm{approx}}{\\sim} N(\\tilde{\\v{\\theta}}_{t \\vert t},     \\tilde{\\v{\\Omega}}_{t\\vert t})\n\\] where \\(\\tilde{\\v\\theta}_{t\\vert t}\\) is posterior mode and \\(\\tilde{\\v\\Omega}_{t\\vert t}\\) is inverse of observed information.\nAutomatic differentiation makes it … automatic."
   },
   {
+    "objectID": "nordstat2026/index.html#simulated-poisson-regression-illustration",
+    "href": "nordstat2026/index.html#simulated-poisson-regression-illustration",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Simulated Poisson regression illustration",
+    "text": "Simulated Poisson regression illustration"
+  },
+  {
     "objectID": "nordstat2026/index.html#time-varying-beta-regression-for-us-layoff-proportion",
     "href": "nordstat2026/index.html#time-varying-beta-regression-for-us-layoff-proportion",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
@@ -207,7 +214,7 @@
     "href": "nordstat2026/index.html#ongoing-and-future-work",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Ongoing and future work",
-    "text": "Ongoing and future work\n\nMultivariate extensions.\n\n\n\n\n\nForecasting.\n\n\n\n\n\nMore efficient sampling of DSP.\n\n\n\n\n\nBetter prior elicitation for DSP.\n\n\n\n\n\nPosterior perturbation bounds from the true target posterior.\n\n\n\n\n\nMetropolis-Hastings correction by blocking the state. Filtering version of [17].\n\n\n\n\n\nDelayed rejection:\n\nfirst try with cheap proposal (e.g. EKF)\nif rejected try more expensive proposal (e.g. Iterated EKF with line search)"
+    "text": "Ongoing and future work\n\nMultivariate extensions\n\n\n\n\n\nForecasting\n\n\n\n\n\nMore efficient sampling of DSP part\n\n\n\n\n\nBetter prior elicitation for DSP part\n\n\n\n\n\nPosterior perturbation bounds from the true target posterior\n\n\n\n\n\nMetropolis-Hastings correction by blocking the state. Filtering version of [17]\n\n\n\n\n\nDelayed rejection:\n\nfirst try with cheap proposal (e.g. EKF)\nif rejected try more expensive proposal (e.g. Iterated EKF with line search)"
   },
   {
     "objectID": "nordstat2026/index.html#references",
