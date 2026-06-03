@@ -651,26 +651,28 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <div class="columns">
 <div class="column" style="width:70%;">
 <ul>
-<li><span class="alertred">Extended Kalman filter</span>
+<li><p><span class="alertred">Extended Kalman filter</span></p>
 <ul>
 <li>Linearize measurement/transition models</li>
 <li>Apply standard Kalman filter</li>
 </ul></li>
-<li><span class="alertred">Unscented Kalman filter</span>
+<li><p><span class="alertred">Unscented Kalman filter</span></p>
 <ul>
 <li>Propagate sigma point approx of prior</li>
-</ul></li>
-<li><span class="alertred">Prior linearization filter</span>
+</ul>
+<p><img data-src="figs/UKFtrue.png" style="width:15.0%"> <img data-src="figs/UKFapprox.png" style="width:15.0%"></p></li>
+<li><p><span class="alertred">Prior linearization filter</span></p>
 <ul>
 <li>Linearize by statistical linear regression.</li>
 <li>Linearizes <span class="math inline">\(\boldsymbol{y}=\boldsymbol{g}(\boldsymbol{\theta})\)</span> by minimizing <span class="math inline">\(\mathbb{E_{\mathrm{prior}}}\left(\left\Vert \boldsymbol{g}(\boldsymbol{\theta})-(\boldsymbol{\boldsymbol{a}+C}\boldsymbol{\theta})\right\Vert ^{2}\right)\)</span>.</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:30%;">
-<div style="height:7em;">
+<div style="height:0em;">
 
 </div>
-<p><img data-src="figs/UKFtrue.png" style="width:40.0%"> <img data-src="figs/UKFapprox.png" style="width:40.0%"></p>
+<p><img data-src="figs/KalmanUpdate.png"></p>
+<p><img data-src="figs/KalmanExtended.png"></p>
 </div></div>
 </section>
 <section id="simulated-example-sar22---mcmc-convergence" class="slide level2">
@@ -684,18 +686,12 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <ul>
 <li><p><span class="alertred">Iterated extended Kalman filter</span> <span class="citation" data-cites="skoglund2015extended">[<a href="#/references" role="doc-biblioref" onclick="">13</a>]</span></p></li>
 <li><p><span class="alertred">Iterated unscented Kalman filter</span> <span class="citation" data-cites="skoglund2019iterative">[<a href="#/references" role="doc-biblioref" onclick="">14</a>]</span></p></li>
-<li><p><span class="alertred">Posterior linearization filter</span> <span class="citation" data-cites="garcia2015posterior">[<a href="#/references" role="doc-biblioref" onclick="">15</a>]</span></p>
-<ul>
-<li>Linearizes <span class="math inline">\(\boldsymbol{y}=\boldsymbol{g}(\boldsymbol{\theta})\)</span> by minimizing <span class="math inline">\(\mathbb{E_{\mathrm{post}}}\left(\left\Vert \boldsymbol{g}(\boldsymbol{\theta})-(\boldsymbol{\boldsymbol{a}+C}\boldsymbol{\theta})\right\Vert ^{2}\right)\)</span>.</li>
-</ul></li>
+<li><p><span class="alertred">Posterior linearization filter</span> <span class="citation" data-cites="garcia2015posterior">[<a href="#/references" role="doc-biblioref" onclick="">15</a>]</span><br> Linearizes <span class="math inline">\(\boldsymbol{y}=\boldsymbol{g}(\boldsymbol{\theta})\)</span> by minimizing <span class="math inline">\(\mathbb{E_{\mathrm{post}}}\left(\left\Vert \boldsymbol{g}(\boldsymbol{\theta})-(\boldsymbol{\boldsymbol{a}+C}\boldsymbol{\theta})\right\Vert ^{2}\right)\)</span>.</p></li>
 </ul></li>
 <li><p>Non-Gaussian models</p>
 <ul>
-<li><span class="alertred">Posterior linearization filter - conditional moments version</span> <span class="citation" data-cites="tronarp2018iterative">[<a href="#/references" role="doc-biblioref" onclick="">16</a>]</span>
-<ul>
-<li>Statistical linearization using <span class="math inline">\(\mathbb{E}(Y \vert \v x)\)</span> and <span class="math inline">\(\mathbb{V}(Y \vert \v x)\)</span>.</li>
-</ul></li>
-<li><span class="alertred">Laplace filter</span> <span class="citation" data-cites="shephard1997likelihood koyama2010approximate">[<a href="#/references" role="doc-biblioref" onclick="">17</a>, <a href="#/references" role="doc-biblioref" onclick="">18</a>]</span>
+<li><p><span class="alertred">Posterior linearization filter - conditional moments version</span> <span class="citation" data-cites="tronarp2018iterative">[<a href="#/references" role="doc-biblioref" onclick="">16</a>]</span><br> Statistical linearization using <span class="math inline">\(\mathbb{E}(Y \vert \v x)\)</span> and <span class="math inline">\(\mathbb{V}(Y \vert \v x)\)</span>.</p></li>
+<li><p><span class="alertred">Laplace filter</span> <span class="citation" data-cites="shephard1997likelihood koyama2010approximate">[<a href="#/references" role="doc-biblioref" onclick="">17</a>, <a href="#/references" role="doc-biblioref" onclick="">18</a>]</span></p>
 <ul>
 <li>Direct Gaussian approximation of filtering posterior at every <span class="math inline">\(t\)</span> <span class="math display">\[
 \v{\theta}_{t} \vert y_{1:t} \overset{\mathrm{approx}}{\sim} N(\tilde{\v{\theta}}_{t \vert t},     \tilde{\v{\Omega}}_{t\vert t})
@@ -838,18 +834,36 @@ y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{gj}^\top\v\beta_
 <section id="natural-parameter-innovations" class="slide level2">
 <h2>Natural parameter innovations</h2>
 <ul>
-<li><p>Parameter evolution should adapt to:</p>
+<li>Parameter evolution should adapt to:
 <ul>
 <li>Scales of covariates</li>
 <li>Link functions</li>
 <li>Model geometry</li>
 </ul></li>
-<li><p><span class="alertred">Natural gradients</span> <span class="citation" data-cites="amari1998natural amari1982differential">[<a href="#/references" role="doc-biblioref" onclick="">22</a>, <a href="#/references" role="doc-biblioref" onclick="">23</a>]</span> in optimization.</p></li>
-<li><p><span class="alertred">Fisher metric</span>. Step sizes scaled with respect to model geometry.</p></li>
+<li><span class="alertred">Natural gradients</span> <span class="citation" data-cites="amari1998natural amari1982differential">[<a href="#/references" role="doc-biblioref" onclick="">22</a>, <a href="#/references" role="doc-biblioref" onclick="">23</a>]</span> in optimization.</li>
 </ul>
-<div class="tinyskip">
-
+<p><span class="math display">\[
+\v x_{i+1} = \v x_t - \gamma \red{\v I(\v x_t)^{-1}}\nabla f(\v x_t)
+\]</span></p>
+<ul>
+<li><span class="alertred">Fisher metric</span>. Step sizes scaled with respect to model geometry.</li>
+</ul>
+</section>
+<section id="scaled-innovations-controls-kullback-leibler-divergence-over-time" class="slide level2">
+<h2>Scaled innovations controls Kullback-Leibler divergence over time</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figs/KLPoissonLambdaNoScaling.svg" class="quarto-figure quarto-figure-center" style="width:65.0%"></p>
+</figure>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figs/KLPoissonLambdaScaling.svg" class="quarto-figure quarto-figure-center" style="width:65.0%"></p>
+</figure>
+</div>
+</section>
+<section id="natural-parameter-innovations-1" class="slide level2">
+<h2>Natural parameter innovations</h2>
 <ul>
 <li><p>Parameter evolution with <span class="alertred">natural innovations</span> <span class="math display">\[
 \begin{aligned}
@@ -859,20 +873,10 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}),
 \]</span> where <span class="math inline">\(\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})\)</span></p></li>
 <li><p><span class="math inline">\(\bar{I}(\v\beta) = \frac{1}{T}I(\v\beta)\)</span> is the <span class="alertred">Fisher information</span> from an “average” observation.</p></li>
 <li><p>Non-linear transition model. Prior propagation step: <span class="math inline">\(S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})\)</span>.</p></li>
+<li><p>Prior at time <span class="math inline">\(t=0\)</span> <span class="math display">\[
+\v\theta_0 \sim N\Big(\v \mu_0, \frac{T}{\kappa_0}, \bar{I}^{-1}(\v\mu_0)\Big)
+\]</span> where <span class="math inline">\(\mu_0\)</span> is backed out from beliefs about the data at time <span class="math inline">\(t=0\)</span>.</p></li>
 </ul>
-</section>
-<section id="natural-parameter-innovations---poissonlambda" class="slide level2">
-<h2>Natural parameter innovations - Poisson(<span class="math inline">\(\lambda\)</span>)</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figs/KLPoissonLambdaNoScaling.svg" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figs/KLPoissonLambdaScaling.svg" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
-</figure>
-</div>
 </section>
 <section id="natural-parameter-innovations---poissonexptheta" class="slide level2">
 <h2>Natural parameter innovations - Poisson(<span class="math inline">\(\exp(\theta)\)</span>)</h2>

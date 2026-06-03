@@ -605,6 +605,8 @@ $$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
 
 - [Unscented Kalman filter]{.alertred}
   - Propagate sigma point approx of prior
+  
+  ![](figs/UKFtrue.png){width="15%"} ![](figs/UKFapprox.png){width="15%"}
 
 - [Prior linearization filter]{.alertred}
   - Linearize by statistical linear regression.
@@ -615,9 +617,13 @@ $$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
 
 ::: {.column width="30%"}
 
-<div style="height:7em;"></div>
+<div style="height:0em;"></div>
 
-![](figs/UKFtrue.png){width="40%"} ![](figs/UKFapprox.png){width="40%"}
+
+![](figs/KalmanUpdate.png) 
+
+![](figs/KalmanExtended.png)
+
 
 
 :::
@@ -637,13 +643,13 @@ $$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
 
   - [Iterated unscented Kalman filter]{.alertred} [@skoglund2019iterative]
 
-  - [Posterior linearization filter]{.alertred} [@garcia2015posterior]
-    - Linearizes $\boldsymbol{y}=\boldsymbol{g}(\boldsymbol{\theta})$ by minimizing $\mathbb{E_{\mathrm{post}}}\left(\left\Vert \boldsymbol{g}(\boldsymbol{\theta})-(\boldsymbol{\boldsymbol{a}+C}\boldsymbol{\theta})\right\Vert ^{2}\right)$.
+  - [Posterior linearization filter]{.alertred} [@garcia2015posterior]<br>
+    Linearizes $\boldsymbol{y}=\boldsymbol{g}(\boldsymbol{\theta})$ by minimizing $\mathbb{E_{\mathrm{post}}}\left(\left\Vert \boldsymbol{g}(\boldsymbol{\theta})-(\boldsymbol{\boldsymbol{a}+C}\boldsymbol{\theta})\right\Vert ^{2}\right)$.
   
 - Non-Gaussian models
 
-  - [Posterior linearization filter - conditional moments version]{.alertred} [@tronarp2018iterative]
-    - Statistical linearization using $\mathbb{E}(Y \vert \v x)$  and $\mathbb{V}(Y \vert \v x)$.
+  - [Posterior linearization filter - conditional moments version]{.alertred} [@tronarp2018iterative]<br>
+    Statistical linearization using $\mathbb{E}(Y \vert \v x)$  and $\mathbb{V}(Y \vert \v x)$.
   
   - [Laplace filter]{.alertred} [@shephard1997likelihood; @koyama2010approximate]
     - Direct Gaussian approximation of filtering posterior at every $t$
@@ -795,9 +801,6 @@ where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
 
 ![](figs/covid_param_Laplace_none_3_withIPLF.svg){fig-align="center"}
 
-
-
-
 ## Natural parameter innovations
 
 - Parameter evolution should adapt to:
@@ -807,10 +810,20 @@ where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
   
 - [Natural gradients]{.alertred} [@amari1998natural; @amari1982differential] in optimization. 
 
+$$
+\v x_{i+1} = \v x_t - \gamma \red{\v I(\v x_t)^{-1}}\nabla f(\v x_t)
+$$
+
 - [Fisher metric]{.alertred}. Step sizes scaled with respect to model geometry.
-  
-::: tinyskip
-:::
+
+## Scaled innovations controls Kullback-Leibler divergence over time
+
+
+![](figs/KLPoissonLambdaNoScaling.svg){width="65%" fig-align="center"}
+
+![](figs/KLPoissonLambdaScaling.svg){width="65%" fig-align="center"}
+
+## Natural parameter innovations
 
 - Parameter evolution with [natural innovations]{.alertred}
 $$
@@ -828,12 +841,13 @@ where $\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})$
 
 - Non-linear transition model. Prior propagation step: $S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})$.
 
-## Natural parameter innovations - Poisson($\lambda$)
 
+- Prior at time $t=0$
+$$
+\v\theta_0 \sim N\Big(\v \mu_0, \frac{T}{\kappa_0}, \bar{I}^{-1}(\v\mu_0)\Big)
+$$
+where $\mu_0$ is backed out from beliefs about the data at time $t=0$. 
 
-![](figs/KLPoissonLambdaNoScaling.svg){width="70%" fig-align="center"}
-
-![](figs/KLPoissonLambdaScaling.svg){width="70%" fig-align="center"}
 
 ## Natural parameter innovations - Poisson($\exp(\theta)$)
 

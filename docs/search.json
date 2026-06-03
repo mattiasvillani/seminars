@@ -109,7 +109,7 @@
     "href": "nordstat2026/index.html#gaussian-approximation-filters-1",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Gaussian approximation filters",
-    "text": "Gaussian approximation filters\n\n\n\nExtended Kalman filter\n\nLinearize measurement/transition models\nApply standard Kalman filter\n\nUnscented Kalman filter\n\nPropagate sigma point approx of prior\n\nPrior linearization filter\n\nLinearize by statistical linear regression.\nLinearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{prior}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\)."
+    "text": "Gaussian approximation filters\n\n\n\nExtended Kalman filter\n\nLinearize measurement/transition models\nApply standard Kalman filter\n\nUnscented Kalman filter\n\nPropagate sigma point approx of prior\n\n \nPrior linearization filter\n\nLinearize by statistical linear regression.\nLinearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{prior}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\)."
   },
   {
     "objectID": "nordstat2026/index.html#simulated-example-sar22---mcmc-convergence",
@@ -123,7 +123,7 @@
     "href": "nordstat2026/index.html#iterated-gaussian-approximation-filters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Iterated Gaussian approximation filters",
-    "text": "Iterated Gaussian approximation filters\n\nNonlinear Gaussian models\n\nIterated extended Kalman filter [13]\nIterated unscented Kalman filter [14]\nPosterior linearization filter [15]\n\nLinearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{post}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\).\n\n\nNon-Gaussian models\n\nPosterior linearization filter - conditional moments version [16]\n\nStatistical linearization using \\(\\mathbb{E}(Y \\vert \\v x)\\) and \\(\\mathbb{V}(Y \\vert \\v x)\\).\n\nLaplace filter [17, 18]\n\nDirect Gaussian approximation of filtering posterior at every \\(t\\) \\[\n\\v{\\theta}_{t} \\vert y_{1:t} \\overset{\\mathrm{approx}}{\\sim} N(\\tilde{\\v{\\theta}}_{t \\vert t},     \\tilde{\\v{\\Omega}}_{t\\vert t})\n\\] where \\(\\tilde{\\v\\theta}_{t\\vert t}\\) is posterior mode and \\(\\tilde{\\v\\Omega}_{t\\vert t}\\) is inverse of observed information.\nAutomatic differentiation makes it … well … automatic."
+    "text": "Iterated Gaussian approximation filters\n\nNonlinear Gaussian models\n\nIterated extended Kalman filter [13]\nIterated unscented Kalman filter [14]\nPosterior linearization filter [15] Linearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{post}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\).\n\nNon-Gaussian models\n\nPosterior linearization filter - conditional moments version [16] Statistical linearization using \\(\\mathbb{E}(Y \\vert \\v x)\\) and \\(\\mathbb{V}(Y \\vert \\v x)\\).\nLaplace filter [17, 18]\n\nDirect Gaussian approximation of filtering posterior at every \\(t\\) \\[\n\\v{\\theta}_{t} \\vert y_{1:t} \\overset{\\mathrm{approx}}{\\sim} N(\\tilde{\\v{\\theta}}_{t \\vert t},     \\tilde{\\v{\\Omega}}_{t\\vert t})\n\\] where \\(\\tilde{\\v\\theta}_{t\\vert t}\\) is posterior mode and \\(\\tilde{\\v\\Omega}_{t\\vert t}\\) is inverse of observed information.\nAutomatic differentiation makes it … well … automatic."
   },
   {
     "objectID": "nordstat2026/index.html#simulated-poisson-regression-illustration",
@@ -207,14 +207,21 @@
     "href": "nordstat2026/index.html#natural-parameter-innovations",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Natural parameter innovations",
-    "text": "Natural parameter innovations\n\nParameter evolution should adapt to:\n\nScales of covariates\nLink functions\nModel geometry\n\nNatural gradients [22, 23] in optimization.\nFisher metric. Step sizes scaled with respect to model geometry.\n\n\n\n\n\nParameter evolution with natural innovations \\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{ExpFamily}\\Big(k(\\v x_{t}^\\top\\v\\beta_{t}), \\varphi_t  \\Big) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\v S(\\v\\beta_{t-1}) \\v\\nu_{t},\n\\end{aligned}\n\\] where \\(\\v S(\\v\\beta_{t-1}) = \\bar{I}^{-1/2}(\\v\\beta_{t-1})\\)\n\\(\\bar{I}(\\v\\beta) = \\frac{1}{T}I(\\v\\beta)\\) is the Fisher information from an “average” observation.\nNon-linear transition model. Prior propagation step: \\(S(\\v\\beta_{t-1}) \\approx S(\\hat{\\v\\beta}_{t-1 \\vert t-1})\\)."
+    "text": "Natural parameter innovations\n\nParameter evolution should adapt to:\n\nScales of covariates\nLink functions\nModel geometry\n\nNatural gradients [22, 23] in optimization.\n\n\\[\n\\v x_{i+1} = \\v x_t - \\gamma \\red{\\v I(\\v x_t)^{-1}}\\nabla f(\\v x_t)\n\\]\n\nFisher metric. Step sizes scaled with respect to model geometry."
   },
   {
-    "objectID": "nordstat2026/index.html#natural-parameter-innovations---poissonlambda",
-    "href": "nordstat2026/index.html#natural-parameter-innovations---poissonlambda",
+    "objectID": "nordstat2026/index.html#scaled-innovations-controls-kullback-leibler-divergence-over-time",
+    "href": "nordstat2026/index.html#scaled-innovations-controls-kullback-leibler-divergence-over-time",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Natural parameter innovations - Poisson(\\(\\lambda\\))",
-    "text": "Natural parameter innovations - Poisson(\\(\\lambda\\))"
+    "section": "Scaled innovations controls Kullback-Leibler divergence over time",
+    "text": "Scaled innovations controls Kullback-Leibler divergence over time"
+  },
+  {
+    "objectID": "nordstat2026/index.html#natural-parameter-innovations-1",
+    "href": "nordstat2026/index.html#natural-parameter-innovations-1",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Natural parameter innovations",
+    "text": "Natural parameter innovations\n\nParameter evolution with natural innovations \\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{ExpFamily}\\Big(k(\\v x_{t}^\\top\\v\\beta_{t}), \\varphi_t  \\Big) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\v S(\\v\\beta_{t-1}) \\v\\nu_{t},\n\\end{aligned}\n\\] where \\(\\v S(\\v\\beta_{t-1}) = \\bar{I}^{-1/2}(\\v\\beta_{t-1})\\)\n\\(\\bar{I}(\\v\\beta) = \\frac{1}{T}I(\\v\\beta)\\) is the Fisher information from an “average” observation.\nNon-linear transition model. Prior propagation step: \\(S(\\v\\beta_{t-1}) \\approx S(\\hat{\\v\\beta}_{t-1 \\vert t-1})\\).\nPrior at time \\(t=0\\) \\[\n\\v\\theta_0 \\sim N\\Big(\\v \\mu_0, \\frac{T}{\\kappa_0}, \\bar{I}^{-1}(\\v\\mu_0)\\Big)\n\\] where \\(\\mu_0\\) is backed out from beliefs about the data at time \\(t=0\\)."
   },
   {
     "objectID": "nordstat2026/index.html#natural-parameter-innovations---poissonexptheta",
