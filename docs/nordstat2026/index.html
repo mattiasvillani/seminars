@@ -874,8 +874,8 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}),
 <li><p><span class="math inline">\(\bar{I}(\v\beta) = \frac{1}{T}I(\v\beta)\)</span> is the <span class="alertred">Fisher information</span> from an “average” observation.</p></li>
 <li><p>Non-linear transition model. Prior propagation step: <span class="math inline">\(S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})\)</span>.</p></li>
 <li><p>Prior at time <span class="math inline">\(t=0\)</span> <span class="math display">\[
-\v\theta_0 \sim N\Big(\v \mu_0, \frac{T}{\kappa_0}, \bar{I}^{-1}(\v\mu_0)\Big)
-\]</span> where <span class="math inline">\(\mu_0\)</span> is backed out from beliefs about the data at time <span class="math inline">\(t=0\)</span>.</p></li>
+\v\beta_0 \sim N\Big(\v \mu_0, \frac{T}{\kappa_0}, \bar{I}^{-1}(\v\mu_0)\Big)
+\]</span> where <span class="math inline">\(\v\mu_0\)</span> is backed out from beliefs about the data at time <span class="math inline">\(t=0\)</span>.</p></li>
 </ul>
 </section>
 <section id="natural-parameter-innovations---poissonexptheta" class="slide level2">
