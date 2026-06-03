@@ -382,7 +382,7 @@ $\tilde{\boldsymbol{\phi}}=(\phi_1,\Phi_1,\red{-\phi_1\Phi_1})^{\top}$ and $\bol
 
 <div>
 
-[Transformation to stability at every $t$]{.alertred} ![](figs/illustration_transformation.svg){width="100%" fig-align="center"}
+[Transformation to stability at every $t$]{.alertred} [@Barndorff-Nielsen1973] ![](figs/illustration_transformation.svg){width="100%" fig-align="center"}
 
 ::: {.callout-important appearance="simple" icon="false" style="width: 100%;"}
 ## Lemma - uniform prior over the stability region [@fagerberg2026time; @jones2003skew]
@@ -525,6 +525,17 @@ $$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
 - Integrated Nested Laplace Approximation (INLA)?
   
 ## Gibbs sampling in linear Gaussian model with DSP prior
+
+- Linear Gaussian regression with DSP evolution
+
+$$
+\begin{aligned}
+y_t  &=\v x_{t}^\top\v\beta_{t} + \varepsilon_t,\hspace{1.6cm} \varepsilon_t \overset{\mathrm{ind}}{\sim}N(0,\sigma_\varepsilon^2) \\
+\v\beta_{t} &= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm} 
+\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
+\v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
+\end{aligned}
+$$
 
 - [Polya-Gamma augmentation]{.alertred} to turn $Z$-distribution into conditionally Gaussian. [@kowal2019dynamic; @polson2013bayesian]
 
