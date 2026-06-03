@@ -617,8 +617,7 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <li>Run Kalman filter <span class="math inline">\(p(\v\theta_t\vert y_{1:t})\)</span> forward for <span class="math inline">\(t=1,2,\ldots,T\)</span></li>
 <li>Sample <span class="math inline">\(p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})\)</span> backward for <span class="math inline">\(t=T,T-1,\ldots,1\)</span></li>
 </ul></li>
-<li><p>Non-linear/non-Gaussian: Kalman filter and FFBS not applicable.</p></li>
-<li><p>General idea: replace the filtering step with an approximate filter.</p></li>
+<li><p>Non-linear/non-Gaussian: replace the filtering step with an approximate filter.</p></li>
 <li><p><span class="alertred">Prior propagation</span>: approximate the joint distribution <span class="math display">\[\left(\begin{array}{c}
 \v\theta_{t}\\
 \v\theta_{t-1}
@@ -659,11 +658,12 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 </ul></li>
 <li><span class="alertred">Unscented Kalman filter</span>
 <ul>
-<li>Propagate sigma point approx of prior/posterior</li>
+<li>Propagate sigma point approx of prior</li>
 </ul></li>
 <li><span class="alertred">Prior linearization filter</span>
 <ul>
-<li>Linearize by statistical linear regression</li>
+<li>Linearize by statistical linear regression.</li>
+<li>Linearizes <span class="math inline">\(\boldsymbol{y}=\boldsymbol{g}(\boldsymbol{\theta})\)</span> by minimizing <span class="math inline">\(\mathbb{E_{\mathrm{prior}}}\left(\left\Vert \boldsymbol{g}(\boldsymbol{\theta})-(\boldsymbol{\boldsymbol{a}+C}\boldsymbol{\theta})\right\Vert ^{2}\right)\)</span>.</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:30%;">
@@ -684,7 +684,10 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <ul>
 <li><p><span class="alertred">Iterated extended Kalman filter</span> <span class="citation" data-cites="skoglund2015extended">[<a href="#/references" role="doc-biblioref" onclick="">13</a>]</span></p></li>
 <li><p><span class="alertred">Iterated unscented Kalman filter</span> <span class="citation" data-cites="skoglund2019iterative">[<a href="#/references" role="doc-biblioref" onclick="">14</a>]</span></p></li>
-<li><p><span class="alertred">Posterior linearization filter</span> <span class="citation" data-cites="garcia2015posterior">[<a href="#/references" role="doc-biblioref" onclick="">15</a>]</span></p></li>
+<li><p><span class="alertred">Posterior linearization filter</span> <span class="citation" data-cites="garcia2015posterior">[<a href="#/references" role="doc-biblioref" onclick="">15</a>]</span></p>
+<ul>
+<li>Linearizes <span class="math inline">\(\boldsymbol{y}=\boldsymbol{g}(\boldsymbol{\theta})\)</span> by minimizing <span class="math inline">\(\mathbb{E_{\mathrm{post}}}\left(\left\Vert \boldsymbol{g}(\boldsymbol{\theta})-(\boldsymbol{\boldsymbol{a}+C}\boldsymbol{\theta})\right\Vert ^{2}\right)\)</span>.</li>
+</ul></li>
 </ul></li>
 <li><p>Non-Gaussian models</p>
 <ul>
@@ -697,11 +700,15 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 <li>Direct Gaussian approximation of filtering posterior at every <span class="math inline">\(t\)</span> <span class="math display">\[
 \v{\theta}_{t} \vert y_{1:t} \overset{\mathrm{approx}}{\sim} N(\tilde{\v{\theta}}_{t \vert t},     \tilde{\v{\Omega}}_{t\vert t})
 \]</span> where <span class="math inline">\(\tilde{\v\theta}_{t\vert t}\)</span> is posterior mode and <span class="math inline">\(\tilde{\v\Omega}_{t\vert t}\)</span> is inverse of observed information.</li>
-<li><span class="alertred">Automatic differentiation</span> makes it … automatic.</li>
+<li><span class="alertred">Automatic differentiation</span> makes it … well … automatic.</li>
 </ul></li>
 </ul></li>
 </ul>
 </section>
+<section id="simulated-poisson-regression-illustration" class="slide level2">
+<h2>Simulated Poisson regression illustration</h2>
+
+<img data-src="figs/covid_param_IPLF_none_1_withIPLF.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="time-varying-beta-regression-for-us-layoff-proportion" class="slide level2">
 <h2>Time-varying Beta regression for US layoff proportion</h2>
 <ul>
@@ -820,6 +827,14 @@ y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{gj}^\top\v\beta_
 <li><p>Large groups: Sequential filtering of individual observations within group.</p></li>
 </ul>
 </section>
+<section id="simulated-poisson-regression-illustration---no-grouping" class="slide level2">
+<h2>Simulated Poisson regression illustration - no grouping</h2>
+
+<img data-src="figs/covid_param_IPLF_none_1_withIPLF.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="simulated-poisson-regression-illustration---group-of-three" class="slide level2">
+<h2>Simulated Poisson regression illustration - group of three</h2>
+
+<img data-src="figs/covid_param_Laplace_none_3_withIPLF.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="natural-parameter-innovations" class="slide level2">
 <h2>Natural parameter innovations</h2>
 <ul>
@@ -875,37 +890,37 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}),
 <section id="ongoing-and-future-work" class="slide level2">
 <h2>Ongoing and future work</h2>
 <ul>
-<li><span class="alertred">Multivariate</span> extensions.</li>
+<li><span class="alertred">Multivariate</span> extensions</li>
 </ul>
 <div class="tinyskip">
 
 </div>
 <ul>
-<li><span class="alertred">Forecasting</span>.</li>
+<li><span class="alertred">Forecasting</span></li>
 </ul>
 <div class="tinyskip">
 
 </div>
 <ul>
-<li>More <span class="alertred">efficient sampling of DSP</span>.</li>
+<li>More <span class="alertred">efficient sampling of DSP part</span></li>
 </ul>
 <div class="tinyskip">
 
 </div>
 <ul>
-<li>Better <span class="alertred">prior elicitation for DSP</span>.</li>
+<li>Better <span class="alertred">prior elicitation for DSP part</span></li>
 </ul>
 <div class="tinyskip">
 
 </div>
 <ul>
-<li><span class="alertred">Posterior perturbation bounds</span> from the true target posterior.</li>
+<li><span class="alertred">Posterior perturbation bounds</span> from the true target posterior</li>
 </ul>
 <div class="tinyskip">
 
 </div>
 <ul>
-<li><span class="alertred">Metropolis-Hastings correction</span> by blocking the state. Filtering version of <span class="citation" data-cites="shephard1997likelihood">[<a href="#/references" role="doc-biblioref" onclick="">17</a>]</span>.</li>
+<li><span class="alertred">Metropolis-Hastings correction</span> by blocking the state. Filtering version of <span class="citation" data-cites="shephard1997likelihood">[<a href="#/references" role="doc-biblioref" onclick="">17</a>]</span></li>
 </ul>
 <div class="tinyskip">
 

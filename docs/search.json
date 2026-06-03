@@ -102,14 +102,14 @@
     "href": "nordstat2026/index.html#gaussian-approximation-filters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Gaussian approximation filters",
-    "text": "Gaussian approximation filters\n\n\n\nForward-filtering-backward sampling for linear Gaussian models [11, 12]\n\nRun Kalman filter \\(p(\\v\\theta_t\\vert y_{1:t})\\) forward for \\(t=1,2,\\ldots,T\\)\nSample \\(p(\\v\\theta_{t}\\vert \\v\\theta_{t+1}, y_{1:T})\\) backward for \\(t=T,T-1,\\ldots,1\\)\n\nNon-linear/non-Gaussian: Kalman filter and FFBS not applicable.\nGeneral idea: replace the filtering step with an approximate filter.\nPrior propagation: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\v\\theta_{t}\\\\\n\\v\\theta_{t-1}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\v\\theta_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t-1})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\v\\theta_{t}) & \\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})\\\\\n\\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})^{\\top} & \\mathbb{V}(\\v\\theta_{t-1})\n\\end{array}\\right)\\right]\\]\nObservation update: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\boldsymbol{y}_{t}\\\\\n\\v\\theta_{t}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\boldsymbol{y}_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\boldsymbol{y}_{t}) & \\red{\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})}\\\\\n\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})^{\\top} & \\mathbb{V}(\\v\\theta_{t})\n\\end{array}\\right)\\right]\\]"
+    "text": "Gaussian approximation filters\n\n\n\nForward-filtering-backward sampling for linear Gaussian models [11, 12]\n\nRun Kalman filter \\(p(\\v\\theta_t\\vert y_{1:t})\\) forward for \\(t=1,2,\\ldots,T\\)\nSample \\(p(\\v\\theta_{t}\\vert \\v\\theta_{t+1}, y_{1:T})\\) backward for \\(t=T,T-1,\\ldots,1\\)\n\nNon-linear/non-Gaussian: replace the filtering step with an approximate filter.\nPrior propagation: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\v\\theta_{t}\\\\\n\\v\\theta_{t-1}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\v\\theta_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t-1})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\v\\theta_{t}) & \\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})\\\\\n\\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})^{\\top} & \\mathbb{V}(\\v\\theta_{t-1})\n\\end{array}\\right)\\right]\\]\nObservation update: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\boldsymbol{y}_{t}\\\\\n\\v\\theta_{t}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\boldsymbol{y}_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\boldsymbol{y}_{t}) & \\red{\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})}\\\\\n\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})^{\\top} & \\mathbb{V}(\\v\\theta_{t})\n\\end{array}\\right)\\right]\\]"
   },
   {
     "objectID": "nordstat2026/index.html#gaussian-approximation-filters-1",
     "href": "nordstat2026/index.html#gaussian-approximation-filters-1",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Gaussian approximation filters",
-    "text": "Gaussian approximation filters\n\n\n\nExtended Kalman filter\n\nLinearize measurement/transition models\nApply standard Kalman filter\n\nUnscented Kalman filter\n\nPropagate sigma point approx of prior/posterior\n\nPrior linearization filter\n\nLinearize by statistical linear regression"
+    "text": "Gaussian approximation filters\n\n\n\nExtended Kalman filter\n\nLinearize measurement/transition models\nApply standard Kalman filter\n\nUnscented Kalman filter\n\nPropagate sigma point approx of prior\n\nPrior linearization filter\n\nLinearize by statistical linear regression.\nLinearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{prior}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\)."
   },
   {
     "objectID": "nordstat2026/index.html#simulated-example-sar22---mcmc-convergence",
@@ -123,7 +123,7 @@
     "href": "nordstat2026/index.html#iterated-gaussian-approximation-filters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Iterated Gaussian approximation filters",
-    "text": "Iterated Gaussian approximation filters\n\nNonlinear Gaussian models\n\nIterated extended Kalman filter [13]\nIterated unscented Kalman filter [14]\nPosterior linearization filter [15]\n\nNon-Gaussian models\n\nPosterior linearization filter - conditional moments version [16]\n\nStatistical linearization using \\(\\mathbb{E}(Y \\vert \\v x)\\) and \\(\\mathbb{V}(Y \\vert \\v x)\\).\n\nLaplace filter [17, 18]\n\nDirect Gaussian approximation of filtering posterior at every \\(t\\) \\[\n\\v{\\theta}_{t} \\vert y_{1:t} \\overset{\\mathrm{approx}}{\\sim} N(\\tilde{\\v{\\theta}}_{t \\vert t},     \\tilde{\\v{\\Omega}}_{t\\vert t})\n\\] where \\(\\tilde{\\v\\theta}_{t\\vert t}\\) is posterior mode and \\(\\tilde{\\v\\Omega}_{t\\vert t}\\) is inverse of observed information.\nAutomatic differentiation makes it … automatic."
+    "text": "Iterated Gaussian approximation filters\n\nNonlinear Gaussian models\n\nIterated extended Kalman filter [13]\nIterated unscented Kalman filter [14]\nPosterior linearization filter [15]\n\nLinearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{post}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\).\n\n\nNon-Gaussian models\n\nPosterior linearization filter - conditional moments version [16]\n\nStatistical linearization using \\(\\mathbb{E}(Y \\vert \\v x)\\) and \\(\\mathbb{V}(Y \\vert \\v x)\\).\n\nLaplace filter [17, 18]\n\nDirect Gaussian approximation of filtering posterior at every \\(t\\) \\[\n\\v{\\theta}_{t} \\vert y_{1:t} \\overset{\\mathrm{approx}}{\\sim} N(\\tilde{\\v{\\theta}}_{t \\vert t},     \\tilde{\\v{\\Omega}}_{t\\vert t})\n\\] where \\(\\tilde{\\v\\theta}_{t\\vert t}\\) is posterior mode and \\(\\tilde{\\v\\Omega}_{t\\vert t}\\) is inverse of observed information.\nAutomatic differentiation makes it … well … automatic."
   },
   {
     "objectID": "nordstat2026/index.html#simulated-poisson-regression-illustration",
@@ -187,6 +187,20 @@
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Grouping observations",
     "text": "Grouping observations\n\nRelated ideas:\n\nImprove Gaussianity in Subsampling MCMC/HMC [19]\nImprove linearity/Gaussianity in filtering [20]\nModeling moderate time evolutions [21]\n\n\n\n\n\n\nTwo views:\n\ninterpolation for algorithmic performance\ngenuine model change: different time scales for observations and parameters.\n\n\n\n\n\n\nParameter evolution is automatically adapted to different group sizes.\nMassive speed-up, particularly for sub-daily data.\nExample: 30 min electricity price. Group \\(48\\times 30 = 1440\\) observations by month.\nLarge groups: Sequential filtering of individual observations within group."
+  },
+  {
+    "objectID": "nordstat2026/index.html#simulated-poisson-regression-illustration---no-grouping",
+    "href": "nordstat2026/index.html#simulated-poisson-regression-illustration---no-grouping",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Simulated Poisson regression illustration - no grouping",
+    "text": "Simulated Poisson regression illustration - no grouping"
+  },
+  {
+    "objectID": "nordstat2026/index.html#simulated-poisson-regression-illustration---group-of-three",
+    "href": "nordstat2026/index.html#simulated-poisson-regression-illustration---group-of-three",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Simulated Poisson regression illustration - group of three",
+    "text": "Simulated Poisson regression illustration - group of three"
   },
   {
     "objectID": "nordstat2026/index.html#natural-parameter-innovations",
