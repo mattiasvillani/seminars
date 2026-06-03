@@ -95,7 +95,7 @@
     "href": "nordstat2026/index.html#gibbs-sampling-in-linear-gaussian-model-with-dsp-prior",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Gibbs sampling in linear Gaussian model with DSP prior",
-    "text": "Gibbs sampling in linear Gaussian model with DSP prior\n\nLinear Gaussian regression with DSP evolution\n\n\\[\n\\begin{aligned}\ny_t  &=\\v x_{t}^\\top\\v\\beta_{t} + \\varepsilon_t,\\hspace{1.6cm} \\varepsilon_t \\overset{\\mathrm{ind}}{\\sim}N(0,\\sigma_\\varepsilon^2) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\boldsymbol{\\nu}_{t},\\hspace{2cm}\n\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\odot  \\v h_t))\\big) \\\\\n\\v h_t &= \\Phi \\v h_{t-1} + \\v\\eta_t,\\hspace{1.6cm} \\eta_{tk} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\]\n\nPolya-Gamma augmentation to turn \\(Z\\)-distribution into conditionally Gaussian. [4, 9]\n\n\n\n\n\nSquare-and-log trick to turn variance \\(\\exp(h_t)\\) into a mean \\(h_t\\). [10]\n\n\n\n\n\nFast sampling of \\(\\v h_{1:T}\\) using sparse multivariate Gaussian [11].\n\n\n\n\n\nForward-filtering-backward sampling (FFBS) to sample \\(\\v\\theta_{1:T}\\) [12, 13]"
+    "text": "Gibbs sampling in linear Gaussian model with DSP prior\n\nLinear Gaussian regression with DSP evolution\n\n\\[\n\\begin{aligned}\ny_t  &=\\v x_{t}^\\top\\v\\beta_{t} + \\varepsilon_t,\\hspace{1.6cm} \\varepsilon_t \\overset{\\mathrm{ind}}{\\sim}N(0,\\sigma_\\varepsilon^2) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\boldsymbol{\\nu}_{t},\\hspace{2cm}\n\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\odot  \\v h_t))\\big) \\\\\n\\v h_t &= \\Phi \\v h_{t-1} + \\v\\eta_t,\\hspace{1.6cm} \\eta_{tk} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\]\n\nPolya-Gamma augmentation to turn \\(Z\\)-distribution into conditionally Gaussian. [4, 9]\n\n\n\n\n\nSquare-and-log trick to turn variance \\(\\exp(h_t)\\) into a mean \\(h_t\\). [10]\n\n\n\n\n\nFast sampling of \\(\\v h_{1:T}\\) using sparse multivariate Gaussian [11].\n\n\n\n\n\nForward-filtering-backward sampling (FFBS) to sample \\(\\v\\beta_{1:T}\\) [12, 13]"
   },
   {
     "objectID": "nordstat2026/index.html#gaussian-approximation-filters",
@@ -207,7 +207,7 @@
     "href": "nordstat2026/index.html#natural-parameter-innovations",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Natural parameter innovations",
-    "text": "Natural parameter innovations\n\nParameter evolution should adapt to:\n\nScales of covariates\nLink functions\nModel geometry\n\nNatural gradients [23, 24] in optimization.\n\n\\[\n\\v x_{i+1} = \\v x_t - \\gamma \\red{\\v I(\\v x_t)^{-1}}\\nabla f(\\v x_t)\n\\]\n\nFisher metric. Step sizes scaled with respect to model geometry."
+    "text": "Natural parameter innovations\n\nParameter evolution should adapt to:\n\nScales of covariates\nLink functions\nModel geometry\n\nNatural gradients [23, 24] in optimization.\n\n\\[\n\\v x_{j+1} = \\v x_j - \\gamma \\red{\\v I(\\v x_j)^{-1}}\\nabla f(\\v x_j)\n\\]\n\nFisher metric. Step sizes scaled with respect to model geometry."
   },
   {
     "objectID": "nordstat2026/index.html#scaled-innovations-controls-kullback-leibler-divergence-over-time",

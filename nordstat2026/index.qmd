@@ -552,7 +552,7 @@ $$
 ::: smallskip
 :::
 
-- [Forward-filtering-backward sampling]{.alertred} (FFBS) to sample $\v\theta_{1:T}$ [@carter1994gibbs; @fruhwirth1994data]
+- [Forward-filtering-backward sampling]{.alertred} (FFBS) to sample $\v\beta_{1:T}$ [@carter1994gibbs; @fruhwirth1994data]
 
 
 ## Gaussian approximation filters
@@ -822,7 +822,7 @@ where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
 - [Natural gradients]{.alertred} [@amari1998natural; @amari1982differential] in optimization. 
 
 $$
-\v x_{i+1} = \v x_t - \gamma \red{\v I(\v x_t)^{-1}}\nabla f(\v x_t)
+\v x_{j+1} = \v x_j - \gamma \red{\v I(\v x_j)^{-1}}\nabla f(\v x_j)
 $$
 
 - [Fisher metric]{.alertred}. Step sizes scaled with respect to model geometry.

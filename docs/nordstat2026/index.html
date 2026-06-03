@@ -615,7 +615,7 @@ y_t  &amp;=\v x_{t}^\top\v\beta_{t} + \varepsilon_t,\hspace{1.6cm} \varepsilon_t
 
 </div>
 <ul>
-<li><span class="alertred">Forward-filtering-backward sampling</span> (FFBS) to sample <span class="math inline">\(\v\theta_{1:T}\)</span> <span class="citation" data-cites="carter1994gibbs fruhwirth1994data">[<a href="#/references" role="doc-biblioref" onclick="">12</a>, <a href="#/references" role="doc-biblioref" onclick="">13</a>]</span></li>
+<li><span class="alertred">Forward-filtering-backward sampling</span> (FFBS) to sample <span class="math inline">\(\v\beta_{1:T}\)</span> <span class="citation" data-cites="carter1994gibbs fruhwirth1994data">[<a href="#/references" role="doc-biblioref" onclick="">12</a>, <a href="#/references" role="doc-biblioref" onclick="">13</a>]</span></li>
 </ul>
 </section>
 <section id="gaussian-approximation-filters" class="slide level2">
@@ -854,7 +854,7 @@ y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{gj}^\top\v\beta_
 <li><span class="alertred">Natural gradients</span> <span class="citation" data-cites="amari1998natural amari1982differential">[<a href="#/references" role="doc-biblioref" onclick="">23</a>, <a href="#/references" role="doc-biblioref" onclick="">24</a>]</span> in optimization.</li>
 </ul>
 <p><span class="math display">\[
-\v x_{i+1} = \v x_t - \gamma \red{\v I(\v x_t)^{-1}}\nabla f(\v x_t)
+\v x_{j+1} = \v x_j - \gamma \red{\v I(\v x_j)^{-1}}\nabla f(\v x_j)
 \]</span></p>
 <ul>
 <li><span class="alertred">Fisher metric</span>. Step sizes scaled with respect to model geometry.</li>
