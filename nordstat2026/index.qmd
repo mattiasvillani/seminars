@@ -855,7 +855,7 @@ where $\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})$
 
 - Prior at time $t=0$
 $$
-\v\beta_0 \sim N\Big(\v \mu_0, \frac{T}{\kappa_0}, \bar{I}^{-1}(\v\mu_0)\Big)
+\v\beta_0 \sim N\Big(\v \mu_0, \frac{T}{\kappa_0}\bar{I}^{-1}(\v\mu_0)\Big)
 $$
 where $\v\mu_0$ is backed out from beliefs about the data at time $t=0$. 
 
