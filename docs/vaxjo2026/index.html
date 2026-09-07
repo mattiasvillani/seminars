@@ -188,7 +188,7 @@ Mattias Villani
 <li><p><span class="alertred">Robert Kohn</span>, University of New South Wales, Sydney.</p></li>
 <li><p><span class="alertred">Ganna Fagerberg</span>, Stockholm University</p></li>
 <li><p><span class="alertred">Yijie Niu</span>, Stockholm University</p></li>
-<li><p><span class="alertred">Oskar Gustafsson</span>, Stockholm University</p></li>
+<li><p><span class="alertred">Oskar Gustafsson</span>, Konjunkturinstitutet and Stockholm University</p></li>
 </ul>
 <hr>
 <p><span class="alertblue">Funding</span></p>
@@ -228,8 +228,9 @@ Mattias Villani
 <li>Time-varying parameters and state-space models</li>
 <li>Dynamic shrinkage process priors</li>
 <li>Time-varying multi-seasonal ARMA</li>
-<li>Non-Gaussian models</li>
-<li>Posterior inference</li>
+<li>Bayesian inference for Non-Gaussian models</li>
+<li>Grouping observations</li>
+<li>Natural parameter innovations</li>
 </ol>
 </section>
 <section id="time-varying-parameter-models" class="slide level2">
@@ -754,34 +755,30 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(\v x_{t
 <p><span class="alertred">Poisson model</span></p>
 <p><img data-src="figs/PoissonLikeContributions.svg" style="width:30.0%"> <img data-src="figs/PoissonPosteriorInformativePrior.svg" style="width:30.0%"> <img data-src="figs/PoissonPosteriorNonInformativePrior.svg" style="width:30.0%"></p>
 </section>
-<section id="grouping" class="slide level2">
-<h2>Grouping</h2>
+<section id="grouping-observations" class="slide level2">
+<h2>Grouping observations</h2>
 <div class="columns">
 <div class="column" style="width:80%;">
 <ul>
-<li><span class="alertred">Group observations</span> in <span class="math inline">\(G\)</span> groups of <span class="math inline">\(J_g\)</span> observations in group <span class="math inline">\(g\)</span>.</li>
+<li><span class="alertred">Group/segment observations</span> in <span class="math inline">\(G\)</span> groups of <span class="math inline">\(J\)</span> observations.</li>
 <li><span class="alertred">Same state <span class="math inline">\(\v\beta_g\)</span> for observations within a group</span>.</li>
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
-y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
+y_{t} \vert \v x_{t} &amp;\sim p(y_t \vert \v x_t, \v\beta_{g(t)}) \\
 \v\beta_{g} &amp;= \v\beta_{g-1}+\boldsymbol{\nu}_{g},\hspace{2cm}
 \v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_g))\big) \\
 \v h_g &amp;= \Phi \v h_{g-1} + \v\eta_g,\hspace{1.6cm} \eta_{g} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
-\]</span> where <span class="math inline">\(j=1,\ldots,J_g\)</span> for <span class="math inline">\(g=1,\ldots,G\)</span>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figs/PoissonLikeContributionsGroup.svg" class="quarto-figure quarto-figure-center" style="width:35.0%"></p>
-</figure>
-</div>
+\]</span> where <span class="math inline">\(g(t) = \lceil t/J \rceil\)</span> maps time periods to segments/groups.</p>
+<p><img data-src="figs/groups.svg" class="quarto-figure quarto-figure-center" style="width:60.0%"> <img data-src="figs/PoissonLikeContributionsGroup.svg" class="quarto-figure quarto-figure-center" style="width:35.0%"></p>
 </div><div class="column" style="width:20%;">
 <blockquote>
 <p>“When all the hope is gone, there is no reason for pessimism”. <br> <em>Aki Kaurismäki</em></p>
 </blockquote>
 </div></div>
 </section>
-<section id="grouping-observations" class="slide level2">
+<section id="grouping-observations-1" class="slide level2">
 <h2>Grouping observations</h2>
 <ul>
 <li>Related ideas:
@@ -813,6 +810,8 @@ y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{gj}^\top\v\beta_
 </section>
 <section id="natural-parameter-innovations" class="slide level2">
 <h2>Natural parameter innovations</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
 <ul>
 <li><p>Parameter evolution should adapt to:</p>
 <ul>
@@ -820,24 +819,44 @@ y_{gj} \vert \v x_{gj} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{gj}^\top\v\beta_
 <li>Link functions</li>
 <li>Model geometry</li>
 </ul></li>
-<li><p>Use ideas from Information geometry. Natural gradient <span class="citation" data-cites="amari1998natural amari1982differential">[<a href="#/references" role="doc-biblioref" onclick="">23</a>, <a href="#/references" role="doc-biblioref" onclick="">24</a>]</span></p></li>
+<li><p>Information geometry ideas <span class="citation" data-cites="amari1998natural amari1982differential">[<a href="#/references" role="doc-biblioref" onclick="">23</a>, <a href="#/references" role="doc-biblioref" onclick="">24</a>]</span></p></li>
+<li><p>Observation driven models (Generalized autoregressive score models) <span class="citation" data-cites="creal2013generalized">[<a href="#/references" role="doc-biblioref" onclick="">25</a>]</span></p></li>
 <li><p><span class="alertred">Natural parameter innovations</span></p></li>
 </ul>
 <p><span class="math display">\[
 \v\beta_{t} = \v\beta_{t-1} + \mathcal{I}(\v\beta_{t-1})^{-1/2}\v\nu_t
-\]</span> - Fisher-scaled innovations controls the Kullback-Leibler divergence over time <span class="math display">\[
-D_{\mathrm{KL}}\big( p(y \vert \v\beta) \, \vert \vert \, p(y \vert \v\beta +\v\epsilon) \big) \approx  \frac{1}{2}(\v\epsilon)^\top \mathcal{I}(\v\beta)\v\epsilon,
-\]</span> <img data-src="figs/KLPoissonLambdaNoScaling.svg" class="quarto-figure quarto-figure-center" style="width:65.0%"></p>
+\]</span></p>
+<ul>
+<li>Controls the KL divergence over time</li>
+</ul>
+<p><span class="math display">\[
+D_{\mathrm{KL}}\big( p(y \vert \v\beta) \, \vert \vert \, p(y \vert \v\beta +\v\epsilon) \big) \approx  \frac{1}{2}\v\epsilon^\top \mathcal{I}(\v\beta)\v\epsilon,
+\]</span></p>
+</div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="figs/KLPoissonLambdaScaling.svg" class="quarto-figure quarto-figure-center" style="width:65.0%"></p>
+<p><img data-src="figs/KLPoissonLambdaNoScaling.svg" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
 </figure>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figs/KLPoissonLambdaScaling.svg" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="natural-parameter-innovations-1" class="slide level2">
+<h2>Natural parameter innovations</h2>
 <ul>
-<li><p>Non-linear transition model. Prior propagation step: <span class="math inline">\(S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})\)</span>.</p></li>
-<li><p>Prior at time <span class="math inline">\(t=0\)</span> <span class="math display">\[
-\v\beta_0 \sim N\Big(\v \mu_0, \frac{T}{\kappa_0}\mathcal{I}^{-1}(\v\mu_0)\Big)
-\]</span> where <span class="math inline">\(\v\mu_0\)</span> is backed out from beliefs about the data at time <span class="math inline">\(t=0\)</span>.</p></li>
+<li><p>Non-linear transition model. <span class="math inline">\(\mathcal{I}(\v\beta_{t-1}) \approx \mathcal{I}(\hat{\v\beta}_{t-1 \vert t-1})\)</span>.</p></li>
+<li><p>Fisher information from one observation is <span class="alertred">unit rank</span>.</p></li>
+<li><p>Poisson regression: <span class="math display">\[\mathcal{I}(\v\beta) = \lambda_t \v x_t \v x_t^\top \]</span> where <span class="math inline">\(\lambda_t = \exp(\v x_t ^\top \v\beta)\)</span>.</p></li>
+<li><p>Many ways around this:</p>
+<ul>
+<li>Pseudo inverse <span class="citation" data-cites="creal2013generalized">[<a href="#/references" role="doc-biblioref" onclick="">25</a>]</span></li>
+<li>Grouping observations</li>
+<li>Average of all observations <span class="math display">\[\bar{\mathcal{I}}(\v\beta) = \frac{1}{T}\v X^\top \mathrm{Diag}(\lambda_1,\ldots,\lambda_T) \v X\]</span></li>
+</ul></li>
 </ul>
 </section>
 <section id="ongoing-and-future-work" class="slide level2">
@@ -962,6 +981,9 @@ D_{\mathrm{KL}}\big( p(y \vert \v\beta) \, \vert \vert \, p(y \vert \v\beta +\v\
 </div>
 <div id="ref-amari1982differential" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[24] </div><div class="csl-right-inline">Amari S-I. Differential geometry of curved exponential families-curvatures and information loss. The Annals of Statistics. 1982:357–385.</div>
+</div>
+<div id="ref-creal2013generalized" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[25] </div><div class="csl-right-inline">Creal D, Koopman SJ, Lucas A. Generalized autoregressive score models with applications. Journal of applied econometrics. 2013;28(5):777–795.</div>
 </div>
 </div>
 </section>
@@ -1255,7 +1277,7 @@ D_{\mathrm{KL}}\big( p(y \vert \v\beta) \, \vert \vert \, p(y \vert \v\beta +\v\
     <script>
     const logo = document.createElement('img');
     logo.src = 'figs/compBayesLogo_mvcolors.png';
-    logo.style.cssText = 'position:absolute; bottom: 50px; left:50%; transform:translateX(-50%); width:600px; z-index:9998; pointer-events:none; display:none;';
+    logo.style.cssText = 'position:absolute; bottom: 20px; left:50%; transform:translateX(-50%); width:260px; z-index:9998; pointer-events:none; display:none;';
     logo.classList.add('no-print');
     document.querySelector('.reveal .slides').appendChild(logo);
 

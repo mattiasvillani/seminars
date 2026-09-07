@@ -86,7 +86,7 @@ csl: vancouver.csl
 
 -  [Yijie Niu]{.alertred}, Stockholm University
 
--  [Oskar Gustafsson]{.alertred}, Stockholm University
+-  [Oskar Gustafsson]{.alertred}, Konjunkturinstitutet and Stockholm University
 
 <hr>
 
@@ -139,8 +139,9 @@ csl: vancouver.csl
 0.  Time-varying parameters and state-space models
 1.  Dynamic shrinkage process priors
 2.  Time-varying multi-seasonal ARMA
-3.  Non-Gaussian models
-4.  Posterior inference
+3.  Bayesian inference for Non-Gaussian models
+4.  Grouping observations
+5.  Natural parameter innovations
 
 
 
@@ -716,25 +717,26 @@ $$
 
 
 
-## Grouping
+## Grouping observations
 
 :::: {.columns}
 
 ::: {.column width="80%"}
 
-- [Group observations]{.alertred} in $G$ groups of $J_g$ observations in group $g$. 
+- [Group/segment observations]{.alertred} in $G$ groups of $J$ observations. 
 - [Same state $\v\beta_g$ for observations within a group]{.alertred}.
 
 $$
 \begin{aligned}
-y_{gj} \vert \v x_{gj} &\sim \mathrm{ExpFamily}\Big(k(\v x_{gj}^\top\v\beta_{g}), \varphi_{g}  \Big) \\
+y_{t} \vert \v x_{t} &\sim p(y_t \vert \v x_t, \v\beta_{g(t)}) \\
 \v\beta_{g} &= \v\beta_{g-1}+\boldsymbol{\nu}_{g},\hspace{2cm} 
 \v\nu_{g}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_g))\big) \\
 \v h_g &= \Phi \v h_{g-1} + \v\eta_g,\hspace{1.6cm} \eta_{g} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 $$
-where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
+where $g(t) = \lceil t/J \rceil$ maps time periods to segments/groups.
 
+![](figs/groups.svg){width="60%" fig-align="center"}
 ![](figs/PoissonLikeContributionsGroup.svg){width="35%" fig-align="center"}
 
 :::
@@ -776,34 +778,53 @@ where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
 
 ## Natural parameter innovations
 
+
+:::: {.columns}
+::: {.column width="50%"}
+
 - Parameter evolution should adapt to:
   - Scales and covariance of covariates
   - Link functions
   - Model geometry
   
-- Use ideas from Information geometry. Natural gradient [@amari1998natural; @amari1982differential]
+- Information geometry ideas [@amari1998natural; @amari1982differential]
+
+- Observation driven models (Generalized autoregressive score models) [@creal2013generalized]
   
 - [Natural parameter innovations]{.alertred}  
 
 $$
 \v\beta_{t} = \v\beta_{t-1} + \mathcal{I}(\v\beta_{t-1})^{-1/2}\v\nu_t
 $$
-- Fisher-scaled innovations controls the Kullback-Leibler divergence over time 
-$$
-D_{\mathrm{KL}}\big( p(y \vert \v\beta) \, \vert \vert \, p(y \vert \v\beta +\v\epsilon) \big) \approx  \frac{1}{2}(\v\epsilon)^\top \mathcal{I}(\v\beta)\v\epsilon,
-$$
-![](figs/KLPoissonLambdaNoScaling.svg){width="65%" fig-align="center"}
 
-![](figs/KLPoissonLambdaScaling.svg){width="65%" fig-align="center"}
+- Controls the KL divergence over time 
 
-- Non-linear transition model. Prior propagation step: $S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})$.
-
-- Prior at time $t=0$
 $$
-\v\beta_0 \sim N\Big(\v \mu_0, \frac{T}{\kappa_0}\mathcal{I}^{-1}(\v\mu_0)\Big)
+D_{\mathrm{KL}}\big( p(y \vert \v\beta) \, \vert \vert \, p(y \vert \v\beta +\v\epsilon) \big) \approx  \frac{1}{2}\v\epsilon^\top \mathcal{I}(\v\beta)\v\epsilon,
 $$
-where $\v\mu_0$ is backed out from beliefs about the data at time $t=0$. 
+:::
 
+::: {.column width="50%"}
+
+![](figs/KLPoissonLambdaNoScaling.svg){width="100%" fig-align="center"}
+
+![](figs/KLPoissonLambdaScaling.svg){width="100%" fig-align="center"}
+:::
+
+::::
+
+
+## Natural parameter innovations
+
+- Non-linear transition model. $\mathcal{I}(\v\beta_{t-1}) \approx \mathcal{I}(\hat{\v\beta}_{t-1 \vert t-1})$.
+- Fisher information from one observation is [unit rank]{.alertred}. 
+- Poisson regression: $$\mathcal{I}(\v\beta) = \lambda_t \v x_t \v x_t^\top $$
+where $\lambda_t = \exp(\v x_t ^\top \v\beta)$.
+- Many ways around this:
+
+  - Pseudo inverse [@creal2013generalized]
+  - Grouping observations
+  - Average of all observations $$\bar{\mathcal{I}}(\v\beta) = \frac{1}{T}\v X^\top \mathrm{Diag}(\lambda_1,\ldots,\lambda_T) \v X$$
 
 ## Ongoing and future work
 
