@@ -161,7 +161,7 @@ y_{t} &= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t}\qquad
 \end{aligned}
 $$
 
-::: mediumskip
+::: smallskip
 :::
 
 -   [Linear Gaussian state-space model]{.alertred} $$
@@ -450,19 +450,11 @@ The AR parameters $\v\phi$ are uniformly distributed over the stability region i
 
 -   [GLMs]{.alertred} with time-varying parameters
 
-$$
-\begin{aligned}
-y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
-\v\beta_{t} &= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm} 
-\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
-\v h_t &= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
-\end{aligned}
-$$
 
 ::: smallskip
 :::
 
--   [Poisson regression]{.alertred} with DSP prior
+-   [Poisson regression]{.alertred} 
 
 $$
 \begin{aligned}
@@ -470,17 +462,24 @@ y_t \vert \v x_{t} &\sim \mathrm{Pois}\big(\mu_t = \exp(\v x_{t}^\top\v\beta_{t}
 \end{aligned}
 $$
 
+
 ::: smallskip
 :::
 
 
--   [Beta regression]{.alertred} with DSP prior
+-   [Beta regression]{.alertred}
 
 $$
 \begin{aligned}
 y_t \vert \v x_{t}, z_{t} &\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t})}, \, \blue{\phi_t = \exp(\v z_{t}^\top\v\gamma_{t})} \big) 
 \end{aligned}
 $$
+
+::: smallskip
+:::
+
+-   [DSP priors]{.alertred} on $\v\beta_t$.
+
 </div>
 
 <div>
@@ -522,7 +521,7 @@ $$p(\v\theta_{1:T}, \v h_{1:T}, \v\psi \vert y_{1:T})$$
 ::: smallskip
 :::
 
-- Integrated Nested Laplace Approximation (INLA)?
+- [Gaussian approximations]{.alertred}
   
 ## Gibbs sampling in linear Gaussian model with DSP prior
 
@@ -564,7 +563,7 @@ $$
   - Run Kalman filter $p(\v\theta_t\vert y_{1:t})$ forward for $t=1,2,\ldots,T$
   - Sample $p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})$ backward for $t=T,T-1,\ldots,1$
   
-- Non-linear/non-Gaussian: replace the filtering step with an approximate filter.
+- Non-linear/non-Gaussian: replace the filtering step with an [approximate Gaussian filter]{.alertred}.
 
 - [Prior propagation]{.alertred}: approximate the joint distribution $$\left(\begin{array}{c}
 \v\theta_{t}\\
@@ -650,9 +649,7 @@ $$
 
 - Nonlinear Gaussian models
 
-  - [Iterated extended Kalman filter]{.alertred} [@skoglund2015extended]
-
-  - [Iterated unscented Kalman filter]{.alertred} [@skoglund2019iterative]
+  - [Iterated extended/unscented Kalman filter]{.alertred} [@skoglund2015extended, @skoglund2019iterative]
 
   - [Posterior linearization filter]{.alertred} [@garcia2015posterior]<br>
     Linearizes $\boldsymbol{y}=\boldsymbol{g}(\boldsymbol{\theta})$ by minimizing $\mathbb{E_{\mathrm{post}}}\left(\left\Vert \boldsymbol{g}(\boldsymbol{\theta})-(\boldsymbol{\boldsymbol{a}+C}\boldsymbol{\theta})\right\Vert ^{2}\right)$.
@@ -661,6 +658,8 @@ $$
 
   - [Posterior linearization filter - conditional moments version]{.alertred} [@tronarp2018iterative]<br>
     Statistical linearization using $\mathbb{E}(Y \vert \v x)$  and $\mathbb{V}(Y \vert \v x)$.
+    
+  - [Posterior linearization filter - sufficient statistics]{.alertred}. 
   
   - [Laplace filter]{.alertred} [@shephard1997likelihood; @koyama2010approximate]
     - Direct Gaussian approximation of filtering posterior at every $t$
@@ -692,7 +691,7 @@ $$
 
 ## Beta regression for US layoff proportion 
 
-![](figs/layoff5.svg){width="80%" fig-align="center"}
+![](figs/layoff_group5.png){width="80%" fig-align="center"}
 
 ## How Gaussian are we at each time step?
 
@@ -736,7 +735,7 @@ y_{t} \vert \v x_{t} &\sim p(y_t \vert \v x_t, \v\beta_{g(t)}) \\
 $$
 where $g(t) = \lceil t/J \rceil$ maps time periods to segments/groups.
 
-![](figs/groups.svg){width="60%" fig-align="center"}
+![](figs/groups.png){width="60%" fig-align="center"}
 ![](figs/PoissonLikeContributionsGroup.svg){width="35%" fig-align="center"}
 
 :::
@@ -774,6 +773,10 @@ where $g(t) = \lceil t/J \rceil$ maps time periods to segments/groups.
 - Example: 30 min electricity price. Group $48\times 30 = 1440$ observations by month.
 
 - Large groups: Sequential filtering of individual observations within group.
+
+## Beta regression for US layoff proportion - groups of 2, 5 and 7
+
+![](figs/layoff5.svg){width="80%" fig-align="left"}
 
 
 ## Natural parameter innovations
@@ -825,6 +828,22 @@ where $\lambda_t = \exp(\v x_t ^\top \v\beta)$.
   - Pseudo inverse [@creal2013generalized]
   - Grouping observations
   - Average of all observations $$\bar{\mathcal{I}}(\v\beta) = \frac{1}{T}\v X^\top \mathrm{Diag}(\lambda_1,\ldots,\lambda_T) \v X$$
+  
+  
+## Natural parameter innovations - Poisson regression simulation study
+
+![](figs/PoisSimScaling.svg){width="90%" fig-align="center"}
+
+## US layoff with different scaling of innovations
+
+- Left to right: no scaling, global full, local full, global diagonal, local diagonal.
+
+![](figs/layoff_diff_s.svg){width="100%" fig-align="left"}
+
+
+## Seasonal Poisson regression for bike rides
+
+![](figs/bikefullscaling.png){width="100%" fig-align="left"}
 
 ## Ongoing and future work
 

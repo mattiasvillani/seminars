@@ -246,7 +246,7 @@ y_{t} &amp;= \v x_{t}^{\top}\v\beta_{t}+\varepsilon_{t}\qquad
 \v\nu_{t}\overset{\mathrm{iid}}{\sim}N(\v 0,\v\Sigma_{\nu})
 \end{aligned}
 \]</span></p>
-<div class="mediumskip">
+<div class="smallskip">
 
 </div>
 <ul>
@@ -515,19 +515,11 @@ r=\begin{cases}
 <ul>
 <li><span class="alertred">GLMs</span> with time-varying parameters</li>
 </ul>
-<p><span class="math display">\[
-\begin{aligned}
-y_t \vert \v x_{t} &amp;\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
-\v\beta_{t} &amp;= \v\beta_{t-1}+\boldsymbol{\nu}_{t},\hspace{2cm}
-\v\nu_{t}\overset{\mathrm{iid}}{\sim}N\big(\v 0,\mathrm{Diag}(\exp(\v\tau^2 \odot  \v h_t))\big) \\
-\v h_t &amp;= \Phi \v h_{t-1} + \v\eta_t,\hspace{1.6cm} \eta_{tk} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
-\end{aligned}
-\]</span></p>
 <div class="smallskip">
 
 </div>
 <ul>
-<li><span class="alertred">Poisson regression</span> with DSP prior</li>
+<li><span class="alertred">Poisson regression</span></li>
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
@@ -538,13 +530,19 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{Pois}\big(\mu_t = \exp(\v x_{t}^\top\v\beta
 
 </div>
 <ul>
-<li><span class="alertred">Beta regression</span> with DSP prior</li>
+<li><span class="alertred">Beta regression</span></li>
 </ul>
 <p><span class="math display">\[
 \begin{aligned}
 y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logistic}(\v x_{t}^\top\v\beta_{t})}, \, \blue{\phi_t = \exp(\v z_{t}^\top\v\gamma_{t})} \big)
 \end{aligned}
 \]</span></p>
+<div class="smallskip">
+
+</div>
+<ul>
+<li><span class="alertred">DSP priors</span> on <span class="math inline">\(\v\beta_t\)</span>.</li>
+</ul>
 </div>
 <div>
 <div class="iframe-slide">
@@ -587,7 +585,7 @@ y_t \vert \v x_{t}, z_{t} &amp;\sim \mathrm{Beta}\big(\red{\mu_t = \mathrm{logis
 
 </div>
 <ul>
-<li>Integrated Nested Laplace Approximation (INLA)?</li>
+<li><span class="alertred">Gaussian approximations</span></li>
 </ul>
 </section>
 <section id="gibbs-sampling-in-linear-gaussian-model-with-dsp-prior" class="slide level2">
@@ -635,7 +633,7 @@ y_t  &amp;=\v x_{t}^\top\v\beta_{t} + \varepsilon_t,\hspace{1.6cm} \varepsilon_t
 <li>Run Kalman filter <span class="math inline">\(p(\v\theta_t\vert y_{1:t})\)</span> forward for <span class="math inline">\(t=1,2,\ldots,T\)</span></li>
 <li>Sample <span class="math inline">\(p(\v\theta_{t}\vert \v\theta_{t+1}, y_{1:T})\)</span> backward for <span class="math inline">\(t=T,T-1,\ldots,1\)</span></li>
 </ul></li>
-<li><p>Non-linear/non-Gaussian: replace the filtering step with an approximate filter.</p></li>
+<li><p>Non-linear/non-Gaussian: replace the filtering step with an <span class="alertred">approximate Gaussian filter</span>.</p></li>
 <li><p><span class="alertred">Prior propagation</span>: approximate the joint distribution <span class="math display">\[\left(\begin{array}{c}
 \v\theta_{t}\\
 \v\theta_{t-1}
@@ -702,13 +700,13 @@ y_t  &amp;=\v x_{t}^\top\v\beta_{t} + \varepsilon_t,\hspace{1.6cm} \varepsilon_t
 <ul>
 <li><p>Nonlinear Gaussian models</p>
 <ul>
-<li><p><span class="alertred">Iterated extended Kalman filter</span> <span class="citation" data-cites="skoglund2015extended">[<a href="#/references" role="doc-biblioref" onclick="">14</a>]</span></p></li>
-<li><p><span class="alertred">Iterated unscented Kalman filter</span> <span class="citation" data-cites="skoglund2019iterative">[<a href="#/references" role="doc-biblioref" onclick="">15</a>]</span></p></li>
+<li><p><span class="alertred">Iterated extended/unscented Kalman filter</span> <span class="citation" data-cites="skoglund2015extended">[<a href="#/references" role="doc-biblioref" onclick="">15</a>]</span></p></li>
 <li><p><span class="alertred">Posterior linearization filter</span> <span class="citation" data-cites="garcia2015posterior">[<a href="#/references" role="doc-biblioref" onclick="">16</a>]</span><br> Linearizes <span class="math inline">\(\boldsymbol{y}=\boldsymbol{g}(\boldsymbol{\theta})\)</span> by minimizing <span class="math inline">\(\mathbb{E_{\mathrm{post}}}\left(\left\Vert \boldsymbol{g}(\boldsymbol{\theta})-(\boldsymbol{\boldsymbol{a}+C}\boldsymbol{\theta})\right\Vert ^{2}\right)\)</span>.</p></li>
 </ul></li>
 <li><p>Non-Gaussian models</p>
 <ul>
 <li><p><span class="alertred">Posterior linearization filter - conditional moments version</span> <span class="citation" data-cites="tronarp2018iterative">[<a href="#/references" role="doc-biblioref" onclick="">17</a>]</span><br> Statistical linearization using <span class="math inline">\(\mathbb{E}(Y \vert \v x)\)</span> and <span class="math inline">\(\mathbb{V}(Y \vert \v x)\)</span>.</p></li>
+<li><p><span class="alertred">Posterior linearization filter - sufficient statistics</span>.</p></li>
 <li><p><span class="alertred">Laplace filter</span> <span class="citation" data-cites="shephard1997likelihood koyama2010approximate">[<a href="#/references" role="doc-biblioref" onclick="">18</a>, <a href="#/references" role="doc-biblioref" onclick="">19</a>]</span></p>
 <ul>
 <li>Direct Gaussian approximation of filtering posterior at every <span class="math inline">\(t\)</span> <span class="math display">\[
@@ -742,7 +740,7 @@ y_t \vert \v x_{t} &amp;\sim \mathrm{Beta}\big(\mu_t = \mathrm{logistic}(\v x_{t
 <section id="beta-regression-for-us-layoff-proportion" class="slide level2">
 <h2>Beta regression for US layoff proportion</h2>
 
-<img data-src="figs/layoff5.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
+<img data-src="figs/layoff_group5.png" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
 <section id="how-gaussian-are-we-at-each-time-step" class="slide level2">
 <h2>How Gaussian are we at each time step?</h2>
 <ul>
@@ -771,7 +769,7 @@ y_{t} \vert \v x_{t} &amp;\sim p(y_t \vert \v x_t, \v\beta_{g(t)}) \\
 \v h_g &amp;= \Phi \v h_{g-1} + \v\eta_g,\hspace{1.6cm} \eta_{g} \overset{\mathrm{iid}}{\sim}Z(\alpha,\beta,0,1)
 \end{aligned}
 \]</span> where <span class="math inline">\(g(t) = \lceil t/J \rceil\)</span> maps time periods to segments/groups.</p>
-<p><img data-src="figs/groups.svg" class="quarto-figure quarto-figure-center" style="width:60.0%"> <img data-src="figs/PoissonLikeContributionsGroup.svg" class="quarto-figure quarto-figure-center" style="width:35.0%"></p>
+<p><img data-src="figs/groups.png" class="quarto-figure quarto-figure-center" style="width:60.0%"> <img data-src="figs/PoissonLikeContributionsGroup.svg" class="quarto-figure quarto-figure-center" style="width:35.0%"></p>
 </div><div class="column" style="width:20%;">
 <blockquote>
 <p>“When all the hope is gone, there is no reason for pessimism”. <br> <em>Aki Kaurismäki</em></p>
@@ -808,6 +806,10 @@ y_{t} \vert \v x_{t} &amp;\sim p(y_t \vert \v x_t, \v\beta_{g(t)}) \\
 <li><p>Large groups: Sequential filtering of individual observations within group.</p></li>
 </ul>
 </section>
+<section id="beta-regression-for-us-layoff-proportion---groups-of-2-5-and-7" class="slide level2">
+<h2>Beta regression for US layoff proportion - groups of 2, 5 and 7</h2>
+
+<img data-src="figs/layoff5.svg" class="quarto-figure quarto-figure-left r-stretch" style="width:80.0%"></section>
 <section id="natural-parameter-innovations" class="slide level2">
 <h2>Natural parameter innovations</h2>
 <div class="columns">
@@ -859,6 +861,21 @@ D_{\mathrm{KL}}\big( p(y \vert \v\beta) \, \vert \vert \, p(y \vert \v\beta +\v\
 </ul></li>
 </ul>
 </section>
+<section id="natural-parameter-innovations---poisson-regression-simulation-study" class="slide level2">
+<h2>Natural parameter innovations - Poisson regression simulation study</h2>
+
+<img data-src="figs/PoisSimScaling.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:90.0%"></section>
+<section id="us-layoff-with-different-scaling-of-innovations" class="slide level2">
+<h2>US layoff with different scaling of innovations</h2>
+<ul>
+<li>Left to right: no scaling, global full, local full, global diagonal, local diagonal.</li>
+</ul>
+
+<img data-src="figs/layoff_diff_s.svg" class="quarto-figure quarto-figure-left r-stretch" style="width:100.0%"></section>
+<section id="seasonal-poisson-regression-for-bike-rides" class="slide level2">
+<h2>Seasonal Poisson regression for bike rides</h2>
+
+<img data-src="figs/bikefullscaling.png" class="quarto-figure quarto-figure-left r-stretch" style="width:100.0%"></section>
 <section id="ongoing-and-future-work" class="slide level2">
 <h2>Ongoing and future work</h2>
 <ul>

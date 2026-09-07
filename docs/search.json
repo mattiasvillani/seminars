@@ -81,14 +81,14 @@
     "href": "vaxjo2026/index.html#time-varying-generalized-linear-models-with-dsp-evolution",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Time-varying generalized linear models with DSP evolution",
-    "text": "Time-varying generalized linear models with DSP evolution\n\n\n\nGLMs with time-varying parameters\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{ExpFamily}\\Big(k(\\v x_{t}^\\top\\v\\beta_{t}), \\varphi_t  \\Big) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\boldsymbol{\\nu}_{t},\\hspace{2cm}\n\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\odot  \\v h_t))\\big) \\\\\n\\v h_t &= \\Phi \\v h_{t-1} + \\v\\eta_t,\\hspace{1.6cm} \\eta_{tk} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\]\n\n\n\n\nPoisson regression with DSP prior\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{Pois}\\big(\\mu_t = \\exp(\\v x_{t}^\\top\\v\\beta_{t}) \\big)\n\\end{aligned}\n\\]\n\n\n\n\nBeta regression with DSP prior\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t}, z_{t} &\\sim \\mathrm{Beta}\\big(\\red{\\mu_t = \\mathrm{logistic}(\\v x_{t}^\\top\\v\\beta_{t})}, \\, \\blue{\\phi_t = \\exp(\\v z_{t}^\\top\\v\\gamma_{t})} \\big)\n\\end{aligned}\n\\]"
+    "text": "Time-varying generalized linear models with DSP evolution\n\n\n\nGLMs with time-varying parameters\n\n\n\n\n\nPoisson regression\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{Pois}\\big(\\mu_t = \\exp(\\v x_{t}^\\top\\v\\beta_{t}) \\big)\n\\end{aligned}\n\\]\n\n\n\n\nBeta regression\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t}, z_{t} &\\sim \\mathrm{Beta}\\big(\\red{\\mu_t = \\mathrm{logistic}(\\v x_{t}^\\top\\v\\beta_{t})}, \\, \\blue{\\phi_t = \\exp(\\v z_{t}^\\top\\v\\gamma_{t})} \\big)\n\\end{aligned}\n\\]\n\n\n\n\nDSP priors on \\(\\v\\beta_t\\)."
   },
   {
     "objectID": "vaxjo2026/index.html#bayesian-inference-in-state-space-models-with-dsp-prior",
     "href": "vaxjo2026/index.html#bayesian-inference-in-state-space-models-with-dsp-prior",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Bayesian inference in state-space models with DSP prior",
-    "text": "Bayesian inference in state-space models with DSP prior\n\nJoint smoothing posterior (\\(\\v\\psi\\) holds all static parameters): \\[p(\\v\\theta_{1:T}, \\v h_{1:T}, \\v\\psi \\vert y_{1:T})\\]\n\n\n\n\n\nGibbs sampling/MCMC\n\n\n\n\n\nParticle MCMC\n\n\n\n\n\nHamiltonian Monte Carlo (HMC)\n\n\n\n\n\nVariational approximations\n\n\n\n\n\nIntegrated Nested Laplace Approximation (INLA)?"
+    "text": "Bayesian inference in state-space models with DSP prior\n\nJoint smoothing posterior (\\(\\v\\psi\\) holds all static parameters): \\[p(\\v\\theta_{1:T}, \\v h_{1:T}, \\v\\psi \\vert y_{1:T})\\]\n\n\n\n\n\nGibbs sampling/MCMC\n\n\n\n\n\nParticle MCMC\n\n\n\n\n\nHamiltonian Monte Carlo (HMC)\n\n\n\n\n\nVariational approximations\n\n\n\n\n\nGaussian approximations"
   },
   {
     "objectID": "vaxjo2026/index.html#gibbs-sampling-in-linear-gaussian-model-with-dsp-prior",
@@ -102,7 +102,7 @@
     "href": "vaxjo2026/index.html#gaussian-approximation-filters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Gaussian approximation filters",
-    "text": "Gaussian approximation filters\n\n\n\nForward-filtering-backward sampling for linear Gaussian models [12, 13]\n\nRun Kalman filter \\(p(\\v\\theta_t\\vert y_{1:t})\\) forward for \\(t=1,2,\\ldots,T\\)\nSample \\(p(\\v\\theta_{t}\\vert \\v\\theta_{t+1}, y_{1:T})\\) backward for \\(t=T,T-1,\\ldots,1\\)\n\nNon-linear/non-Gaussian: replace the filtering step with an approximate filter.\nPrior propagation: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\v\\theta_{t}\\\\\n\\v\\theta_{t-1}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\v\\theta_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t-1})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\v\\theta_{t}) & \\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})\\\\\n\\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})^{\\top} & \\mathbb{V}(\\v\\theta_{t-1})\n\\end{array}\\right)\\right]\\]\nObservation update: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\boldsymbol{y}_{t}\\\\\n\\v\\theta_{t}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\boldsymbol{y}_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\boldsymbol{y}_{t}) & \\red{\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})}\\\\\n\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})^{\\top} & \\mathbb{V}(\\v\\theta_{t})\n\\end{array}\\right)\\right]\\]"
+    "text": "Gaussian approximation filters\n\n\n\nForward-filtering-backward sampling for linear Gaussian models [12, 13]\n\nRun Kalman filter \\(p(\\v\\theta_t\\vert y_{1:t})\\) forward for \\(t=1,2,\\ldots,T\\)\nSample \\(p(\\v\\theta_{t}\\vert \\v\\theta_{t+1}, y_{1:T})\\) backward for \\(t=T,T-1,\\ldots,1\\)\n\nNon-linear/non-Gaussian: replace the filtering step with an approximate Gaussian filter.\nPrior propagation: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\v\\theta_{t}\\\\\n\\v\\theta_{t-1}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\v\\theta_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t-1})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\v\\theta_{t}) & \\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})\\\\\n\\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})^{\\top} & \\mathbb{V}(\\v\\theta_{t-1})\n\\end{array}\\right)\\right]\\]\nObservation update: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\boldsymbol{y}_{t}\\\\\n\\v\\theta_{t}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\boldsymbol{y}_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\boldsymbol{y}_{t}) & \\red{\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})}\\\\\n\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})^{\\top} & \\mathbb{V}(\\v\\theta_{t})\n\\end{array}\\right)\\right]\\]"
   },
   {
     "objectID": "vaxjo2026/index.html#gaussian-approximation-filters-1",
@@ -123,7 +123,7 @@
     "href": "vaxjo2026/index.html#iterated-gaussian-approximation-filters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Iterated Gaussian approximation filters",
-    "text": "Iterated Gaussian approximation filters\n\nNonlinear Gaussian models\n\nIterated extended Kalman filter [14]\nIterated unscented Kalman filter [15]\nPosterior linearization filter [16] Linearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{post}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\).\n\nNon-Gaussian models\n\nPosterior linearization filter - conditional moments version [17] Statistical linearization using \\(\\mathbb{E}(Y \\vert \\v x)\\) and \\(\\mathbb{V}(Y \\vert \\v x)\\).\nLaplace filter [18, 19]\n\nDirect Gaussian approximation of filtering posterior at every \\(t\\) \\[\n\\v{\\theta}_{t} \\vert y_{1:t} \\overset{\\mathrm{approx}}{\\sim} N(\\tilde{\\v{\\theta}}_{t \\vert t},     \\tilde{\\v{\\Omega}}_{t\\vert t})\n\\] where \\(\\tilde{\\v\\theta}_{t\\vert t}\\) is posterior mode and \\(\\tilde{\\v\\Omega}_{t\\vert t}\\) is inverse of observed information.\nAutomatic differentiation makes it … well … automatic."
+    "text": "Iterated Gaussian approximation filters\n\nNonlinear Gaussian models\n\nIterated extended/unscented Kalman filter [15]\nPosterior linearization filter [16] Linearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{post}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\).\n\nNon-Gaussian models\n\nPosterior linearization filter - conditional moments version [17] Statistical linearization using \\(\\mathbb{E}(Y \\vert \\v x)\\) and \\(\\mathbb{V}(Y \\vert \\v x)\\).\nPosterior linearization filter - sufficient statistics.\nLaplace filter [18, 19]\n\nDirect Gaussian approximation of filtering posterior at every \\(t\\) \\[\n\\v{\\theta}_{t} \\vert y_{1:t} \\overset{\\mathrm{approx}}{\\sim} N(\\tilde{\\v{\\theta}}_{t \\vert t},     \\tilde{\\v{\\Omega}}_{t\\vert t})\n\\] where \\(\\tilde{\\v\\theta}_{t\\vert t}\\) is posterior mode and \\(\\tilde{\\v\\Omega}_{t\\vert t}\\) is inverse of observed information.\nAutomatic differentiation makes it … well … automatic."
   },
   {
     "objectID": "vaxjo2026/index.html#simulated-poisson-regression-illustration",
@@ -168,6 +168,13 @@
     "text": "Grouping observations\n\nRelated ideas:\n\nImprove Gaussianity in Subsampling MCMC/HMC [20]\nImprove linearity/Gaussianity in filtering [21]\nModeling moderate time evolutions [22]\n\n\n\n\n\n\nTwo views:\n\ninterpolation for algorithmic performance\ngenuine model change: different time scales for observations and parameters.\n\n\n\n\n\n\nParameter evolution is automatically adapted to different group sizes.\nMassive speed-up, particularly for sub-daily data.\nExample: 30 min electricity price. Group \\(48\\times 30 = 1440\\) observations by month.\nLarge groups: Sequential filtering of individual observations within group."
   },
   {
+    "objectID": "vaxjo2026/index.html#beta-regression-for-us-layoff-proportion---groups-of-2-5-and-7",
+    "href": "vaxjo2026/index.html#beta-regression-for-us-layoff-proportion---groups-of-2-5-and-7",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Beta regression for US layoff proportion - groups of 2, 5 and 7",
+    "text": "Beta regression for US layoff proportion - groups of 2, 5 and 7"
+  },
+  {
     "objectID": "vaxjo2026/index.html#natural-parameter-innovations",
     "href": "vaxjo2026/index.html#natural-parameter-innovations",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
@@ -180,6 +187,27 @@
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Natural parameter innovations",
     "text": "Natural parameter innovations\n\nNon-linear transition model. \\(\\mathcal{I}(\\v\\beta_{t-1}) \\approx \\mathcal{I}(\\hat{\\v\\beta}_{t-1 \\vert t-1})\\).\nFisher information from one observation is unit rank.\nPoisson regression: \\[\\mathcal{I}(\\v\\beta) = \\lambda_t \\v x_t \\v x_t^\\top \\] where \\(\\lambda_t = \\exp(\\v x_t ^\\top \\v\\beta)\\).\nMany ways around this:\n\nPseudo inverse [25]\nGrouping observations\nAverage of all observations \\[\\bar{\\mathcal{I}}(\\v\\beta) = \\frac{1}{T}\\v X^\\top \\mathrm{Diag}(\\lambda_1,\\ldots,\\lambda_T) \\v X\\]"
+  },
+  {
+    "objectID": "vaxjo2026/index.html#natural-parameter-innovations---poisson-regression-simulation-study",
+    "href": "vaxjo2026/index.html#natural-parameter-innovations---poisson-regression-simulation-study",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Natural parameter innovations - Poisson regression simulation study",
+    "text": "Natural parameter innovations - Poisson regression simulation study"
+  },
+  {
+    "objectID": "vaxjo2026/index.html#us-layoff-with-different-scaling-of-innovations",
+    "href": "vaxjo2026/index.html#us-layoff-with-different-scaling-of-innovations",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "US layoff with different scaling of innovations",
+    "text": "US layoff with different scaling of innovations\n\nLeft to right: no scaling, global full, local full, global diagonal, local diagonal."
+  },
+  {
+    "objectID": "vaxjo2026/index.html#seasonal-poisson-regression-for-bike-rides",
+    "href": "vaxjo2026/index.html#seasonal-poisson-regression-for-bike-rides",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Seasonal Poisson regression for bike rides",
+    "text": "Seasonal Poisson regression for bike rides"
   },
   {
     "objectID": "vaxjo2026/index.html#ongoing-and-future-work",
