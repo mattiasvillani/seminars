@@ -7,3 +7,5 @@
 *.lyx~
 .Rhistory*
 *.code-workspace
+
+**/*.quarto_ipynb
