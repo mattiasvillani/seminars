@@ -1,245 +1,189 @@
 [
   {
-    "objectID": "nordstat2026/index.html#outline",
-    "href": "nordstat2026/index.html#outline",
+    "objectID": "vaxjo2026/index.html#outline",
+    "href": "vaxjo2026/index.html#outline",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Outline",
     "text": "Outline\n\nTime-varying parameters and state-space models\nDynamic shrinkage process priors\nTime-varying multi-seasonal ARMA\nNon-Gaussian models\nPosterior inference"
   },
   {
-    "objectID": "nordstat2026/index.html#time-varying-parameter-models",
-    "href": "nordstat2026/index.html#time-varying-parameter-models",
+    "objectID": "vaxjo2026/index.html#time-varying-parameter-models",
+    "href": "vaxjo2026/index.html#time-varying-parameter-models",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Time-varying parameter models",
     "text": "Time-varying parameter models\n\nRegression with time-varying parameters\n\n\\[\n\\begin{aligned}\ny_{t} &= \\v x_{t}^{\\top}\\v\\beta_{t}+\\varepsilon_{t}\\qquad\n\\varepsilon_{t}\\overset{\\mathrm{iid}}{\\sim}N(0,\\sigma_{\\varepsilon}^{2}) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\boldsymbol{\\nu}_{t}\\hspace{2.1cm}\n\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N(\\v 0,\\v\\Sigma_{\\nu})\n\\end{aligned}\n\\]\n\n\n\n\nLinear Gaussian state-space model \\[\n\\begin{aligned}\n\\text{Observation model:}\\qquad\\qquad\\qquad \\v y_{t} &=\n\\v C_t\\v\\theta_{t}+\\v\\varepsilon_{t}\\qquad\n&\\v\\varepsilon_{t}\\overset{\\mathrm{iid}}{\\sim}N(\\v 0,\\v\\Sigma_{\\varepsilon, t}) \\\\\n\\text{Transition model:}\\qquad\\qquad\\qquad\\hspace{0.6cm} \\v\\theta_{t}\n&=\\v A_t \\v\\theta_{t-1}+\\boldsymbol{\\nu}_{t}\\hspace{2.1cm}\n&\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N(\\v 0,\\v\\Sigma_{\\nu, t})\n\\end{aligned}\n\\] with state \\(\\v \\theta_t=\\v\\beta_t\\), \\(\\v C_t = \\v x_t^\\top\\) and \\(\\v A_t = \\v I_p\\).\n\n\n\n\n\nInitial prior at time \\(t=0\\) \\[\n  \\v\\theta_0 \\sim N(\\v\\mu_0,\\v\\Omega_0)\n  \\]"
   },
   {
-    "objectID": "nordstat2026/index.html#regression-with-time-varying-parameters",
-    "href": "nordstat2026/index.html#regression-with-time-varying-parameters",
+    "objectID": "vaxjo2026/index.html#regression-with-time-varying-parameters",
+    "href": "vaxjo2026/index.html#regression-with-time-varying-parameters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Regression with time-varying parameters",
     "text": "Regression with time-varying parameters"
   },
   {
-    "objectID": "nordstat2026/index.html#taxonomy-of-state-space-models",
-    "href": "nordstat2026/index.html#taxonomy-of-state-space-models",
+    "objectID": "vaxjo2026/index.html#taxonomy-of-state-space-models",
+    "href": "vaxjo2026/index.html#taxonomy-of-state-space-models",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Taxonomy of state-space models",
     "text": "Taxonomy of state-space models\n\nLinear Gaussian\n\n\\[\n\\begin{aligned}\n\\v y_{t} &=\n\\v C_t\\v\\theta_{t}+\\v\\varepsilon_{t}\\qquad\n&\\v\\varepsilon_{t}\\overset{\\mathrm{iid}}{\\sim}N(\\v 0,\\v\\Sigma_{\\varepsilon,t}) \\\\\n\\v\\theta_{t}\n&=\\v A_t \\v\\theta_{t-1}+\\boldsymbol{\\nu}_{t}\\qquad\n&\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N(\\v 0,\\v\\Sigma_{\\nu,t})\n\\end{aligned}\n\\]\n\nNon-linear Gaussian (additive) models\n\n\\[\n    \\begin{aligned}\n    \\v y_{t} &=\n    \\v c_t(\\v\\theta_{t}) + \\v\\varepsilon_{t}\\qquad\n    &\\v\\varepsilon_{t}\\overset{\\mathrm{iid}}{\\sim}N(\\v 0,\\v\\Sigma_{\\varepsilon,t}) \\\\\n    \\v\\theta_{t}\n    &=\\v a_t(\\v\\theta_{t-1})+\\boldsymbol{\\nu}_{t}\\qquad\n    &\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N(\\v 0,\\v\\Sigma_{\\nu,t})\n    \\end{aligned}\n\\]\n\nNon-Gaussian - general distributions\n\n\\[\n    \\begin{aligned}\n    \\v y_{t} &\\sim p_t(\\v y_{t} \\vert \\v\\theta_t) \\\\\n    \\v\\theta_{t} &\\sim q_t(\\v\\theta_{t} \\vert \\v\\theta_{t-1})\n    \\end{aligned}\n\\]"
   },
   {
-    "objectID": "nordstat2026/index.html#bayesian-inference-in-state-space-models",
-    "href": "nordstat2026/index.html#bayesian-inference-in-state-space-models",
+    "objectID": "vaxjo2026/index.html#bayesian-inference-in-state-space-models",
+    "href": "vaxjo2026/index.html#bayesian-inference-in-state-space-models",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Bayesian inference in state-space models",
     "text": "Bayesian inference in state-space models\n\nFiltering posterior (instantaneous) \\(p(\\v\\theta_{t}\\vert y_{1:t})\\)\n\n\n\nSmoothing posterior (retrospective) \\(p(\\v\\theta_{t}\\vert y_{1:T})\\)\n\n\n\nJoint smoothing posterior \\(p(\\v\\theta_{1:T}\\vert y_{1:T})\\)"
   },
   {
-    "objectID": "nordstat2026/index.html#global-local-shrinkage-priors---regression-carvalho2010horseshoe-polson2010shrink-piironen2017sparsity",
-    "href": "nordstat2026/index.html#global-local-shrinkage-priors---regression-carvalho2010horseshoe-polson2010shrink-piironen2017sparsity",
+    "objectID": "vaxjo2026/index.html#global-local-shrinkage-priors---regression-carvalho2010horseshoe-polson2010shrink-piironen2017sparsity",
+    "href": "vaxjo2026/index.html#global-local-shrinkage-priors---regression-carvalho2010horseshoe-polson2010shrink-piironen2017sparsity",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Global-local shrinkage priors - regression [1, 2] [3]",
     "text": "Global-local shrinkage priors - regression [1, 2] [3]\n\nLinear Gaussian regression with horseshoe prior \\[\n\\begin{aligned}\ny_i &=  \\v x_i^\\top\\v\\beta + \\varepsilon_i,\\quad \\varepsilon_i \\overset{\\mathrm{iid}}{\\sim}N(0,\\sigma^2_\\varepsilon) \\\\\n\\beta_j &\\overset{\\mathrm{ind}}{\\sim} N(0,\\blue{\\tau^2}\\red{\\lambda^2_j}) \\\\\n\\tau &\\sim C^+(0,1) \\\\\n\\lambda_j &\\overset{\\mathrm{iid}}{\\sim} C^+(0,1)\n\\end{aligned}\n\\]\nPosterior mean (for orthogonal \\(\\v x\\)) equals shrunken ML estimator \\[\n\\tilde{\\beta}_j = (1-\\kappa_j)\\hat\\beta_j\n\\]"
   },
   {
-    "objectID": "nordstat2026/index.html#dynamic-global-local-shrinkage-priors-for-time-series-kowal2019dynamic",
-    "href": "nordstat2026/index.html#dynamic-global-local-shrinkage-priors-for-time-series-kowal2019dynamic",
+    "objectID": "vaxjo2026/index.html#dynamic-global-local-shrinkage-priors-for-time-series-kowal2019dynamic",
+    "href": "vaxjo2026/index.html#dynamic-global-local-shrinkage-priors-for-time-series-kowal2019dynamic",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Dynamic global-local shrinkage priors for time series [4]",
     "text": "Dynamic global-local shrinkage priors for time series [4]\n\n\n\nLocal level model - dynamic shrinkage process (DSP) prior \\[\n\\begin{aligned}\ny_t & = \\mu_t + \\varepsilon_t \\hspace{4.3cm} \\varepsilon_t \\overset{\\mathrm{iid}}{\\sim} N(0,\\sigma^2_\\varepsilon) \\\\\n\\mu_t &= \\mu_{t-1} + \\nu_t, \\hspace{3.0cm} \\nu_t \\overset{\\mathrm{ind}}{\\sim} N \\big(0,\\blue{\\tau^2}\\red{\\exp(h_t)}\\big) \\\\\nh_t &= \\rho h_{t-1}  + \\eta_t,\\hspace{2.5cm} \\eta_t \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1) \\\\\n\\tau &\\sim C^+(0,1)\n\\end{aligned}\n\\]\n\n\n\n\n\nGlobal variance \\(\\blue{\\tau^2}\\)\nLocal variance \\(\\red{\\lambda^2_t=\\exp(h_t)}\\)\n\n\n\n\n\nDSP becomes horseshoe when \\(\\rho=0\\): \\[\nh_t \\sim Z(\\alpha,\\beta,0,1) \\Longleftrightarrow \\lambda_t = \\exp(h_t/2) \\sim C^+(0,1)\n\\]"
   },
   {
-    "objectID": "nordstat2026/index.html#logistic-beta-distribution-fishers-z",
-    "href": "nordstat2026/index.html#logistic-beta-distribution-fishers-z",
+    "objectID": "vaxjo2026/index.html#logistic-beta-distribution-fishers-z",
+    "href": "vaxjo2026/index.html#logistic-beta-distribution-fishers-z",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Logistic-Beta distribution (Fisher’s \\(Z\\))",
     "text": "Logistic-Beta distribution (Fisher’s \\(Z\\))\n\n\n\n\\(X\\sim \\mathrm{Beta}(\\alpha,\\beta)\\) then \\[Z := \\log\\Big(\\frac{X}{1-X}\\Big) \\sim Z(\\alpha,\\beta,0,1)\\]\nLocation-scale: \\[\\mu + \\sigma Z  \\sim  Z(\\alpha,\\beta,\\mu,\\sigma)\\]\nHeavy tails - log density decays linearly.\n\n\n\nMean-variance mixture of Gaussians [5] \\[\n\\begin{aligned}\nZ \\vert \\xi &\\sim N \\big(\\xi^{-1}(\\alpha-\\beta)/2,\\xi^{-1}\\big)  \\\\\n\\xi &\\sim \\mathrm{PolyaGamma}(\\alpha+\\beta,1)\n\\end{aligned}\n\\]"
   },
   {
-    "objectID": "nordstat2026/index.html#multi-seasonal-arma-with-dsp-prior-fagerberg2026time",
-    "href": "nordstat2026/index.html#multi-seasonal-arma-with-dsp-prior-fagerberg2026time",
+    "objectID": "vaxjo2026/index.html#multi-seasonal-arma-with-dsp-prior-fagerberg2026time",
+    "href": "vaxjo2026/index.html#multi-seasonal-arma-with-dsp-prior-fagerberg2026time",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Multi-seasonal ARMA with DSP prior [6]",
     "text": "Multi-seasonal ARMA with DSP prior [6]\n\nSeasonal AR with DSP evolution \\[\n\\phi_{p,t}(L)\\Phi_{P,t}(L^{s})(y_{t}-\\mu_t) = \\varepsilon_{t},\\quad\\varepsilon_{t}\\overset{\\mathrm{iid}}{\\sim}N(0,\\sigma_{t}^{2})\n\\]\nSAR(1,1) as a nonlinear Gaussian regression \\[\ny_t=\\v z_t^{\\top}\\tilde{\\v \\phi}+\\varepsilon_t\n\\] \\(\\tilde{\\boldsymbol{\\phi}}=(\\phi_1,\\Phi_1,\\red{-\\phi_1\\Phi_1})^{\\top}\\) and \\(\\boldsymbol{z}_{t}=(x_{t-1},x_{t-s},x_{t-(1+s)})^{\\top}\\)\nExtensions\n\n\n Multi-seasonal (daily, weekly, yearly cycle)\n\n\n ARMA and Exact likelihood\n\n\n Stochastic volatility with DSP priors\n\n\n Multi-seasonal forecasting\n\n\n Multi-seasonal VAR"
   },
   {
-    "objectID": "nordstat2026/index.html#stability-restrictions",
-    "href": "nordstat2026/index.html#stability-restrictions",
+    "objectID": "vaxjo2026/index.html#stability-restrictions",
+    "href": "vaxjo2026/index.html#stability-restrictions",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Stability restrictions",
     "text": "Stability restrictions\n\n\nTransformation to stability at every \\(t\\) [7] \n\n\n\n\nLemma - uniform prior over the stability region [6, 8]\n\n\nThe AR parameters \\(\\v\\phi\\) are uniformly distributed over the stability region if, independently, \\[\\begin{equation}\\label{eq:t_odd_even}\n\\theta_k \\sim\n    \\begin{cases}\n       t\\big(k+1,0,\\frac{1}{\\sqrt{k+1}}\\big) & \\text{ for } k \\text{ is odd}\\\\\n       t_\\mathrm{skew}\\big(\\frac{k}{2},\\frac{k+2}{2}, 0, \\frac{1}{\\sqrt{k+1}}\\big) & \\text{ for } k \\text{ is even}\n    \\end{cases}\n\\end{equation}\\]\n\n\n\n\n\nSame restriction on each AR polynomial.\nSame restriction for invertibility of MA.\n\n\n\n\n\n\nTransformation to partial autocorr matters\n\nMonahan \\[r=\\frac{\\theta}{\\sqrt{1+\\theta^{2}}}\\]\nTanh \\[r=\\frac{e^{\\theta}-e^{-\\theta}}{e^{\\theta}+e^{-\\theta}}\\]\nHard-tanh \\[\nr=\\begin{cases}\n-(1-\\epsilon) & \\text{if }\\theta\\leq-(1-\\epsilon)\\\\[6pt]\n\\theta & \\text{if }-(1-\\epsilon)&lt;\\theta&lt;1-\\epsilon\\\\[6pt]\n1-\\epsilon & \\text{if }\\geq1-\\epsilon\n  \\end{cases}\n\\]"
   },
   {
-    "objectID": "nordstat2026/index.html#seasonal-ar-with-dsp-prior---us-industrial-production-1919-2024",
-    "href": "nordstat2026/index.html#seasonal-ar-with-dsp-prior---us-industrial-production-1919-2024",
+    "objectID": "vaxjo2026/index.html#seasonal-ar-with-dsp-prior---us-industrial-production-1919-2024",
+    "href": "vaxjo2026/index.html#seasonal-ar-with-dsp-prior---us-industrial-production-1919-2024",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Seasonal AR with DSP prior - US industrial production 1919-2024",
     "text": "Seasonal AR with DSP prior - US industrial production 1919-2024\n\n\nSAR(1,2) - Homoscedastic Gaussian \n\n\nSAR(1,2) - DSP"
   },
   {
-    "objectID": "nordstat2026/index.html#time-varying-generalized-linear-models-with-dsp-evolution",
-    "href": "nordstat2026/index.html#time-varying-generalized-linear-models-with-dsp-evolution",
+    "objectID": "vaxjo2026/index.html#time-varying-generalized-linear-models-with-dsp-evolution",
+    "href": "vaxjo2026/index.html#time-varying-generalized-linear-models-with-dsp-evolution",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Time-varying generalized linear models with DSP evolution",
     "text": "Time-varying generalized linear models with DSP evolution\n\n\n\nGLMs with time-varying parameters\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{ExpFamily}\\Big(k(\\v x_{t}^\\top\\v\\beta_{t}), \\varphi_t  \\Big) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\boldsymbol{\\nu}_{t},\\hspace{2cm}\n\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\odot  \\v h_t))\\big) \\\\\n\\v h_t &= \\Phi \\v h_{t-1} + \\v\\eta_t,\\hspace{1.6cm} \\eta_{tk} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\]\n\n\n\n\nPoisson regression with DSP prior\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{Pois}\\big(\\mu_t = \\exp(\\v x_{t}^\\top\\v\\beta_{t}) \\big)\n\\end{aligned}\n\\]\n\n\n\n\nBeta regression with DSP prior\n\n\\[\n\\begin{aligned}\ny_t \\vert \\v x_{t}, z_{t} &\\sim \\mathrm{Beta}\\big(\\red{\\mu_t = \\mathrm{logistic}(\\v x_{t}^\\top\\v\\beta_{t})}, \\, \\blue{\\phi_t = \\exp(\\v z_{t}^\\top\\v\\gamma_{t})} \\big)\n\\end{aligned}\n\\]"
   },
   {
-    "objectID": "nordstat2026/index.html#bayesian-inference-in-state-space-models-with-dsp-prior",
-    "href": "nordstat2026/index.html#bayesian-inference-in-state-space-models-with-dsp-prior",
+    "objectID": "vaxjo2026/index.html#bayesian-inference-in-state-space-models-with-dsp-prior",
+    "href": "vaxjo2026/index.html#bayesian-inference-in-state-space-models-with-dsp-prior",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Bayesian inference in state-space models with DSP prior",
     "text": "Bayesian inference in state-space models with DSP prior\n\nJoint smoothing posterior (\\(\\v\\psi\\) holds all static parameters): \\[p(\\v\\theta_{1:T}, \\v h_{1:T}, \\v\\psi \\vert y_{1:T})\\]\n\n\n\n\n\nGibbs sampling/MCMC\n\n\n\n\n\nParticle MCMC\n\n\n\n\n\nHamiltonian Monte Carlo (HMC)\n\n\n\n\n\nVariational approximations\n\n\n\n\n\nIntegrated Nested Laplace Approximation (INLA)?"
   },
   {
-    "objectID": "nordstat2026/index.html#gibbs-sampling-in-linear-gaussian-model-with-dsp-prior",
-    "href": "nordstat2026/index.html#gibbs-sampling-in-linear-gaussian-model-with-dsp-prior",
+    "objectID": "vaxjo2026/index.html#gibbs-sampling-in-linear-gaussian-model-with-dsp-prior",
+    "href": "vaxjo2026/index.html#gibbs-sampling-in-linear-gaussian-model-with-dsp-prior",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Gibbs sampling in linear Gaussian model with DSP prior",
     "text": "Gibbs sampling in linear Gaussian model with DSP prior\n\nLinear Gaussian regression with DSP evolution\n\n\\[\n\\begin{aligned}\ny_t  &=\\v x_{t}^\\top\\v\\beta_{t} + \\varepsilon_t,\\hspace{1.6cm} \\varepsilon_t \\overset{\\mathrm{ind}}{\\sim}N(0,\\sigma_\\varepsilon^2) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\boldsymbol{\\nu}_{t},\\hspace{2cm}\n\\v\\nu_{t}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\odot  \\v h_t))\\big) \\\\\n\\v h_t &= \\Phi \\v h_{t-1} + \\v\\eta_t,\\hspace{1.6cm} \\eta_{tk} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\]\n\nPolya-Gamma augmentation to turn \\(Z\\)-distribution into conditionally Gaussian. [4, 9]\n\n\n\n\n\nSquare-and-log trick to turn variance \\(\\exp(h_t)\\) into a mean \\(h_t\\). [10]\n\n\n\n\n\nFast sampling of \\(\\v h_{1:T}\\) using sparse multivariate Gaussian [11].\n\n\n\n\n\nForward-filtering-backward sampling (FFBS) to sample \\(\\v\\beta_{1:T}\\) [12, 13]"
   },
   {
-    "objectID": "nordstat2026/index.html#gaussian-approximation-filters",
-    "href": "nordstat2026/index.html#gaussian-approximation-filters",
+    "objectID": "vaxjo2026/index.html#gaussian-approximation-filters",
+    "href": "vaxjo2026/index.html#gaussian-approximation-filters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Gaussian approximation filters",
     "text": "Gaussian approximation filters\n\n\n\nForward-filtering-backward sampling for linear Gaussian models [12, 13]\n\nRun Kalman filter \\(p(\\v\\theta_t\\vert y_{1:t})\\) forward for \\(t=1,2,\\ldots,T\\)\nSample \\(p(\\v\\theta_{t}\\vert \\v\\theta_{t+1}, y_{1:T})\\) backward for \\(t=T,T-1,\\ldots,1\\)\n\nNon-linear/non-Gaussian: replace the filtering step with an approximate filter.\nPrior propagation: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\v\\theta_{t}\\\\\n\\v\\theta_{t-1}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\v\\theta_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t-1})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\v\\theta_{t}) & \\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})\\\\\n\\mathbb{C}(\\v\\theta_{t},\\v\\theta_{t-1})^{\\top} & \\mathbb{V}(\\v\\theta_{t-1})\n\\end{array}\\right)\\right]\\]\nObservation update: approximate the joint distribution \\[\\left(\\begin{array}{c}\n\\boldsymbol{y}_{t}\\\\\n\\v\\theta_{t}\n\\end{array}\\right)\\mid\\boldsymbol{y}_{1:t-1}\\overset{\\mathrm{approx}}{\\sim}N\\left[\\left(\\begin{array}{c}\n\\mathbb{E}(\\boldsymbol{y}_{t})\\\\\n\\mathbb{E}(\\v\\theta_{t})\n\\end{array}\\right),\\left(\\begin{array}{cc}\n\\mathbb{V}(\\boldsymbol{y}_{t}) & \\red{\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})}\\\\\n\\mathbb{C}(\\boldsymbol{y}_{t},\\v\\theta_{t})^{\\top} & \\mathbb{V}(\\v\\theta_{t})\n\\end{array}\\right)\\right]\\]"
   },
   {
-    "objectID": "nordstat2026/index.html#gaussian-approximation-filters-1",
-    "href": "nordstat2026/index.html#gaussian-approximation-filters-1",
+    "objectID": "vaxjo2026/index.html#gaussian-approximation-filters-1",
+    "href": "vaxjo2026/index.html#gaussian-approximation-filters-1",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Gaussian approximation filters",
     "text": "Gaussian approximation filters\n\n\n\nExtended Kalman filter\n\nLinearize measurement/transition models\nApply standard Kalman filter\n\nUnscented Kalman filter\n\nPropagate sigma point approx of prior\n\n \nPrior linearization filter\n\nLinearize by statistical linear regression.\nLinearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{prior}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\)."
   },
   {
-    "objectID": "nordstat2026/index.html#simulated-example-sar22---mcmc-convergence",
-    "href": "nordstat2026/index.html#simulated-example-sar22---mcmc-convergence",
+    "objectID": "vaxjo2026/index.html#simulated-example-sar22---mcmc-convergence",
+    "href": "vaxjo2026/index.html#simulated-example-sar22---mcmc-convergence",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Simulated example SAR(2,2) - MCMC convergence",
     "text": "Simulated example SAR(2,2) - MCMC convergence"
   },
   {
-    "objectID": "nordstat2026/index.html#iterated-gaussian-approximation-filters",
-    "href": "nordstat2026/index.html#iterated-gaussian-approximation-filters",
+    "objectID": "vaxjo2026/index.html#iterated-gaussian-approximation-filters",
+    "href": "vaxjo2026/index.html#iterated-gaussian-approximation-filters",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Iterated Gaussian approximation filters",
     "text": "Iterated Gaussian approximation filters\n\nNonlinear Gaussian models\n\nIterated extended Kalman filter [14]\nIterated unscented Kalman filter [15]\nPosterior linearization filter [16] Linearizes \\(\\boldsymbol{y}=\\boldsymbol{g}(\\boldsymbol{\\theta})\\) by minimizing \\(\\mathbb{E_{\\mathrm{post}}}\\left(\\left\\Vert \\boldsymbol{g}(\\boldsymbol{\\theta})-(\\boldsymbol{\\boldsymbol{a}+C}\\boldsymbol{\\theta})\\right\\Vert ^{2}\\right)\\).\n\nNon-Gaussian models\n\nPosterior linearization filter - conditional moments version [17] Statistical linearization using \\(\\mathbb{E}(Y \\vert \\v x)\\) and \\(\\mathbb{V}(Y \\vert \\v x)\\).\nLaplace filter [18, 19]\n\nDirect Gaussian approximation of filtering posterior at every \\(t\\) \\[\n\\v{\\theta}_{t} \\vert y_{1:t} \\overset{\\mathrm{approx}}{\\sim} N(\\tilde{\\v{\\theta}}_{t \\vert t},     \\tilde{\\v{\\Omega}}_{t\\vert t})\n\\] where \\(\\tilde{\\v\\theta}_{t\\vert t}\\) is posterior mode and \\(\\tilde{\\v\\Omega}_{t\\vert t}\\) is inverse of observed information.\nAutomatic differentiation makes it … well … automatic."
   },
   {
-    "objectID": "nordstat2026/index.html#simulated-poisson-regression-illustration",
-    "href": "nordstat2026/index.html#simulated-poisson-regression-illustration",
+    "objectID": "vaxjo2026/index.html#simulated-poisson-regression-illustration",
+    "href": "vaxjo2026/index.html#simulated-poisson-regression-illustration",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Simulated Poisson regression illustration",
     "text": "Simulated Poisson regression illustration"
   },
   {
-    "objectID": "nordstat2026/index.html#time-varying-beta-regression-for-us-layoff-proportion",
-    "href": "nordstat2026/index.html#time-varying-beta-regression-for-us-layoff-proportion",
+    "objectID": "vaxjo2026/index.html#time-varying-beta-regression-for-us-layoff-proportion",
+    "href": "vaxjo2026/index.html#time-varying-beta-regression-for-us-layoff-proportion",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Time-varying Beta regression for US layoff proportion",
     "text": "Time-varying Beta regression for US layoff proportion\n\nBeta regression \\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{Beta}\\big(\\mu_t = \\mathrm{logistic}(\\v x_{t}^\\top\\v\\beta_{t}), \\, \\phi_t \\big)\n\\end{aligned}\n\\]\nMonthly US data from 1990:1-2026:4\n\nlayoff - job losers on layoff as % of total unemployed\nvix - CBOE Volatility Index (“fear index”)"
   },
   {
-    "objectID": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---dsp-prior",
-    "href": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---dsp-prior",
+    "objectID": "vaxjo2026/index.html#beta-regression-for-us-layoff-proportion",
+    "href": "vaxjo2026/index.html#beta-regression-for-us-layoff-proportion",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Beta regression for US layoff proportion - DSP prior",
-    "text": "Beta regression for US layoff proportion - DSP prior"
+    "section": "Beta regression for US layoff proportion",
+    "text": "Beta regression for US layoff proportion"
   },
   {
-    "objectID": "nordstat2026/index.html#linear-approximations-struggle-with-beta-regression",
-    "href": "nordstat2026/index.html#linear-approximations-struggle-with-beta-regression",
-    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Linear approximations struggle with Beta regression",
-    "text": "Linear approximations struggle with Beta regression"
-  },
-  {
-    "objectID": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---homoscedastic-gauss-prior",
-    "href": "nordstat2026/index.html#beta-regression-for-us-layoff-proportion---homoscedastic-gauss-prior",
-    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Beta regression for US layoff proportion - homoscedastic Gauss prior",
-    "text": "Beta regression for US layoff proportion - homoscedastic Gauss prior"
-  },
-  {
-    "objectID": "nordstat2026/index.html#beta-regression-for-us-layoff---fit-at-posterior-median-around-pandemic",
-    "href": "nordstat2026/index.html#beta-regression-for-us-layoff---fit-at-posterior-median-around-pandemic",
-    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Beta regression for US layoff - fit at posterior median around pandemic",
-    "text": "Beta regression for US layoff - fit at posterior median around pandemic\n\n\n\nDSP\n\n\nHomoscedastic Gaussian"
-  },
-  {
-    "objectID": "nordstat2026/index.html#how-gaussian-are-we-at-each-time-step",
-    "href": "nordstat2026/index.html#how-gaussian-are-we-at-each-time-step",
+    "objectID": "vaxjo2026/index.html#how-gaussian-are-we-at-each-time-step",
+    "href": "vaxjo2026/index.html#how-gaussian-are-we-at-each-time-step",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "How Gaussian are we at each time step?",
     "text": "How Gaussian are we at each time step?\n\nGaussian approximations at every time \\(t\\).\nHow Gaussian are the likelihood contributions \\(p(y_t\\vert\\v\\theta_t)\\) in \\(\\v\\theta_t\\)?\nNo asymptotic Bernstein-von Mises effect to help.\nA tight propagated prior \\(\\v\\theta_t \\sim N(\\hat{\\v\\theta}_{t\\vert t-1}, \\Omega_{t \\vert t-1} )\\) helps a lot.\nBut DSP can give large innovations, so \\(\\Omega_{t \\vert t-1}\\) can be large.\n\nPoisson model"
   },
   {
-    "objectID": "nordstat2026/index.html#grouping",
-    "href": "nordstat2026/index.html#grouping",
+    "objectID": "vaxjo2026/index.html#grouping",
+    "href": "vaxjo2026/index.html#grouping",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Grouping",
-    "text": "Grouping\n\n\n\nGroup observations in \\(G\\) groups of \\(J_g\\) observations in group \\(g\\).\nSame state \\(\\v\\theta_g\\) for observations within a group.\n\n\\[\n\\begin{aligned}\ny_{gj} \\vert \\v x_{gj} &\\sim \\mathrm{ExpFamily}\\Big(k(\\v x_{gj}^\\top\\v\\beta_{g}), \\varphi_{g}  \\Big) \\\\\n\\v\\beta_{g} &= \\v\\beta_{g-1}+\\boldsymbol{\\nu}_{g},\\hspace{2cm}\n\\v\\nu_{g}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\odot  \\v h_g))\\big) \\\\\n\\v h_g &= \\Phi \\v h_{g-1} + \\v\\eta_g,\\hspace{1.6cm} \\eta_{g} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\] where \\(j=1,\\ldots,J_g\\) for \\(g=1,\\ldots,G\\).\n\n\n\n\n\n\n\n“When all the hope is gone, there is no reason for pessimism”.  Aki Kaurismäki"
+    "text": "Grouping\n\n\n\nGroup observations in \\(G\\) groups of \\(J_g\\) observations in group \\(g\\).\nSame state \\(\\v\\beta_g\\) for observations within a group.\n\n\\[\n\\begin{aligned}\ny_{gj} \\vert \\v x_{gj} &\\sim \\mathrm{ExpFamily}\\Big(k(\\v x_{gj}^\\top\\v\\beta_{g}), \\varphi_{g}  \\Big) \\\\\n\\v\\beta_{g} &= \\v\\beta_{g-1}+\\boldsymbol{\\nu}_{g},\\hspace{2cm}\n\\v\\nu_{g}\\overset{\\mathrm{iid}}{\\sim}N\\big(\\v 0,\\mathrm{Diag}(\\exp(\\v\\tau^2 \\odot  \\v h_g))\\big) \\\\\n\\v h_g &= \\Phi \\v h_{g-1} + \\v\\eta_g,\\hspace{1.6cm} \\eta_{g} \\overset{\\mathrm{iid}}{\\sim}Z(\\alpha,\\beta,0,1)\n\\end{aligned}\n\\] where \\(j=1,\\ldots,J_g\\) for \\(g=1,\\ldots,G\\).\n\n\n\n\n\n\n\n“When all the hope is gone, there is no reason for pessimism”.  Aki Kaurismäki"
   },
   {
-    "objectID": "nordstat2026/index.html#grouping-observations",
-    "href": "nordstat2026/index.html#grouping-observations",
+    "objectID": "vaxjo2026/index.html#grouping-observations",
+    "href": "vaxjo2026/index.html#grouping-observations",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Grouping observations",
     "text": "Grouping observations\n\nRelated ideas:\n\nImprove Gaussianity in Subsampling MCMC/HMC [20]\nImprove linearity/Gaussianity in filtering [21]\nModeling moderate time evolutions [22]\n\n\n\n\n\n\nTwo views:\n\ninterpolation for algorithmic performance\ngenuine model change: different time scales for observations and parameters.\n\n\n\n\n\n\nParameter evolution is automatically adapted to different group sizes.\nMassive speed-up, particularly for sub-daily data.\nExample: 30 min electricity price. Group \\(48\\times 30 = 1440\\) observations by month.\nLarge groups: Sequential filtering of individual observations within group."
   },
   {
-    "objectID": "nordstat2026/index.html#simulated-poisson-regression-illustration---no-grouping",
-    "href": "nordstat2026/index.html#simulated-poisson-regression-illustration---no-grouping",
-    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Simulated Poisson regression illustration - no grouping",
-    "text": "Simulated Poisson regression illustration - no grouping"
-  },
-  {
-    "objectID": "nordstat2026/index.html#simulated-poisson-regression-illustration---group-of-three",
-    "href": "nordstat2026/index.html#simulated-poisson-regression-illustration---group-of-three",
-    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Simulated Poisson regression illustration - group of three",
-    "text": "Simulated Poisson regression illustration - group of three"
-  },
-  {
-    "objectID": "nordstat2026/index.html#natural-parameter-innovations",
-    "href": "nordstat2026/index.html#natural-parameter-innovations",
+    "objectID": "vaxjo2026/index.html#natural-parameter-innovations",
+    "href": "vaxjo2026/index.html#natural-parameter-innovations",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Natural parameter innovations",
-    "text": "Natural parameter innovations\n\nParameter evolution should adapt to:\n\nScales of covariates\nLink functions\nModel geometry\n\nNatural gradients [23, 24] in optimization.\n\n\\[\n\\v x_{j+1} = \\v x_j - \\gamma \\red{\\v I(\\v x_j)^{-1}}\\nabla f(\\v x_j)\n\\]\n\nFisher metric. Step sizes scaled with respect to model geometry."
+    "text": "Natural parameter innovations\n\nParameter evolution should adapt to:\n\nScales and covariance of covariates\nLink functions\nModel geometry\n\nUse ideas from Information geometry. Natural gradient [23, 24]\nNatural parameter innovations\n\n\\[\n\\v\\beta_{t} = \\v\\beta_{t-1} + \\mathcal{I}(\\v\\beta_{t-1})^{-1/2}\\v\\nu_t\n\\] - Fisher-scaled innovations controls the Kullback-Leibler divergence over time \\[\nD_{\\mathrm{KL}}\\big( p(y \\vert \\v\\beta) \\, \\vert \\vert \\, p(y \\vert \\v\\beta +\\v\\epsilon) \\big) \\approx  \\frac{1}{2}(\\v\\epsilon)^\\top \\mathcal{I}(\\v\\beta)\\v\\epsilon,\n\\] \n\n\n\n\n\n\nNon-linear transition model. Prior propagation step: \\(S(\\v\\beta_{t-1}) \\approx S(\\hat{\\v\\beta}_{t-1 \\vert t-1})\\).\nPrior at time \\(t=0\\) \\[\n\\v\\beta_0 \\sim N\\Big(\\v \\mu_0, \\frac{T}{\\kappa_0}\\mathcal{I}^{-1}(\\v\\mu_0)\\Big)\n\\] where \\(\\v\\mu_0\\) is backed out from beliefs about the data at time \\(t=0\\)."
   },
   {
-    "objectID": "nordstat2026/index.html#scaled-innovations-controls-kullback-leibler-divergence-over-time",
-    "href": "nordstat2026/index.html#scaled-innovations-controls-kullback-leibler-divergence-over-time",
-    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Scaled innovations controls Kullback-Leibler divergence over time",
-    "text": "Scaled innovations controls Kullback-Leibler divergence over time"
-  },
-  {
-    "objectID": "nordstat2026/index.html#natural-parameter-innovations-1",
-    "href": "nordstat2026/index.html#natural-parameter-innovations-1",
-    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Natural parameter innovations",
-    "text": "Natural parameter innovations\n\nParameter evolution with natural innovations \\[\n\\begin{aligned}\ny_t \\vert \\v x_{t} &\\sim \\mathrm{ExpFamily}\\Big(k(\\v x_{t}^\\top\\v\\beta_{t}), \\varphi_t  \\Big) \\\\\n\\v\\beta_{t} &= \\v\\beta_{t-1}+\\v S(\\v\\beta_{t-1}) \\v\\nu_{t},\n\\end{aligned}\n\\] where \\(\\v S(\\v\\beta_{t-1}) = \\bar{I}^{-1/2}(\\v\\beta_{t-1})\\)\n\\(\\bar{I}(\\v\\beta) = \\frac{1}{T}I(\\v\\beta)\\) is the Fisher information from an “average” observation.\nNon-linear transition model. Prior propagation step: \\(S(\\v\\beta_{t-1}) \\approx S(\\hat{\\v\\beta}_{t-1 \\vert t-1})\\).\nPrior at time \\(t=0\\) \\[\n\\v\\beta_0 \\sim N\\Big(\\v \\mu_0, \\frac{1}{\\kappa_0}\\bar{I}^{-1}(\\v\\mu_0)\\Big)\n\\] where \\(\\v\\mu_0\\) is backed out from beliefs about the data at time \\(t=0\\)."
-  },
-  {
-    "objectID": "nordstat2026/index.html#natural-parameter-innovations---poissonexptheta",
-    "href": "nordstat2026/index.html#natural-parameter-innovations---poissonexptheta",
-    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Natural parameter innovations - Poisson(\\(\\exp(\\theta)\\))",
-    "text": "Natural parameter innovations - Poisson(\\(\\exp(\\theta)\\))"
-  },
-  {
-    "objectID": "nordstat2026/index.html#ongoing-and-future-work",
-    "href": "nordstat2026/index.html#ongoing-and-future-work",
+    "objectID": "vaxjo2026/index.html#ongoing-and-future-work",
+    "href": "vaxjo2026/index.html#ongoing-and-future-work",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "Ongoing and future work",
-    "text": "Ongoing and future work\n\nMultivariate extensions\n\n\n\n\n\nForecasting\n\n\n\n\n\nMore efficient sampling of DSP part\n\n\n\n\n\nBetter prior elicitation for DSP part\n\n\n\n\n\nPosterior perturbation bounds from the true target posterior\n\n\n\n\n\nMetropolis-Hastings correction by blocking the state. Filtering version of [18]\n\n\n\n\n\nDelayed rejection:\n\nfirst try with cheap proposal (e.g. EKF)\nif rejected try more expensive proposal (e.g. Iterated EKF with line search)"
+    "text": "Ongoing and future work\n\nMultivariate extensions, including mixed data types.\n\n\n\n\n\nForecasting\n\n\n\n\n\nMore efficient sampling of DSP part\n\n\n\n\n\nBetter prior elicitation for DSP part\n\n\n\n\n\nPosterior perturbation bounds from the true target posterior\n\n\n\n\n\nMetropolis-Hastings correction by blocking the state. Filtering version of [18]\n\n\n\n\n\nDelayed rejection:\n\nfirst try with cheap proposal (e.g. EKF)\nif rejected try more expensive proposal (e.g. Iterated EKF with line search)"
   },
   {
-    "objectID": "nordstat2026/index.html#references",
-    "href": "nordstat2026/index.html#references",
+    "objectID": "vaxjo2026/index.html#references",
+    "href": "vaxjo2026/index.html#references",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "References",
     "text": "References\n\n\n\n\n[1] Carvalho CM, Polson NG, Scott JG. The horseshoe estimator for sparse signals. Biometrika. 2010;97(2):465–480.\n\n\n[2] Polson NG, Scott JG. Shrink globally, act locally: Sparse Bayesian regularization and prediction. Bayesian statistics. 2010;9(501-538):105.\n\n\n[3] Piironen J, Vehtari A. Sparsity information and regularization in the horseshoe and other shrinkage priors. Electronic Journal of Statistics. 2017.\n\n\n[4] Kowal DR, Matteson DS, Ruppert D. Dynamic shrinkage processes. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2019;81(4):781–804.\n\n\n[5] Barndorff-Nielsen O, Kent J, Sørensen M. Normal variance-mean mixtures and z distributions. International Statistical Review/Revue Internationale de Statistique. 1982:145–159.\n\n\n[6] Fagerberg G, Villani M, Kohn R. Time-varying multi-seasonal AR models. Journal of Computational and Graphical Statistics. 2026.\n\n\n[7] Barndorff-Nielsen O, Schou G. On the parametrization of autoregressive models by partial autocorrelations. Journal of Multivariate Analysis. 1973;3(4).\n\n\n[8] Jones MC, Faddy M. A skew extension of the t-distribution, with applications. Journal of the Royal Statistical Society Series B: Statistical Methodology. 2003;65(1):159–174.\n\n\n[9] Polson NG, Scott JG, Windle J. Bayesian inference for logistic models using pólya–gamma latent variables. Journal of the American statistical Association. 2013;108(504):1339–1349.\n\n\n[10] Kim S, Shephard N, Chib S. Stochastic volatility: Likelihood inference and comparison with ARCH models. The review of economic studies. 1998;65(3):361–393.\n\n\n[11] Rue H. Fast sampling of Gaussian Markov random fields. Journal of the Royal Statistical Society: Series B (Statistical Methodology). 2001;63(2):325–338.\n\n\n[12] Carter CK, Kohn R. On Gibbs sampling for state space models. Biometrika. 1994;81(3):541–553.\n\n\n[13] Frühwirth-Schnatter S. Data augmentation and dynamic linear models. Journal of time series analysis. 1994;15(2):183–202.\n\n\n[14] Skoglund MA, Hendeby G, Axehill D. Extended Kalman filter modifications based on an optimization view point. In: 2015 18th international conference on information fusion (fusion). IEEE; 2015. p. 1856–1861.\n\n\n[15] Skoglund MA, Gustafsson F, Hendeby G. On iterative unscented kalman filter using optimization. In: 2019 22th international conference on information fusion (FUSION). IEEE; 2019. p. 1–8.\n\n\n[16] Garcı́a-Fernández ÁF, Svensson L, Morelande MR, Särkkä S. Posterior linearization filter: Principles and implementation using sigma points. IEEE transactions on signal processing. 2015;63(20):5561–5573.\n\n\n[17] Tronarp F, Garcı́a-Fernández ÁF, Särkkä S. Iterative filtering and smoothing in nonlinear and non-gaussian systems using conditional moments. IEEE Signal Processing Letters. 2018;25(3):408–412.\n\n\n[18] Shephard N, Pitt MK. Likelihood analysis of non-gaussian measurement time series. Biometrika. 1997;84(3):653–667.\n\n\n[19] Koyama S, Castellanos Pérez-Bolde L, Shalizi CR, Kass RE. Approximate methods for state-space models. Journal of the American Statistical Association. 2010;105(489):170–180.\n\n\n[20] Salomone R, Quiroz M, Kohn R, Villani M, Tran M-N. Spectral subsampling MCMC for stationary time series. In: International conference on machine learning. PMLR; 2020. p. 8449–8458.\n\n\n[21] Raitoharju M, Garcı́a-Fernández ÁF, Ali-Löytty S, Särkkä S. Stacked iterated posterior linearization filter. In: 2024 27th international conference on information fusion (FUSION). IEEE; 2024. p. 1–8.\n\n\n[22] Celani A, Pedini L. Moderate time-varying parameter VARs. Örebro University, School of Business; 2025. Report No.: 2025:16.\n\n\n[23] Amari S-I. Natural gradient works efficiently in learning. Neural computation. 1998;10(2):251–276.\n\n\n[24] Amari S-I. Differential geometry of curved exponential families-curvatures and information loss. The Annals of Statistics. 1982:357–385."

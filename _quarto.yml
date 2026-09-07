@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: docs
   render:
-    - nordstat2026/index.qmd
+    - vaxjo2026/index.qmd
 
 knitr:
   opts_knit:
@@ -15,8 +15,8 @@ website:
     logo: /misc/SU_logo_small.png
     background: primary
     left:
-      - href: nordstat2026/index.qmd
-        text: NordStat2026
+      - href: vaxjo2026/index.qmd
+        text: vaxjo2026
         
 format:
   html:

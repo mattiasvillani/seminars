@@ -1,5 +1,5 @@
 ---
-title: "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors"
+title: " Bayesian inference in non-Gaussian time series with global-local shrinkage process priors"
 author: "Mattias Villani"
 institute: "Department of Statistics, Stockholm University"
 
@@ -689,37 +689,11 @@ $$
   
 ![](figs/layoff_time_series.svg){width="40%" fig-align="center"} ![](figs/vixlag1_time_series.svg){width="40%" fig-align="center"}
 
-## Beta regression for US layoff proportion - DSP prior
+## Beta regression for US layoff proportion 
 
-![](figs/layoff_vix_param_Laplace_none_3.svg){width="80%" fig-align="center"}
-
-## Linear approximations struggle with Beta regression
-
-![](figs/layoff_vix_param_IPLF_none_3_withIPLF.svg){width="80%" fig-align="center"}
-
-## Beta regression for US layoff proportion - homoscedastic Gauss prior
-
-![](figs/layoff_vix_homo_param_Laplace_none_3.svg){width="80%" fig-align="center"}
-
-## Beta regression for US layoff - fit at posterior median around pandemic 
-
-<table style="width:100%; border:none;">
-  <tr>
-    <th style="text-align:center; font-weight:500; font-style:normal;">[DSP]{.alertred}</th>
-    <th style="text-align:center; font-weight:500; font-style:normal;">[Homoscedastic Gaussian]{.alertred}</th>
-  </tr>
-  <tr>
-    <td style="text-align:center; border:none;">
-      <img src="figs/layoff_vix_dens_zoom_Laplace_none_3.svg" style="width:90%;"/>
-    </td>
-    <td style="text-align:center; border:none;">
-      <img src="figs/layoff_vix_homo_dens_zoom_Laplace_none_3.svg" style="width:90%;"/>
-    </td>
-  </tr>
-</table>
+![](figs/layoff5.svg){width="80%" fig-align="center"}
 
 ## How Gaussian are we at each time step?
-
 
 
 - Gaussian approximations at every time $t$. 
@@ -749,7 +723,7 @@ $$
 ::: {.column width="80%"}
 
 - [Group observations]{.alertred} in $G$ groups of $J_g$ observations in group $g$. 
-- [Same state $\v\theta_g$ for observations within a group]{.alertred}.
+- [Same state $\v\beta_g$ for observations within a group]{.alertred}.
 
 $$
 \begin{aligned}
@@ -800,76 +774,40 @@ where $j=1,\ldots,J_g$ for $g=1,\ldots,G$.
 - Large groups: Sequential filtering of individual observations within group.
 
 
-
-## Simulated Poisson regression illustration - no grouping
-
-![](figs/covid_param_IPLF_none_1_withIPLF.svg){fig-align="center"}
-
-
-
-## Simulated Poisson regression illustration - group of three
-
-![](figs/covid_param_Laplace_none_3_withIPLF.svg){fig-align="center"}
-
 ## Natural parameter innovations
 
 - Parameter evolution should adapt to:
-  - Scales of covariates
+  - Scales and covariance of covariates
   - Link functions
   - Model geometry
   
-- [Natural gradients]{.alertred} [@amari1998natural; @amari1982differential] in optimization. 
+- Use ideas from Information geometry. Natural gradient [@amari1998natural; @amari1982differential]
+  
+- [Natural parameter innovations]{.alertred}  
 
 $$
-\v x_{j+1} = \v x_j - \gamma \red{\v I(\v x_j)^{-1}}\nabla f(\v x_j)
+\v\beta_{t} = \v\beta_{t-1} + \mathcal{I}(\v\beta_{t-1})^{-1/2}\v\nu_t
 $$
-
-- [Fisher metric]{.alertred}. Step sizes scaled with respect to model geometry.
-
-## Scaled innovations controls Kullback-Leibler divergence over time
-
-
+- Fisher-scaled innovations controls the Kullback-Leibler divergence over time 
+$$
+D_{\mathrm{KL}}\big( p(y \vert \v\beta) \, \vert \vert \, p(y \vert \v\beta +\v\epsilon) \big) \approx  \frac{1}{2}(\v\epsilon)^\top \mathcal{I}(\v\beta)\v\epsilon,
+$$
 ![](figs/KLPoissonLambdaNoScaling.svg){width="65%" fig-align="center"}
 
 ![](figs/KLPoissonLambdaScaling.svg){width="65%" fig-align="center"}
 
-## Natural parameter innovations
-
-- Parameter evolution with [natural innovations]{.alertred}
-$$
-\begin{aligned}
-y_t \vert \v x_{t} &\sim \mathrm{ExpFamily}\Big(k(\v x_{t}^\top\v\beta_{t}), \varphi_t  \Big) \\
-\v\beta_{t} &= \v\beta_{t-1}+\v S(\v\beta_{t-1}) \v\nu_{t},
-\end{aligned}
-$$
-where $\v S(\v\beta_{t-1}) = \bar{I}^{-1/2}(\v\beta_{t-1})$
-
-
-- $\bar{I}(\v\beta) = \frac{1}{T}I(\v\beta)$ is the [Fisher information]{.alertred} from an "average" observation.
-
-
-
 - Non-linear transition model. Prior propagation step: $S(\v\beta_{t-1}) \approx S(\hat{\v\beta}_{t-1 \vert t-1})$.
-
 
 - Prior at time $t=0$
 $$
-\v\beta_0 \sim N\Big(\v \mu_0, \frac{1}{\kappa_0}\bar{I}^{-1}(\v\mu_0)\Big)
+\v\beta_0 \sim N\Big(\v \mu_0, \frac{T}{\kappa_0}\mathcal{I}^{-1}(\v\mu_0)\Big)
 $$
 where $\v\mu_0$ is backed out from beliefs about the data at time $t=0$. 
 
 
-## Natural parameter innovations - Poisson($\exp(\theta)$)
-
-
-![](figs/KLPoissonLogLambdaNoScaling.svg){width="70%" fig-align="center"}
-
-![](figs/KLPoissonLogLambdaScaling.svg){width="70%" fig-align="center"}
-
-
 ## Ongoing and future work
 
-- [Multivariate]{.alertred} extensions
+- [Multivariate]{.alertred} extensions, including mixed data types.
 
 ::: tinyskip
 :::
