@@ -830,15 +830,18 @@ where $\lambda_t = \exp(\v x_t ^\top \v\beta)$.
   - Average of all observations $$\bar{\mathcal{I}}(\v\beta) = \frac{1}{T}\v X^\top \mathrm{Diag}(\lambda_1,\ldots,\lambda_T) \v X$$
   
   
-## Natural parameter innovations - Poisson regression simulation study
-
-![](figs/PoisSimScaling.svg){width="90%" fig-align="center"}
 
 ## US layoff with different scaling of innovations
 
 - Left to right: no scaling, global full, local full, global diagonal, local diagonal.
 
 ![](figs/layoff_diff_s.svg){width="100%" fig-align="left"}
+
+## Natural parameter innovations - Poisson regression simulation study
+
+![](figs/PoisSimScaling.svg){width="90%" fig-align="center"}
+
+
 
 
 ## Seasonal Poisson regression for bike rides

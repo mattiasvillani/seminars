@@ -189,18 +189,18 @@
     "text": "Natural parameter innovations\n\nNon-linear transition model. \\(\\mathcal{I}(\\v\\beta_{t-1}) \\approx \\mathcal{I}(\\hat{\\v\\beta}_{t-1 \\vert t-1})\\).\nFisher information from one observation is unit rank.\nPoisson regression: \\[\\mathcal{I}(\\v\\beta) = \\lambda_t \\v x_t \\v x_t^\\top \\] where \\(\\lambda_t = \\exp(\\v x_t ^\\top \\v\\beta)\\).\nMany ways around this:\n\nPseudo inverse [25]\nGrouping observations\nAverage of all observations \\[\\bar{\\mathcal{I}}(\\v\\beta) = \\frac{1}{T}\\v X^\\top \\mathrm{Diag}(\\lambda_1,\\ldots,\\lambda_T) \\v X\\]"
   },
   {
-    "objectID": "vaxjo2026/index.html#natural-parameter-innovations---poisson-regression-simulation-study",
-    "href": "vaxjo2026/index.html#natural-parameter-innovations---poisson-regression-simulation-study",
-    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
-    "section": "Natural parameter innovations - Poisson regression simulation study",
-    "text": "Natural parameter innovations - Poisson regression simulation study"
-  },
-  {
     "objectID": "vaxjo2026/index.html#us-layoff-with-different-scaling-of-innovations",
     "href": "vaxjo2026/index.html#us-layoff-with-different-scaling-of-innovations",
     "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
     "section": "US layoff with different scaling of innovations",
     "text": "US layoff with different scaling of innovations\n\nLeft to right: no scaling, global full, local full, global diagonal, local diagonal."
+  },
+  {
+    "objectID": "vaxjo2026/index.html#natural-parameter-innovations---poisson-regression-simulation-study",
+    "href": "vaxjo2026/index.html#natural-parameter-innovations---poisson-regression-simulation-study",
+    "title": "Bayesian inference in non-Gaussian time series with global-local shrinkage process priors",
+    "section": "Natural parameter innovations - Poisson regression simulation study",
+    "text": "Natural parameter innovations - Poisson regression simulation study"
   },
   {
     "objectID": "vaxjo2026/index.html#seasonal-poisson-regression-for-bike-rides",
